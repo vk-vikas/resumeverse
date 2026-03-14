@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -10,6 +11,7 @@ import { toast } from 'sonner';
 import type { ResumeData } from '@/types/resume';
 
 export default function Home() {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [parsedData, setParsedData] = useState<ResumeData | null>(null);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
@@ -34,6 +36,8 @@ export default function Home() {
       }
 
       setParsedData(result.data);
+      // Store parsed data for the editor to pick up
+      sessionStorage.setItem('resumeverse-parsed-data', JSON.stringify(result.data));
       toast.success('Resume parsed successfully!');
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Something went wrong';
@@ -197,9 +201,13 @@ export default function Home() {
               </CollapsibleSection>
             )}
 
-            {/* Action button — will link to editor in Task 6 */}
+            {/* Action button */}
             <div className="pt-4">
-              <Button size="lg" className="w-full text-base">
+              <Button
+                size="lg"
+                className="w-full text-base"
+                onClick={() => router.push('/editor/new')}
+              >
                 Continue to Editor →
               </Button>
             </div>
