@@ -2,12 +2,16 @@
 
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState, Suspense } from 'react';
-import { EditorProvider } from '@/components/editor/editor-context';
+import { EditorProvider, useEditor } from '@/components/editor/editor-context';
 import { ResumeEditor } from '@/components/editor/resume-editor';
 import { LivePreview } from '@/components/editor/live-preview';
+import { PublishDialog } from '@/components/editor/publish-dialog';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Save } from 'lucide-react';
+import { ArrowLeft, Save, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { createClient } from '@/lib/supabase/client';
+import { validateResumeData } from '@/lib/utils/schema';
+import { generateSlug } from '@/lib/utils/slug';
 import type { ResumeData } from '@/types/resume';
 
 function EditorContent() {
@@ -16,7 +20,6 @@ function EditorContent() {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    // Load data from sessionStorage (set by landing page after parsing)
     const stored = sessionStorage.getItem('resumeverse-parsed-data');
     if (stored) {
       try {
@@ -38,51 +41,135 @@ function EditorContent() {
 
   return (
     <EditorProvider initialData={initialData}>
-      <div className="min-h-screen bg-[#0a0a0a] flex flex-col">
-        {/* Top bar */}
-        <header className="border-b border-neutral-800 bg-neutral-950/80 backdrop-blur-sm sticky top-0 z-50">
-          <div className="flex items-center justify-between px-4 py-3">
-            <div className="flex items-center gap-3">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-neutral-400 hover:text-white"
-                onClick={() => window.history.back()}
-              >
-                <ArrowLeft className="h-4 w-4" />
-              </Button>
-              <h1 className="text-sm font-semibold text-white">
-                Resume<span className="text-blue-500">Verse</span>{' '}
-                <span className="text-neutral-500 font-normal">Editor</span>
-              </h1>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button
-                size="sm"
-                onClick={() => toast.info('Save & publish coming in the next task!')}
-                className="bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                <Save className="h-3.5 w-3.5 mr-1.5" />
-                Save & Publish
-              </Button>
-            </div>
-          </div>
-        </header>
+      <EditorLayout />
+    </EditorProvider>
+  );
+}
 
-        {/* Split panel layout */}
-        <div className="flex flex-1 overflow-hidden">
-          {/* Left: Editor form */}
-          <div className="w-1/2 border-r border-neutral-800 overflow-y-auto p-4">
-            <ResumeEditor />
-          </div>
+function EditorLayout() {
+  const { data, theme } = useEditor();
+  const [isPublishing, setIsPublishing] = useState(false);
+  const [publishedSlug, setPublishedSlug] = useState<string | null>(null);
+  const [showPublishDialog, setShowPublishDialog] = useState(false);
 
-          {/* Right: Live preview */}
-          <div className="w-1/2 overflow-y-auto p-4 bg-neutral-950">
-            <LivePreview />
+  const handlePublish = async () => {
+    // Validate data
+    const validation = validateResumeData(data);
+    if (!validation.success) {
+      toast.error('Please fill in at least Name, Title, and Summary before publishing.');
+      return;
+    }
+
+    setIsPublishing(true);
+
+    try {
+      const supabase = createClient();
+
+      // Generate a unique slug
+      let slug = generateSlug(data.name);
+
+      // Check if slug is taken, regenerate if needed
+      const { data: existing } = await supabase
+        .from('resumes')
+        .select('id')
+        .eq('slug', slug)
+        .single();
+
+      if (existing) {
+        slug = generateSlug(data.name); // Regenerate with different random suffix
+      }
+
+      // Insert resume into Supabase
+      const { error } = await supabase.from('resumes').insert({
+        slug,
+        theme,
+        data: data as unknown as Record<string, unknown>,
+        is_public: true,
+        views: 0,
+      });
+
+      if (error) {
+        // If RLS blocks, offer workaround
+        if (error.code === '42501' || error.message.includes('policy')) {
+          throw new Error(
+            'Permission denied. Please ensure Row Level Security policies are configured correctly in Supabase.'
+          );
+        }
+        throw new Error(error.message);
+      }
+
+      setPublishedSlug(slug);
+      setShowPublishDialog(true);
+      toast.success('Resume published!');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Failed to publish';
+      toast.error(message);
+    } finally {
+      setIsPublishing(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#0a0a0a] flex flex-col">
+      {/* Top bar */}
+      <header className="border-b border-neutral-800 bg-neutral-950/80 backdrop-blur-sm sticky top-0 z-50">
+        <div className="flex items-center justify-between px-4 py-3">
+          <div className="flex items-center gap-3">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-neutral-400 hover:text-white"
+              onClick={() => window.history.back()}
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+            <h1 className="text-sm font-semibold text-white">
+              Resume<span className="text-blue-500">Verse</span>{' '}
+              <span className="text-neutral-500 font-normal">Editor</span>
+            </h1>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              onClick={handlePublish}
+              disabled={isPublishing}
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              {isPublishing ? (
+                <>
+                  <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" />
+                  Publishing...
+                </>
+              ) : (
+                <>
+                  <Save className="h-3.5 w-3.5 mr-1.5" />
+                  Save & Publish
+                </>
+              )}
+            </Button>
           </div>
         </div>
+      </header>
+
+      {/* Split panel layout */}
+      <div className="flex flex-1 overflow-hidden">
+        <div className="w-1/2 border-r border-neutral-800 overflow-y-auto p-4">
+          <ResumeEditor />
+        </div>
+        <div className="w-1/2 overflow-y-auto p-4 bg-neutral-950">
+          <LivePreview />
+        </div>
       </div>
-    </EditorProvider>
+
+      {/* Publish success dialog */}
+      {publishedSlug && (
+        <PublishDialog
+          open={showPublishDialog}
+          onOpenChange={setShowPublishDialog}
+          slug={publishedSlug}
+        />
+      )}
+    </div>
   );
 }
 
