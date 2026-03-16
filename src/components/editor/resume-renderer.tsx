@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { BentoTheme } from '@/themes/bento/bento-theme';
 import { JourneyTheme } from '@/themes/journey/journey-theme';
+import { TerminalTheme } from '@/themes/terminal/terminal-theme';
 
 /**
  * Simple renderer that displays resume data.
@@ -27,6 +28,10 @@ export function ResumeRenderer({
   
   if (theme === 'journey') {
     return <JourneyTheme data={data} />;
+  }
+
+  if (theme === 'terminal') {
+    return <TerminalTheme data={data} />;
   }
 
   // Fallback / default renderer
