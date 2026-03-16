@@ -14,8 +14,10 @@ import {
   Eye,
   Calendar,
   MoreVertical,
-  Loader2
+  Loader2,
+  LineChart
 } from 'lucide-react';
+import Link from 'next/link';
 import { toast } from 'sonner';
 import {
   DropdownMenu,
@@ -137,6 +139,12 @@ export function ResumeCard({ resume }: ResumeCardProps) {
                 >
                   <Edit2 className="mr-2 h-4 w-4" />
                   Edit Resume
+                </DropdownMenuItem>
+                <DropdownMenuItem className="p-0">
+                  <Link href={`/dashboard/analytics/${resume.id}`} className="cursor-pointer w-full flex items-center px-2 py-1.5 hover:bg-neutral-800 focus:bg-neutral-800 rounded outline-none w-[100%] min-w-full">
+                    <LineChart className="mr-2 h-4 w-4" />
+                    <span>Analytics</span>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="bg-neutral-800" />
                 <DropdownMenuItem 
