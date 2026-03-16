@@ -13,6 +13,7 @@ import { createClient } from '@/lib/supabase/client';
 import { validateResumeData } from '@/lib/utils/schema';
 import { generateSlug } from '@/lib/utils/slug';
 import type { ResumeData } from '@/types/resume';
+import { UserMenu } from '@/components/layout/user-menu';
 
 function EditorContent() {
   const searchParams = useSearchParams();
@@ -68,6 +69,12 @@ function EditorLayout() {
       // Generate a unique slug
       let slug = generateSlug(data.name);
 
+      // Get current user session
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.user) {
+        throw new Error('You must be logged in to publish.');
+      }
+
       // Check if slug is taken, regenerate if needed
       const { data: existing } = await supabase
         .from('resumes')
@@ -86,6 +93,7 @@ function EditorLayout() {
         data: data as unknown as Record<string, unknown>,
         is_public: true,
         views: 0,
+        user_id: session.user.id,
       });
 
       if (error) {
@@ -128,7 +136,8 @@ function EditorLayout() {
               <span className="text-neutral-500 font-normal">Editor</span>
             </h1>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
+            <UserMenu />
             <Button
               size="sm"
               onClick={handlePublish}

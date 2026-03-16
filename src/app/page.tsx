@@ -9,9 +9,12 @@ import { Dropzone } from '@/components/upload/dropzone';
 import { Sparkles, Upload, Share2, CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
 import { toast } from 'sonner';
 import type { ResumeData } from '@/types/resume';
+import { UserMenu } from '@/components/layout/user-menu';
+import { useAuth } from '@/hooks/use-auth';
 
 export default function Home() {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [parsedData, setParsedData] = useState<ResumeData | null>(null);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
@@ -52,8 +55,13 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] px-4 py-12">
-      <div className="mx-auto max-w-2xl space-y-8">
+    <div className="min-h-screen bg-[#0a0a0a]">
+      {/* Navigation */}
+      <header className="absolute top-0 w-full p-4 flex justify-end z-50">
+        <UserMenu />
+      </header>
+
+      <div className="px-4 py-20 mx-auto max-w-2xl space-y-8">
         {/* Header */}
         <div className="text-center space-y-4">
           <Badge variant="secondary" className="mb-2">
@@ -206,7 +214,14 @@ export default function Home() {
               <Button
                 size="lg"
                 className="w-full text-base"
-                onClick={() => router.push('/editor/new')}
+                onClick={() => {
+                  if (isAuthenticated) {
+                    router.push('/editor/new');
+                  } else {
+                    toast.info('Please sign in to continue editing your resume');
+                    router.push('/login?next=/editor/new');
+                  }
+                }}
               >
                 Continue to Editor →
               </Button>
