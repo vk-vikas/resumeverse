@@ -2,7 +2,6 @@ import { cookies } from 'next/headers';
 import { createServerClient } from '@supabase/ssr';
 import { UserMenu } from '@/components/layout/user-menu';
 import { ResumeCard } from '@/components/dashboard/resume-card';
-import { buttonVariants } from '@/components/ui/button';
 import { FileText, Plus, Eye, Share2 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -43,8 +42,8 @@ export default async function DashboardPage() {
   
   // Aggregate stats
   const totalResumes = typedResumes.length;
-  const totalViews = typedResumes.reduce((acc, curr) => acc + (curr.views || 0), 0);
-  const activeShares = typedResumes.filter(r => r.is_public).length;
+  const totalViews = typedResumes.reduce((acc: number, curr: any) => acc + (curr.views || 0), 0);
+  const activeShares = typedResumes.filter((r: any) => r.is_public).length;
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
@@ -60,7 +59,10 @@ export default async function DashboardPage() {
           </div>
           
           <div className="flex items-center gap-4">
-            <Link href="/editor/new" className={buttonVariants({ size: "sm", className: "hidden sm:flex bg-blue-600 hover:bg-blue-700 text-white" })}>
+            <Link 
+              href="/editor/new" 
+              className="hidden sm:inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 disabled:pointer-events-none disabled:opacity-50 bg-blue-600 hover:bg-blue-700 text-white shadow-sm h-8 px-3"
+            >
               <Plus className="mr-2 h-4 w-4" />
               New Resume
             </Link>
@@ -122,14 +124,17 @@ export default async function DashboardPage() {
             <p className="text-neutral-400 max-w-sm mb-6">
               You haven't created any resumes. Upload an existing PDF/DOCX or start from scratch using our interactive editor.
             </p>
-            <Link href="/" className={buttonVariants({ size: "lg", className: "bg-white text-black hover:bg-neutral-200" })}>
+            <Link 
+              href="/" 
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 disabled:pointer-events-none disabled:opacity-50 bg-white text-black hover:bg-neutral-200 shadow-sm h-10 px-8"
+            >
               <Plus className="mr-2 h-5 w-5" />
               Create First Resume
             </Link>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {typedResumes.map((resume) => (
+            {typedResumes.map((resume: any) => (
               <ResumeCard key={resume.id} resume={resume} />
             ))}
             
