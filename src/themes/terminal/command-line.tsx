@@ -22,20 +22,15 @@ export function CommandLine({ data, onClear, history, onCommand }: CommandLinePr
   const promptHost = data.name ? data.name.toLowerCase().replace(/\s+/g, '') : 'resume';
   const promptString = `${promptUser}@${promptHost}:~$ `;
 
-  // Keep input focused
+  // Keep input focused when clicking inside the terminal
+  const focusInput = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   useEffect(() => {
-    const focusInput = () => {
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
-    };
-    
-    document.addEventListener('click', focusInput);
-    focusInput(); // Initial focus
-    
-    return () => {
-      document.removeEventListener('click', focusInput);
-    };
+    focusInput(); // Initial focus only when mounted
   }, []);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -90,7 +85,10 @@ export function CommandLine({ data, onClear, history, onCommand }: CommandLinePr
   };
 
   return (
-    <div className="w-full text-sm md:text-base font-mono">
+    <div 
+      className="w-full text-sm md:text-base font-mono cursor-text pb-32" 
+      onClick={focusInput}
+    >
       {/* Scrollable history above the current input */}
       <div className="flex flex-col gap-1 w-full mb-1">
         {history.map((log) => (
