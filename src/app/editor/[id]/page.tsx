@@ -54,10 +54,17 @@ function EditorLayout() {
   const [showPublishDialog, setShowPublishDialog] = useState(false);
 
   const handlePublish = async () => {
-    // Validate data
+    // Basic checks first for the most common requirement
+    if (!data.name?.trim() || !data.title?.trim() || !data.summary?.trim()) {
+      toast.error('Please fill in at least Name, Title, and Summary before publishing.');
+      return;
+    }
+
+    // Validate remaining data structure against schema
     const validation = validateResumeData(data);
     if (!validation.success) {
-      toast.error('Please fill in at least Name, Title, and Summary before publishing.');
+      // Show the first descriptive error from the schema
+      toast.error(`Validation Error: ${validation.errors[0]}`);
       return;
     }
 

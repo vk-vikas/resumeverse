@@ -43,14 +43,7 @@ const skillsSchema = z
     frameworks: z.array(z.string()),
     tools: z.array(z.string()),
     soft: z.array(z.string()).optional(),
-  })
-  .refine(
-    (skills) =>
-      skills.languages.length > 0 ||
-      skills.frameworks.length > 0 ||
-      skills.tools.length > 0,
-    { message: 'At least one skill category must have entries' }
-  );
+  });
 
 // --- Main resume schema ---
 
