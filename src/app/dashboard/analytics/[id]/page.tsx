@@ -17,13 +17,17 @@ export default async function AnalyticsPage({ params }: { params: Promise<{ id: 
 
   const { data: resume, error: resumeError } = await supabase
     .from('resumes')
-    .select('id, name, title, slug, views, user_id')
+    .select('id, slug, views, user_id, data')
     .eq('id', id)
     .single();
 
   if (resumeError || !resume) {
     notFound();
   }
+
+  // Extract name and title from the JSONB payload
+  const resumeData = resume.data as { name?: string; title?: string };
+  const displayName = resumeData?.name || 'Untitled Resume';
 
   if (resume.user_id !== session.user.id) {
     return (
@@ -72,7 +76,7 @@ export default async function AnalyticsPage({ params }: { params: Promise<{ id: 
           <p className="text-muted-foreground flex items-center gap-2 text-neutral-400">
             Overview for 
             <Link href={`/${resume.slug}`} target="_blank" className="font-medium text-blue-400 hover:underline">
-              {resume.name}
+              {displayName}
             </Link>
           </p>
         </div>
