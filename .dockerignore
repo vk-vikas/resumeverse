@@ -1,0 +1,23 @@
+# Excluded directories
+node_modules
+.next
+out
+coverage
+
+# Excluded generic files
+.env*.local
+.vercel
+.eslintcache
+*.log
+*.md
+.gitignore
+.dockerignore
+
+# Excluded specific project tools
+resumeverse-master-plan.md
+resumeverse-verification-tracker.md
+RESTAURANT_LOGGER_PLAN.md
+
+# OS specific files
+.DS_Store
+Thumbs.db
