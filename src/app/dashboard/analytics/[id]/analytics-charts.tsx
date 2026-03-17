@@ -70,7 +70,7 @@ export function AnalyticsCharts({ views }: AnalyticsChartsProps) {
 
   // 3. Process Device Data
   const devices = views.reduce((acc, view) => {
-    const ua = view.user_agent.toLowerCase();
+    const ua = (view.user_agent || 'unknown').toLowerCase();
     let type = 'Desktop';
     if (ua.includes('mobi') || ua.includes('android') || ua.includes('iphone')) {
       type = 'Mobile';
