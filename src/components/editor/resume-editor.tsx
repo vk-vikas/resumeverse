@@ -8,12 +8,51 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
-import { Plus, Trash2, X } from 'lucide-react';
+import { Plus, Trash2, X, Sparkles, Loader2, RotateCcw } from 'lucide-react';
 import type { ExperienceItem, EducationItem, ProjectItem } from '@/types/resume';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 export function ResumeEditor() {
   const { data, theme, updateField, setTheme } = useEditor();
+  const [isEnhancingAll, setIsEnhancingAll] = useState(false);
+
+  const handleEnhanceAll = async () => {
+    setIsEnhancingAll(true);
+    let enhancedCount = 0;
+    try {
+      // Create a deep copy to mutate
+      const newExperiences = JSON.parse(JSON.stringify(data.experience)) as ExperienceItem[];
+
+      for (let i = 0; i < newExperiences.length; i++) {
+        const exp = newExperiences[i];
+        for (let j = 0; j < exp.bullets.length; j++) {
+          const rawBullet = exp.bullets[j];
+          if (!rawBullet.trim()) continue;
+
+          const res = await fetch('/api/enhance', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ bullet: rawBullet, company: exp.company, role: exp.role }),
+          });
+          const result = await res.json();
+          if (!res.ok) throw new Error(result.error);
+          
+          exp.bullets[j] = result.enhanced;
+          enhancedCount++;
+          
+          updateField('experience', [...newExperiences]);
+          
+          await new Promise(r => setTimeout(r, 300));
+        }
+      }
+      if (enhancedCount > 0) toast.success(`Enhanced ${enhancedCount} bullets!`);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Batch enhancement halted');
+    } finally {
+      setIsEnhancingAll(false);
+    }
+  };
 
   return (
     <div className="space-y-4 pb-20">
@@ -79,6 +118,20 @@ export function ResumeEditor() {
 
       {/* Experience */}
       <SectionEditor title={`Experience (${data.experience.length})`}>
+        {data.experience.length > 0 && (
+          <div className="flex justify-end mb-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleEnhanceAll}
+              disabled={isEnhancingAll}
+              className="border-neutral-700 bg-neutral-900/50 text-amber-500 hover:text-amber-400 hover:bg-neutral-800 transition-colors gap-2"
+            >
+              {isEnhancingAll ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Sparkles className="h-3.5 w-3.5" />}
+              {isEnhancingAll ? 'Enhancing...' : 'Enhance All'}
+            </Button>
+          </div>
+        )}
         <div className="space-y-4">
           {data.experience.map((exp, i) => (
             <ExperienceEditor
@@ -220,6 +273,50 @@ function ExperienceEditor({
   onChange: (item: ExperienceItem) => void;
   onRemove: () => void;
 }) {
+  const [enhancingIndex, setEnhancingIndex] = useState<number | null>(null);
+  const [originalBullets, setOriginalBullets] = useState<Record<number, string>>({});
+
+  const enhanceBullet = async (index: number) => {
+    const rawBullet = item.bullets[index];
+    if (!rawBullet.trim()) return;
+
+    setEnhancingIndex(index);
+    try {
+      const res = await fetch('/api/enhance', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bullet: rawBullet, company: item.company, role: item.role }),
+      });
+      
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to enhance bullet point');
+      
+      // Save original for undo
+      setOriginalBullets(prev => ({ ...prev, [index]: rawBullet }));
+      
+      const newBullets = [...item.bullets];
+      newBullets[index] = data.enhanced;
+      onChange({ ...item, bullets: newBullets });
+      toast.success('Bullet enhanced!');
+    } catch(err) {
+      toast.error(err instanceof Error ? err.message : 'Failed to reach AI service');
+    } finally {
+      setEnhancingIndex(null);
+    }
+  };
+
+  const undoEnhancement = (index: number) => {
+    if (originalBullets[index]) {
+      const newBullets = [...item.bullets];
+      newBullets[index] = originalBullets[index];
+      onChange({ ...item, bullets: newBullets });
+      
+      const newOriginals = { ...originalBullets };
+      delete newOriginals[index];
+      setOriginalBullets(newOriginals);
+    }
+  };
+
   return (
     <div className="rounded-lg border border-neutral-800 p-3 space-y-2">
       <div className="flex items-center justify-between">
@@ -271,6 +368,35 @@ function ExperienceEditor({
               placeholder="Achievement or responsibility..."
               className="bg-neutral-800/50 border-neutral-700 text-white text-sm flex-1"
             />
+
+            {/* AI Enhance / Undo Controls */}
+            {enhancingIndex === j ? (
+              <Button disabled variant="ghost" size="icon" className="h-9 w-9 shrink-0 text-neutral-400">
+                <Loader2 className="h-3 w-3 animate-spin" />
+              </Button>
+            ) : originalBullets[j] ? (
+              <Button
+                variant="ghost"
+                size="icon"
+                title="Undo AI enhancement"
+                className="h-9 w-9 shrink-0 text-blue-400 hover:text-blue-300 hover:bg-blue-400/10"
+                onClick={() => undoEnhancement(j)}
+              >
+                <RotateCcw className="h-3 w-3" />
+              </Button>
+            ) : (
+              <Button
+                variant="ghost"
+                size="icon"
+                title="Enhance with AI"
+                className="h-9 w-9 shrink-0 text-amber-500 hover:text-amber-400 hover:bg-amber-500/10"
+                onClick={() => enhanceBullet(j)}
+                disabled={!bullet.trim()}
+              >
+                <Sparkles className="h-3 w-3" />
+              </Button>
+            )}
+
             <Button
               variant="ghost"
               size="icon"
@@ -278,6 +404,13 @@ function ExperienceEditor({
               onClick={() => {
                 if (item.bullets.length > 1) {
                   onChange({ ...item, bullets: item.bullets.filter((_, idx) => idx !== j) });
+                  
+                  // Clean up original undo cache on delete
+                  if (originalBullets[j]) {
+                    const newOriginals = { ...originalBullets };
+                    delete newOriginals[j];
+                    setOriginalBullets(newOriginals);
+                  }
                 }
               }}
             >
