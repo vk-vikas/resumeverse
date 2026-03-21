@@ -1,7 +1,4 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
-
-// Initialize the Gemini API client
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+import { getGeminiModel } from './gemini';
 
 interface EnhanceOptions {
   bullet: string;
@@ -14,8 +11,8 @@ export async function enhanceBulletPoint({ bullet, company, role }: EnhanceOptio
     throw new Error('GEMINI_API_KEY is not configured');
   }
 
-  // We use the flash model for speed on single text transformation tasks
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+  // We use the centralized fast model for completion tasks
+  const model = getGeminiModel();
 
   const prompt = `
 You are an expert resume writer and career coach. Your task is to take a weak or standard resume bullet point and rewrite it into a powerful accomplishment statement using the STAR method (Situation, Task, Action, Result).
@@ -49,6 +46,6 @@ Enhanced Bullet Point:`;
     return enhancedText;
   } catch (error) {
     console.error('Failed to enhance bullet point with AI:', error);
-    throw new Error('Failed to reach AI service for enhancement');
+    throw error;
   }
 }
