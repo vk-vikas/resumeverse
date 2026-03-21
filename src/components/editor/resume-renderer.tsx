@@ -9,6 +9,7 @@ import {
 import { BentoTheme } from '@/themes/bento/bento-theme';
 import { JourneyTheme } from '@/themes/journey/journey-theme';
 import { TerminalTheme } from '@/themes/terminal/terminal-theme';
+import { KPITheme } from '@/components/themes/kpi';
 
 /**
  * Simple renderer that displays resume data.
@@ -32,6 +33,10 @@ export function ResumeRenderer({
 
   if (theme === 'terminal') {
     return <TerminalTheme data={data} />;
+  }
+
+  if (theme === 'kpi') {
+    return <KPITheme data={data} />;
   }
 
   // Fallback / default renderer

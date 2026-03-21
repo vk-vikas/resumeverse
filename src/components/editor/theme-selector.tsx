@@ -1,7 +1,7 @@
 'use client';
 
 import { Card } from '@/components/ui/card';
-import { Check, LayoutGrid, ScrollText, Terminal } from 'lucide-react';
+import { Check, LayoutGrid, ScrollText, Terminal, BarChartHorizontalBig } from 'lucide-react';
 import type { ThemeType } from '@/types/resume';
 
 interface ThemeSelectorProps {
@@ -27,6 +27,12 @@ const themes: { id: ThemeType; name: string; description: string; icon: React.Re
     name: 'Terminal',
     description: 'Interactive CLI experience',
     icon: <Terminal className="h-5 w-5" />,
+  },
+  {
+    id: 'kpi',
+    name: 'Data Room',
+    description: 'Executive dashboard driven by numerical KPIs',
+    icon: <BarChartHorizontalBig className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />,
   },
 ];
 
