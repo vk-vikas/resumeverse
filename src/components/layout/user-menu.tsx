@@ -10,6 +10,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuGroup,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { LogOut, LayoutDashboard, FileText, Loader2, User } from 'lucide-react';
@@ -28,9 +29,9 @@ export function UserMenu() {
 
   if (!user) {
     return (
-      <Button 
-        variant="outline" 
-        size="sm" 
+      <Button
+        variant="outline"
+        size="sm"
         onClick={() => router.push('/login')}
         className="border-neutral-800 text-neutral-300 hover:text-white"
       >
@@ -50,33 +51,35 @@ export function UserMenu() {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 bg-neutral-900 border-neutral-800 text-neutral-200" align="end">
-        <DropdownMenuLabel className="font-normal">
-          <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none text-white">
-              {user.user_metadata?.full_name || 'Account'}
-            </p>
-            <p className="text-xs leading-none text-neutral-500">
-              {user.email}
-            </p>
-          </div>
-        </DropdownMenuLabel>
+        <DropdownMenuGroup>
+          <DropdownMenuLabel className="font-normal">
+            <div className="flex flex-col space-y-1">
+              <p className="text-sm font-medium leading-none text-white">
+                {user.user_metadata?.full_name || 'Account'}
+              </p>
+              <p className="text-xs leading-none text-neutral-500">
+                {user.email}
+              </p>
+            </div>
+          </DropdownMenuLabel>
+        </DropdownMenuGroup>
         <DropdownMenuSeparator className="bg-neutral-800" />
-        <DropdownMenuItem 
+        <DropdownMenuItem
           onClick={() => router.push('/dashboard')}
           className="hover:bg-neutral-800 hover:text-white cursor-pointer transition-colors"
         >
           <LayoutDashboard className="mr-2 h-4 w-4" />
           <span>Dashboard</span>
         </DropdownMenuItem>
-        <DropdownMenuItem 
-          onClick={() => router.push('/editor/new')}
+        <DropdownMenuItem
+          onClick={() => router.push('/upload')}
           className="hover:bg-neutral-800 hover:text-white cursor-pointer transition-colors"
         >
           <FileText className="mr-2 h-4 w-4" />
           <span>New Resume</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator className="bg-neutral-800" />
-        <DropdownMenuItem 
+        <DropdownMenuItem
           onClick={async () => {
             await signOut();
             router.push('/');

@@ -40,11 +40,10 @@ export function ThemeSelector({ selected, onSelect }: ThemeSelectorProps) {
             key={theme.id}
             onClick={() => onSelect(theme.id)}
             aria-selected={isSelected}
-            className={`relative text-left rounded-xl border-2 p-3 transition-all duration-200 ${
-              isSelected
+            className={`relative text-left rounded-xl border-2 p-3 transition-all duration-200 ${isSelected
                 ? 'border-blue-500 bg-blue-500/10'
                 : 'border-neutral-800 bg-neutral-900/50 hover:border-neutral-600'
-            }`}
+              }`}
           >
             {isSelected && (
               <div className="absolute top-2 right-2 h-5 w-5 rounded-full bg-blue-500 flex items-center justify-center">

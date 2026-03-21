@@ -60,7 +60,7 @@ export default async function DashboardPage() {
           
           <div className="flex items-center gap-4">
             <Link 
-              href="/editor/new" 
+              href="/upload" 
               className="hidden sm:inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 disabled:pointer-events-none disabled:opacity-50 bg-blue-600 hover:bg-blue-700 text-white shadow-sm h-8 px-3"
             >
               <Plus className="mr-2 h-4 w-4" />
@@ -125,7 +125,7 @@ export default async function DashboardPage() {
               You haven't created any resumes. Upload an existing PDF/DOCX or start from scratch using our interactive editor.
             </p>
             <Link 
-              href="/" 
+              href="/upload" 
               className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 disabled:pointer-events-none disabled:opacity-50 bg-white text-black hover:bg-neutral-200 shadow-sm h-10 px-8"
             >
               <Plus className="mr-2 h-5 w-5" />
@@ -140,7 +140,7 @@ export default async function DashboardPage() {
             
             {/* Create New Card (Empty/Action state within grid) */}
             <Link 
-              href="/"
+              href="/upload"
               className="flex flex-col items-center justify-center min-h-[220px] rounded-xl border-2 border-dashed border-neutral-800 bg-neutral-900/20 hover:bg-neutral-900/50 hover:border-neutral-700 transition-colors group"
             >
               <div className="w-12 h-12 bg-neutral-800 group-hover:bg-neutral-700 rounded-full flex items-center justify-center mb-3 transition-colors">

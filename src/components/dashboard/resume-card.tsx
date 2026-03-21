@@ -64,7 +64,7 @@ export function ResumeCard({ resume }: ResumeCardProps) {
   const handleToggleVisibility = async () => {
     setIsUpdatingVisibility(true);
     const newStatus = !isPublic;
-    
+
     try {
       const { error } = await supabase
         .from('resumes')
@@ -72,7 +72,7 @@ export function ResumeCard({ resume }: ResumeCardProps) {
         .eq('id', resume.id);
 
       if (error) throw error;
-      
+
       setIsPublic(newStatus);
       toast.success(newStatus ? 'Resume is now public' : 'Resume is now private');
     } catch (error) {
@@ -92,7 +92,7 @@ export function ResumeCard({ resume }: ResumeCardProps) {
         .eq('id', resume.id);
 
       if (error) throw error;
-      
+
       toast.success('Resume deleted completely');
       router.refresh(); // Refresh the Server Component page
     } catch (error) {
@@ -120,20 +120,20 @@ export function ResumeCard({ resume }: ResumeCardProps) {
                 {resumeRole}
               </p>
             </div>
-            
+
             <DropdownMenu>
               <DropdownMenuTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium hover:bg-neutral-800 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring h-8 w-8 text-neutral-400 hover:text-white -mr-2">
                 <MoreVertical className="h-4 w-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48 bg-neutral-900 border-neutral-800 text-neutral-200">
-                <DropdownMenuItem 
+                <DropdownMenuItem
                   className="cursor-pointer hover:bg-neutral-800 focus:bg-neutral-800"
                   onClick={() => window.open(`/${resume.slug}`, '_blank')}
                 >
                   <ExternalLink className="mr-2 h-4 w-4" />
                   View Live
                 </DropdownMenuItem>
-                <DropdownMenuItem 
+                <DropdownMenuItem
                   className="cursor-pointer hover:bg-neutral-800 focus:bg-neutral-800"
                   onClick={() => router.push(`/editor/${resume.id}`)}
                 >
@@ -147,7 +147,7 @@ export function ResumeCard({ resume }: ResumeCardProps) {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="bg-neutral-800" />
-                <DropdownMenuItem 
+                <DropdownMenuItem
                   className="cursor-pointer text-red-500 hover:bg-neutral-800 focus:bg-neutral-800 focus:text-red-400"
                   onClick={() => setShowDeleteDialog(true)}
                 >
@@ -181,7 +181,7 @@ export function ResumeCard({ resume }: ResumeCardProps) {
 
             <div className="flex items-center gap-2">
               <span className="text-[10px] uppercase tracking-wider font-medium">Link</span>
-              <Switch 
+              <Switch
                 checked={isPublic}
                 onCheckedChange={handleToggleVisibility}
                 disabled={isUpdatingVisibility}
@@ -202,7 +202,7 @@ export function ResumeCard({ resume }: ResumeCardProps) {
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowDeleteDialog(false)} className="bg-transparent border-neutral-700 text-neutral-300 hover:bg-neutral-800 hover:text-white">Cancel</Button>
-            <Button 
+            <Button
               onClick={(e: React.MouseEvent) => {
                 e.preventDefault();
                 handleDelete();

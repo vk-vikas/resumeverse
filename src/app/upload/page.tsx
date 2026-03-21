@@ -100,11 +100,35 @@ export default function Home() {
         </div>
 
         {/* Upload Section */}
-        <div className="space-y-2">
-          <h2 className="text-sm font-medium text-neutral-400 uppercase tracking-wider">
-            Upload Your Resume
-          </h2>
-          <Dropzone onFileSelect={handleFileSelect} isLoading={isLoading} />
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <h2 className="text-sm font-medium text-neutral-400 uppercase tracking-wider">
+              Upload Your Resume
+            </h2>
+            <Dropzone onFileSelect={handleFileSelect} isLoading={isLoading} />
+          </div>
+          
+          <div className="flex items-center gap-4 py-2">
+            <div className="flex-1 border-t border-neutral-800"></div>
+            <span className="text-xs text-neutral-500 font-medium uppercase tracking-widest">OR</span>
+            <div className="flex-1 border-t border-neutral-800"></div>
+          </div>
+          
+          <Button 
+            variant="outline" 
+            size="lg"
+            className="w-full border-neutral-800 text-neutral-300 hover:text-white hover:bg-neutral-900"
+            onClick={() => {
+              if (isAuthenticated) {
+                router.push('/editor/new');
+              } else {
+                toast.info('Please sign in to start creating your resume');
+                router.push('/login?next=/editor/new');
+              }
+            }}
+          >
+            Start from scratch
+          </Button>
         </div>
 
         {/* Parsed Result */}

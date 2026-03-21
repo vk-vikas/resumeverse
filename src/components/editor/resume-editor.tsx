@@ -37,12 +37,12 @@ export function ResumeEditor() {
           });
           const result = await res.json();
           if (!res.ok) throw new Error(result.error);
-          
+
           exp.bullets[j] = result.enhanced;
           enhancedCount++;
-          
+
           updateField('experience', [...newExperiences]);
-          
+
           await new Promise(r => setTimeout(r, 300));
         }
       }
@@ -287,18 +287,18 @@ function ExperienceEditor({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ bullet: rawBullet, company: item.company, role: item.role }),
       });
-      
+
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to enhance bullet point');
-      
+
       // Save original for undo
       setOriginalBullets(prev => ({ ...prev, [index]: rawBullet }));
-      
+
       const newBullets = [...item.bullets];
       newBullets[index] = data.enhanced;
       onChange({ ...item, bullets: newBullets });
       toast.success('Bullet enhanced!');
-    } catch(err) {
+    } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Failed to reach AI service');
     } finally {
       setEnhancingIndex(null);
@@ -310,7 +310,7 @@ function ExperienceEditor({
       const newBullets = [...item.bullets];
       newBullets[index] = originalBullets[index];
       onChange({ ...item, bullets: newBullets });
-      
+
       const newOriginals = { ...originalBullets };
       delete newOriginals[index];
       setOriginalBullets(newOriginals);
@@ -404,7 +404,7 @@ function ExperienceEditor({
               onClick={() => {
                 if (item.bullets.length > 1) {
                   onChange({ ...item, bullets: item.bullets.filter((_, idx) => idx !== j) });
-                  
+
                   // Clean up original undo cache on delete
                   if (originalBullets[j]) {
                     const newOriginals = { ...originalBullets };
