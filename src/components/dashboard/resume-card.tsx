@@ -44,6 +44,11 @@ interface ResumeCardProps {
     views: number;
     created_at: string;
     data: any;
+    telemetry?: {
+      uniqueVisitors: number;
+      avgDurationSecs: number;
+      topLocation: string;
+    };
   };
 }
 
@@ -158,7 +163,7 @@ export function ResumeCard({ resume }: ResumeCardProps) {
             </DropdownMenu>
           </div>
 
-          <div className="flex flex-wrap gap-2 mb-6">
+          <div className="flex flex-wrap gap-2 mb-4">
             <Badge variant="secondary" className="bg-neutral-800 text-neutral-300 font-normal">
               Theme: <span className="capitalize ml-1 text-white">{resume.theme}</span>
             </Badge>
@@ -166,6 +171,24 @@ export function ResumeCard({ resume }: ResumeCardProps) {
               {isPublic ? 'Public' : 'Private'}
             </Badge>
           </div>
+
+          {/* Micro Telemetry Dashboard */}
+          {isPublic && (
+            <div className="grid grid-cols-3 gap-2 py-3 mb-4 border-t border-b border-neutral-800/50 bg-neutral-900/30 px-3 -mx-6 text-center">
+               <div>
+                 <p className="text-[10px] text-neutral-500 uppercase tracking-wider font-semibold">Unique Viewers</p>
+                 <p className="text-sm font-bold text-emerald-400 mt-0.5">{resume.telemetry?.uniqueVisitors || 0}</p>
+               </div>
+               <div className="border-l border-neutral-800/50">
+                 <p className="text-[10px] text-neutral-500 uppercase tracking-wider font-semibold">Read Time</p>
+                 <p className="text-sm font-bold text-blue-400 mt-0.5">{resume.telemetry?.avgDurationSecs ? `${resume.telemetry.avgDurationSecs}s` : '0s'}</p>
+               </div>
+               <div className="border-l border-neutral-800/50">
+                 <p className="text-[10px] text-neutral-500 uppercase tracking-wider font-semibold">Top Location</p>
+                 <p className="text-sm font-bold text-purple-400 mt-0.5 truncate px-1">{resume.telemetry?.topLocation || 'N/A'}</p>
+               </div>
+            </div>
+          )}
 
           <div className="flex items-center justify-between text-xs text-neutral-500 pt-4 border-t border-neutral-800/50">
             <div className="flex items-center gap-4">

@@ -11,6 +11,7 @@ import { JourneyTheme } from '@/themes/journey/journey-theme';
 import { TerminalTheme } from '@/themes/terminal/terminal-theme';
 import { KPITheme } from '@/components/themes/kpi';
 import { FaangTheme } from '@/components/themes/faang';
+import { RawPdfTheme } from '@/components/themes/raw-pdf';
 
 /**
  * Simple renderer that displays resume data.
@@ -20,9 +21,13 @@ import { FaangTheme } from '@/components/themes/faang';
 export function ResumeRenderer({
   data,
   theme,
+  originalFile,
+  resumeId
 }: {
   data: ResumeData;
-  theme: ThemeType;
+  theme: ThemeType | 'raw_pdf';
+  originalFile?: string;
+  resumeId?: string;
 }) {
   if (theme === 'bento') {
     return <BentoTheme data={data} />;
@@ -42,6 +47,10 @@ export function ResumeRenderer({
 
   if (theme === 'faang') {
     return <FaangTheme data={data} />;
+  }
+
+  if (theme === 'raw_pdf') {
+    return <RawPdfTheme data={data} originalFile={originalFile} resumeId={resumeId} />;
   }
 
   // Fallback / default renderer

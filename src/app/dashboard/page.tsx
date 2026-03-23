@@ -39,8 +39,29 @@ export default async function DashboardPage() {
   }
 
   const typedResumes = resumes || [];
-  
-  // Aggregate stats
+
+  // Fetch telemetry via RPC (bypasses PostgREST schema cache)
+  const analyticsPromises = typedResumes.map(async (resume: any) => {
+    const { data: analytics, error: rpcError } = await supabase.rpc('get_resume_analytics', {
+      p_resume_id: resume.id
+    });
+    
+    // Debug: log what we get from the RPC
+    console.log('[Dashboard] Analytics for', resume.id, ':', JSON.stringify(analytics), 'error:', rpcError?.message);
+    
+    return {
+      ...resume,
+      telemetry: (analytics && !rpcError) ? {
+        uniqueVisitors: analytics.unique_visitors || 0,
+        avgDurationSecs: analytics.avg_duration || 0,
+        topLocation: analytics.top_country || 'N/A'
+      } : { uniqueVisitors: 0, avgDurationSecs: 0, topLocation: 'N/A' }
+    };
+  });
+
+  const resumesWithTelemetry = await Promise.all(analyticsPromises);
+
+  // Aggregate stats globally
   const totalResumes = typedResumes.length;
   const totalViews = typedResumes.reduce((acc: number, curr: any) => acc + (curr.views || 0), 0);
   const activeShares = typedResumes.filter((r: any) => r.is_public).length;
@@ -134,7 +155,7 @@ export default async function DashboardPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {typedResumes.map((resume: any) => (
+            {resumesWithTelemetry.map((resume: any) => (
               <ResumeCard key={resume.id} resume={resume} />
             ))}
             

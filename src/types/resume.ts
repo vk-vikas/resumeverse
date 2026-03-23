@@ -53,7 +53,7 @@ export interface ResumeData {
   highlights?: string[];
 }
 
-export type ThemeType = 'bento' | 'journey' | 'terminal' | 'kpi' | 'faang';
+export type ThemeType = 'bento' | 'journey' | 'terminal' | 'kpi' | 'faang' | 'raw_pdf';
 
 export interface SavedResume {
   id: string;

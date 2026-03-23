@@ -9,7 +9,7 @@ import { format, subDays, parseISO } from 'date-fns';
 interface ViewRecord {
   id: string;
   resume_id: string;
-  viewed_at: string;
+  created_at: string;
   referrer: string;
   user_agent: string;
 }
@@ -32,7 +32,7 @@ export function AnalyticsCharts({ views }: AnalyticsChartsProps) {
   });
 
   const viewsByDate = views.reduce((acc, view) => {
-    const dateStr = view.viewed_at.split('T')[0];
+    const dateStr = view.created_at.split('T')[0];
     acc[dateStr] = (acc[dateStr] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);

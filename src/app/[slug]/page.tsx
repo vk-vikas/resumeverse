@@ -1,9 +1,11 @@
 import { notFound } from 'next/navigation';
-import { headers } from 'next/headers';
 import { createClient } from '@/lib/supabase/server';
 import type { Metadata } from 'next';
 import type { ResumeData, ThemeType } from '@/types/resume';
 import { ResumeRenderer } from '@/components/editor/resume-renderer';
+import { ViewTracker } from '@/components/analytics/view-tracker';
+
+export const dynamic = 'force-dynamic';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -21,39 +23,13 @@ async function getResume(slug: string) {
 
   if (error || !resume) return null;
 
-  // 1. Check if the viewer is the owner
-  const { data: { session } } = await supabase.auth.getSession();
-  const isOwner = session?.user?.id === resume.user_id;
-
-  // 2. Only log views for non-owners
-  if (!isOwner) {
-    const headersList = await headers();
-    const referer = headersList.get('referer') || '';
-    const userAgent = headersList.get('user-agent') || 'Unknown';
-
-    // Fire-and-forget logging
-    supabase
-      .from('resumes')
-      .update({ views: (resume.views || 0) + 1 })
-      .eq('id', resume.id)
-      .then(() => {});
-
-    supabase
-      .from('resume_views')
-      .insert({ 
-        resume_id: resume.id,
-        referrer: referer,
-        user_agent: userAgent 
-      })
-      .then(() => {});
-  }
-
   return resume as {
     id: string;
     slug: string;
     theme: ThemeType;
     data: ResumeData;
     views: number;
+    original_file?: string;
   };
 }
 
@@ -98,7 +74,14 @@ export default async function ShareableResumePage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen">
-      <ResumeRenderer data={resume.data} theme={resume.theme} />
+      {/* Universal analytics tracker — works for ALL themes */}
+      <ViewTracker resumeId={resume.id} />
+      <ResumeRenderer 
+        data={resume.data} 
+        theme={resume.theme} 
+        originalFile={resume.original_file}
+        resumeId={resume.id}
+      />
     </main>
   );
 }

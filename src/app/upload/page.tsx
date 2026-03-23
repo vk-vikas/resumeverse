@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dropzone } from '@/components/upload/dropzone';
-import { Sparkles, Upload, Share2, CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
+import { Sparkles, Upload, Share2, CheckCircle2, ChevronDown, ChevronUp, Eye } from 'lucide-react';
 import { toast } from 'sonner';
 import type { ResumeData } from '@/types/resume';
 import { UserMenu } from '@/components/layout/user-menu';
@@ -16,10 +16,16 @@ export default function Home() {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [stagedFile, setStagedFile] = useState<File | null>(null);
   const [parsedData, setParsedData] = useState<ResumeData | null>(null);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
 
-  const handleFileSelect = async (file: File) => {
+  const handleFileSelect = (file: File) => {
+    setStagedFile(file);
+    setParsedData(null);
+  };
+
+  const processAIParsing = async (file: File) => {
     setIsLoading(true);
     setParsedData(null);
 
@@ -46,6 +52,31 @@ export default function Home() {
       const message = error instanceof Error ? error.message : 'Something went wrong';
       toast.error(message);
     } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const processRawUpload = async (file: File) => {
+    if (!isAuthenticated) {
+      toast.info('Please sign in to host a tracked PDF');
+      router.push('/login?next=/upload');
+      return;
+    }
+    
+    setIsLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      const res = await fetch('/api/upload-raw', { method: 'POST', body: formData });
+      const json = await res.json();
+      
+      if (!res.ok) throw new Error(json.error || 'Failed to upload document');
+      
+      toast.success('PDF Hosted Successfully!');
+      router.push('/dashboard');
+    } catch(err: any) {
+      toast.error(err.message || 'Something went wrong');
       setIsLoading(false);
     }
   };
@@ -100,13 +131,14 @@ export default function Home() {
         </div>
 
         {/* Upload Section */}
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <h2 className="text-sm font-medium text-neutral-400 uppercase tracking-wider">
-              Upload Your Resume
-            </h2>
-            <Dropzone onFileSelect={handleFileSelect} isLoading={isLoading} />
-          </div>
+        {(!stagedFile || parsedData) && (
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <h2 className="text-sm font-medium text-neutral-400 uppercase tracking-wider">
+                Upload Your Resume
+              </h2>
+              <Dropzone onFileSelect={handleFileSelect} isLoading={isLoading} />
+            </div>
           
           <div className="flex items-center gap-4 py-2">
             <div className="flex-1 border-t border-neutral-800"></div>
@@ -130,6 +162,40 @@ export default function Home() {
             Start from scratch
           </Button>
         </div>
+        )}
+
+        {/* Branching Options: AI vs Raw PDF */}
+        {stagedFile && !isLoading && !parsedData && (
+          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+             <h2 className="text-xl font-bold text-white text-center">How would you like to build your portfolio?</h2>
+             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Card 
+                  className="bg-neutral-900/50 border-blue-500/50 cursor-pointer hover:bg-neutral-800 transition-colors" 
+                  onClick={() => processAIParsing(stagedFile)}
+                >
+                  <CardContent className="p-6 text-center space-y-3">
+                     <Sparkles className="h-8 w-8 text-blue-400 mx-auto" />
+                     <h3 className="font-semibold text-white">Extract & Build (AI)</h3>
+                     <p className="text-xs text-neutral-400">Parse your document into an interactive, customizable web dashboard.</p>
+                  </CardContent>
+                </Card>
+
+                <Card 
+                  className="bg-neutral-900/50 border-emerald-500/50 cursor-pointer hover:bg-neutral-800 transition-colors" 
+                  onClick={() => processRawUpload(stagedFile)}
+                >
+                  <CardContent className="p-6 text-center space-y-3">
+                     <Eye className="h-8 w-8 text-emerald-400 mx-auto" />
+                     <h3 className="font-semibold text-white">Host Tracked PDF</h3>
+                     <p className="text-xs text-neutral-400">Bypass AI entirely. Host your raw PDF natively to get an instant view-tracking link.</p>
+                  </CardContent>
+                </Card>
+             </div>
+             <Button variant="ghost" className="w-full text-neutral-500 hover:text-white" onClick={() => setStagedFile(null)}>
+               Cancel and select a different file
+             </Button>
+          </div>
+        )}
 
         {/* Parsed Result */}
         {parsedData && (
