@@ -112,7 +112,7 @@ export function TrackedPdfViewer({ fileUrl, viewId }: TrackedPdfViewerProps) {
   return (
     <div ref={containerRef} className="flex flex-col items-center w-full h-full overflow-auto bg-[#050505]">
       <div 
-        className="relative my-4" 
+        className="relative my-4 flex flex-col leading-none" 
         style={{ width: pageWidth }}
         onClick={handleClick}
         onMouseMove={handleMouseMove}

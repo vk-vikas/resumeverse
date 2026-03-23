@@ -54,9 +54,16 @@ export function PdfHeatmap({ fileUrl, clicks, scrolls }: PdfHeatmapProps) {
   const [activeLayer, setActiveLayer] = useState<'clicks' | 'scrolls'>('clicks');
   const [containerWidth, setContainerWidth] = useState(600);
   const [numPages, setNumPages] = useState(1);
+  const [aspectRatio, setAspectRatio] = useState(1.414); // Fallback to A4 initially
   const containerRef = useRef<HTMLDivElement>(null);
   const clickCanvasRef = useRef<HTMLCanvasElement>(null);
   const scrollCanvasRef = useRef<HTMLCanvasElement>(null);
+
+  function onPageLoadSuccess(page: any) {
+    if (page.originalWidth && page.originalHeight) {
+      setAspectRatio(page.originalHeight / page.originalWidth);
+    }
+  }
 
   useEffect(() => {
     if (containerRef.current) {
@@ -135,14 +142,20 @@ export function PdfHeatmap({ fileUrl, clicks, scrolls }: PdfHeatmapProps) {
                 </div>
               }
             >
-              <Page pageNumber={1} width={containerWidth} renderTextLayer={false} renderAnnotationLayer={false} />
+              <Page 
+                pageNumber={1} 
+                width={containerWidth} 
+                renderTextLayer={false} 
+                renderAnnotationLayer={false}
+                onLoadSuccess={onPageLoadSuccess}
+              />
             </Document>
 
             {/* Click heatmap canvas overlay */}
             <canvas
               ref={clickCanvasRef}
               width={containerWidth}
-              height={containerWidth * 1.414} // A4 ratio
+              height={containerWidth * aspectRatio} // Dynamic ratio
               className={`absolute inset-0 pointer-events-none transition-opacity duration-200 ${
                 activeLayer === 'clicks' ? 'opacity-100' : 'opacity-0'
               }`}
@@ -152,7 +165,7 @@ export function PdfHeatmap({ fileUrl, clicks, scrolls }: PdfHeatmapProps) {
             <canvas
               ref={scrollCanvasRef}
               width={containerWidth}
-              height={containerWidth * 1.414}
+              height={containerWidth * aspectRatio} // Dynamic ratio
               className={`absolute inset-0 pointer-events-none transition-opacity duration-200 ${
                 activeLayer === 'scrolls' ? 'opacity-100' : 'opacity-0'
               }`}
