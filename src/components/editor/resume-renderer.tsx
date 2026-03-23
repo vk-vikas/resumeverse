@@ -10,6 +10,7 @@ import { BentoTheme } from '@/themes/bento/bento-theme';
 import { JourneyTheme } from '@/themes/journey/journey-theme';
 import { TerminalTheme } from '@/themes/terminal/terminal-theme';
 import { KPITheme } from '@/components/themes/kpi';
+import { FaangTheme } from '@/components/themes/faang';
 
 /**
  * Simple renderer that displays resume data.
@@ -37,6 +38,10 @@ export function ResumeRenderer({
 
   if (theme === 'kpi') {
     return <KPITheme data={data} />;
+  }
+
+  if (theme === 'faang') {
+    return <FaangTheme data={data} />;
   }
 
   // Fallback / default renderer
@@ -194,7 +199,17 @@ export function ResumeRenderer({
                     <a href={proj.link} target="_blank" rel="noopener" className="text-xs text-blue-400 hover:underline">↗</a>
                   )}
                 </div>
-                <p className="text-sm text-neutral-400 mt-0.5">{proj.description}</p>
+                {(proj.bullets && proj.bullets.length > 0) ? (
+                  <ul className="mt-1 space-y-1">
+                    {proj.bullets.map((b, bIdx) => (
+                      <li key={bIdx} className="text-sm text-neutral-400 flex gap-2">
+                        <span className="text-neutral-600 shrink-0">•</span><span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-neutral-400 mt-0.5">{proj.description}</p>
+                )}
                 <div className="flex flex-wrap gap-1 mt-1.5">
                   {proj.tech.map((t, j) => (
                     <Badge key={j} variant="secondary" className="text-[10px] px-1.5 py-0">{t}</Badge>

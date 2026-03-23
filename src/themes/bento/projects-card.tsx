@@ -41,9 +41,15 @@ export function ProjectsCard({ data }: ThemeProps) {
               </h3>
             </div>
             
-            <p className="text-sm text-neutral-400 leading-relaxed mb-3">
-              {proj.description}
-            </p>
+            {(proj.bullets && proj.bullets.length > 0) ? (
+              <ul className="text-sm text-neutral-400 leading-relaxed mb-3 list-disc pl-4 space-y-1">
+                {proj.bullets.map((b, bIdx) => <li key={bIdx}>{b}</li>)}
+              </ul>
+            ) : (
+              <p className="text-sm text-neutral-400 leading-relaxed mb-3">
+                {proj.description}
+              </p>
+            )}
 
             {proj.tech && proj.tech.length > 0 && (
               <div className="flex flex-wrap gap-1.5 mt-auto">

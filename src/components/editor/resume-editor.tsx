@@ -506,11 +506,18 @@ function ProjectEditor({
         className="bg-neutral-800/50 border-neutral-700 text-white text-sm"
       />
       <Textarea
-        value={item.description}
-        onChange={(e) => onChange({ ...item, description: e.target.value })}
-        placeholder="Brief description..."
-        rows={2}
-        className="bg-neutral-800/50 border-neutral-700 text-white text-sm resize-none"
+        value={item.bullets && item.bullets.length > 0 ? item.bullets.join('\n') : item.description}
+        onChange={(e) => {
+          const val = e.target.value;
+          if (val.includes('\n') || (item.bullets && item.bullets.length > 0)) {
+            onChange({ ...item, bullets: val.split('\n'), description: '' });
+          } else {
+            onChange({ ...item, description: val, bullets: [] });
+          }
+        }}
+        placeholder="Project description OR bullet points (one per line)..."
+        rows={4}
+        className="bg-neutral-800/50 border-neutral-700 text-white text-sm resize-none min-h-[80px]"
       />
       <SkillsGroup
         label="Tech Stack"

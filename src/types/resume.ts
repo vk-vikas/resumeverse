@@ -28,6 +28,7 @@ export interface EducationItem {
 export interface ProjectItem {
   name: string;
   description: string;
+  bullets?: string[];
   tech: string[];
   link?: string;
 }
@@ -52,7 +53,7 @@ export interface ResumeData {
   highlights?: string[];
 }
 
-export type ThemeType = 'bento' | 'journey' | 'terminal' | 'kpi';
+export type ThemeType = 'bento' | 'journey' | 'terminal' | 'kpi' | 'faang';
 
 export interface SavedResume {
   id: string;

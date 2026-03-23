@@ -8,6 +8,12 @@ declare module 'pdf-parse' {
     version: string;
   }
 
-  function pdf(buffer: Buffer): Promise<PDFData>;
+  interface PDFOptions {
+    pagerender?: (pageData: any) => Promise<string> | string;
+    max?: number;
+    version?: string;
+  }
+
+  function pdf(buffer: Buffer, options?: PDFOptions): Promise<PDFData>;
   export default pdf;
 }

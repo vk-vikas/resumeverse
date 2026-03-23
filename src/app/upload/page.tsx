@@ -220,7 +220,13 @@ export default function Home() {
                 {parsedData.projects.map((proj, i) => (
                   <div key={i} className="py-2">
                     <p className="text-sm font-medium text-white">{proj.name}</p>
-                    <p className="text-xs text-neutral-500">{proj.description}</p>
+                    {(proj.bullets && proj.bullets.length > 0) ? (
+                      <ul className="text-xs text-neutral-500 list-disc pl-4 space-y-0.5 mt-0.5">
+                        {proj.bullets.map((b, bIdx) => <li key={bIdx}>{b}</li>)}
+                      </ul>
+                    ) : (
+                      <p className="text-xs text-neutral-500">{proj.description}</p>
+                    )}
                     <div className="flex flex-wrap gap-1 mt-1">
                       {proj.tech.map((t, j) => (
                         <Badge key={j} variant="secondary" className="text-[10px] px-1.5 py-0">

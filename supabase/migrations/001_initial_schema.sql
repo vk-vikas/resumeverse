@@ -14,7 +14,7 @@ CREATE TABLE public.resumes (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
   slug TEXT UNIQUE NOT NULL,
-  theme TEXT NOT NULL DEFAULT 'bento' CHECK (theme IN ('bento', 'journey', 'terminal', 'kpi')),
+  theme TEXT NOT NULL DEFAULT 'bento' CHECK (theme IN ('bento', 'journey', 'terminal', 'kpi', 'faang')),
   data JSONB NOT NULL,
   original_file TEXT,
   is_public BOOLEAN DEFAULT true,

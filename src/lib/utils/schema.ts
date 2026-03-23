@@ -32,7 +32,8 @@ const educationItemSchema = z.object({
 
 const projectItemSchema = z.object({
   name: z.string().min(1, 'Project name is required'),
-  description: z.string().min(1, 'Project description is required'),
+  description: z.string().optional().default(''),
+  bullets: z.array(z.string()).optional(),
   tech: z.array(z.string()),
   link: z.string().optional(),
 });

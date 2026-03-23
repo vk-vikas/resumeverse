@@ -49,7 +49,8 @@ Return a JSON object matching this exact structure:
   "projects": [
     {
       "name": "Project Name",
-      "description": "Brief description of the project",
+      "description": "Brief description of the project. (Can leave blank if bullets are used)",
+      "bullets": ["Key feature implemented", "Performance metric achieved"],
       "tech": ["React", "TypeScript"],
       "link": "https://project-url.com"
     }

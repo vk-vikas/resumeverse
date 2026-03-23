@@ -153,7 +153,13 @@ export function TerminalOutput({ cmd, data, isRecent = false }: TerminalOutputPr
                 </a>
               )}
             </div>
-            <p className="text-neutral-300 my-1 text-sm">{proj.description}</p>
+            {(proj.bullets && proj.bullets.length > 0) ? (
+              <div className="text-neutral-300 my-1 text-sm space-y-0.5 pl-4 border-l border-neutral-700/50">
+                {proj.bullets.map((b: string, bIdx: number) => <div key={bIdx}><span className="text-[#00ff41] mr-2">*</span>{b}</div>)}
+              </div>
+            ) : (
+              <p className="text-neutral-300 my-1 text-sm">{proj.description}</p>
+            )}
             {proj.tech && proj.tech.length > 0 && (
               <p className="text-xs text-neutral-500">
                 Tech: {proj.tech.join(' • ')}
