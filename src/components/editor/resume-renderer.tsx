@@ -22,12 +22,14 @@ export function ResumeRenderer({
   data,
   theme,
   originalFile,
-  resumeId
+  resumeId,
+  viewId
 }: {
   data: ResumeData;
   theme: ThemeType | 'raw_pdf';
   originalFile?: string;
   resumeId?: string;
+  viewId?: string | null;
 }) {
   if (theme === 'bento') {
     return <BentoTheme data={data} />;
@@ -50,7 +52,7 @@ export function ResumeRenderer({
   }
 
   if (theme === 'raw_pdf') {
-    return <RawPdfTheme data={data} originalFile={originalFile} resumeId={resumeId} />;
+    return <RawPdfTheme data={data} originalFile={originalFile} resumeId={resumeId} viewId={viewId} />;
   }
 
   // Fallback / default renderer

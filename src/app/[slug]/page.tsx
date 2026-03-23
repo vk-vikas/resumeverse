@@ -2,8 +2,7 @@ import { notFound } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import type { Metadata } from 'next';
 import type { ResumeData, ThemeType } from '@/types/resume';
-import { ResumeRenderer } from '@/components/editor/resume-renderer';
-import { ViewTracker } from '@/components/analytics/view-tracker';
+import { TrackedResumePage } from '@/components/analytics/tracked-resume-page';
 
 export const dynamic = 'force-dynamic';
 
@@ -74,13 +73,11 @@ export default async function ShareableResumePage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen">
-      {/* Universal analytics tracker — works for ALL themes */}
-      <ViewTracker resumeId={resume.id} />
-      <ResumeRenderer 
-        data={resume.data} 
-        theme={resume.theme} 
-        originalFile={resume.original_file}
+      <TrackedResumePage
         resumeId={resume.id}
+        data={resume.data}
+        theme={resume.theme}
+        originalFile={resume.original_file}
       />
     </main>
   );

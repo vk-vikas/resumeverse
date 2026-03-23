@@ -3,15 +3,17 @@
 import { Download, Eye } from 'lucide-react';
 import type { ResumeData } from '@/types/resume';
 import { Button } from '@/components/ui/button';
+import { TrackedPdfViewer } from '@/components/analytics/tracked-pdf-viewer';
 
 interface RawPdfThemeProps {
   data: ResumeData;
   originalFile?: string;
   resumeId?: string;
+  viewId?: string | null; // passed down from ViewTracker via slug page
 }
 
-export function RawPdfTheme({ data, originalFile }: RawPdfThemeProps) {
-  // Tracking is now handled by the universal ViewTracker in [slug]/page.tsx
+export function RawPdfTheme({ data, originalFile, viewId }: RawPdfThemeProps) {
+  // Tracking is handled by ViewTracker (universal) + TrackedPdfViewer (heatmaps)
 
   if (!originalFile) {
     return (
@@ -42,6 +44,7 @@ export function RawPdfTheme({ data, originalFile }: RawPdfThemeProps) {
           onClick={handleDownload}
           variant="outline" 
           size="sm"
+          data-track="download"
           className="bg-neutral-900 border-neutral-800 hover:bg-neutral-800 hover:text-white text-neutral-300 gap-2 h-8 text-xs"
         >
           <Download className="h-3.5 w-3.5" />
@@ -49,18 +52,12 @@ export function RawPdfTheme({ data, originalFile }: RawPdfThemeProps) {
         </Button>
       </header>
 
-      <div className="flex-1 w-full bg-[#050505] p-2 sm:p-4 overflow-hidden flex justify-center shadow-inner relative">
-        <iframe 
-          src={`${originalFile}#toolbar=0&navpanes=0&scrollbar=1`}
-          className="w-full max-w-[50in] h-full rounded shadow-2xl bg-white/5 border border-neutral-800/50"
-          title="Resume Viewer"
+      {/* PDF.js tracked viewer — replaces the old <iframe> */}
+      <div className="flex-1 overflow-hidden">
+        <TrackedPdfViewer
+          fileUrl={originalFile}
+          viewId={viewId ?? null}
         />
-        
-        <div className="absolute bottom-6 right-6 pointer-events-none opacity-20">
-          <p className="text-[10px] font-medium tracking-widest text-white uppercase origin-bottom-right drop-shadow-lg">
-            Hosted via ResumeVerse
-          </p>
-        </div>
       </div>
     </div>
   );
