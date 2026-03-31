@@ -40,8 +40,8 @@ function drawHeatmap(
     const x = (p.x_pct / 100) * width;
     const y = (p.y_pct / 100) * height;
     const grad = ctx.createRadialGradient(x, y, 0, x, y, radius);
-    grad.addColorStop(0, `${color} 0.6)`);
-    grad.addColorStop(0.5, `${color} 0.2)`);
+    grad.addColorStop(0, `${color} 0.4)`);
+    grad.addColorStop(0.5, `${color} 0.15)`);
     grad.addColorStop(1, `${color} 0)`);
     ctx.beginPath();
     ctx.fillStyle = grad;
@@ -155,8 +155,8 @@ export function PdfHeatmap({ fileUrl, clicks, scrolls }: PdfHeatmapProps) {
             <canvas
               ref={clickCanvasRef}
               width={containerWidth}
-              height={containerWidth * aspectRatio} // Dynamic ratio
-              className={`absolute inset-0 pointer-events-none transition-opacity duration-200 ${
+              height={containerWidth * aspectRatio}
+              className={`absolute inset-0 pointer-events-none mix-blend-multiply transition-opacity duration-200 ${
                 activeLayer === 'clicks' ? 'opacity-100' : 'opacity-0'
               }`}
             />
@@ -165,8 +165,8 @@ export function PdfHeatmap({ fileUrl, clicks, scrolls }: PdfHeatmapProps) {
             <canvas
               ref={scrollCanvasRef}
               width={containerWidth}
-              height={containerWidth * aspectRatio} // Dynamic ratio
-              className={`absolute inset-0 pointer-events-none transition-opacity duration-200 ${
+              height={containerWidth * aspectRatio}
+              className={`absolute inset-0 pointer-events-none mix-blend-multiply transition-opacity duration-200 ${
                 activeLayer === 'scrolls' ? 'opacity-100' : 'opacity-0'
               }`}
             />

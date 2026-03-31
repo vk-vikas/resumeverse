@@ -9,14 +9,17 @@ import { useEffect, useRef } from 'react';
  */
 export function ViewTracker({ 
   resumeId, 
-  onViewCreated 
+  onViewCreated,
+  themeType 
 }: { 
   resumeId: string;
   onViewCreated?: (viewId: string) => void;
+  themeType?: string;
 }) {
   const viewIdRef = useRef<string | null>(null);
   const startedRef = useRef(false);
   const startTimeRef = useRef<number>(Date.now());
+  const maxScrollRef = useRef<number>(0);
   const BOUNCE_THRESHOLD_MS = 5000; // < 5 seconds = bounce
 
   // ─── 1. Record initial page view ───────────────────────────────────────────
@@ -51,11 +54,22 @@ export function ViewTracker({
   useEffect(() => {
     const interval = setInterval(() => {
       if (!viewIdRef.current || document.hidden) return;
+      
+      // 1. Duration ping
       fetch('/api/track-view', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ viewId: viewIdRef.current, seconds: 10 })
       }).catch(() => {});
+
+      // 2. Scroll depth ping
+      if (maxScrollRef.current > 0) {
+        fetch('/api/track-event', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ viewId: viewIdRef.current, action: 'scroll_depth', pct: maxScrollRef.current })
+        }).catch(() => {});
+      }
     }, 10000);
     return () => clearInterval(interval);
   }, []);
@@ -72,6 +86,14 @@ export function ViewTracker({
         navigator.sendBeacon(
           '/api/track-event',
           JSON.stringify({ viewId, action: 'bounce' })
+        );
+      }
+
+      // Send final scroll depth on unload
+      if (maxScrollRef.current > 0) {
+        navigator.sendBeacon(
+          '/api/track-event',
+          JSON.stringify({ viewId, action: 'scroll_depth', pct: maxScrollRef.current })
         );
       }
     }
@@ -92,6 +114,10 @@ export function ViewTracker({
 
   // ─── 4. Contact link & download click tracking ──────────────────────────────
   useEffect(() => {
+    // Only track these specific interactions for hosted PDFs.
+    // Web themes are excluded from interaction tracking as per analytics separation plan.
+    if (themeType !== 'raw_pdf') return;
+
     function handleClick(e: MouseEvent) {
       const viewId = viewIdRef.current;
       if (!viewId) return;
@@ -137,6 +163,29 @@ export function ViewTracker({
 
     document.addEventListener('click', handleClick, { capture: true });
     return () => document.removeEventListener('click', handleClick, { capture: true });
+  }, []);
+
+  // ─── 5. Universal Scroll Depth Tracking ──────────────────────────────────
+  useEffect(() => {
+    function handleScroll(e: Event) {
+      if (!viewIdRef.current) return;
+      
+      // Works for both Window scrolling AND inner div scrolling
+      const target = (e.target === document ? document.documentElement : e.target) as HTMLElement;
+      if (!target || typeof target.scrollHeight !== 'number') return;
+      
+      const scrollableHeight = target.scrollHeight - target.clientHeight;
+      if (scrollableHeight <= 0) return;
+      
+      const pct = Math.round((target.scrollTop / scrollableHeight) * 100);
+      if (pct > maxScrollRef.current) {
+        maxScrollRef.current = pct;
+      }
+    }
+
+    // capture: true ensures we intercept scroll events from ANY nested overflow container
+    window.addEventListener('scroll', handleScroll, { capture: true, passive: true });
+    return () => window.removeEventListener('scroll', handleScroll, { capture: true });
   }, []);
 
   return null;

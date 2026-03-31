@@ -22,7 +22,7 @@ export function TrackedResumePage({ resumeId, data, theme, originalFile }: Track
 
   return (
     <>
-      <ViewTracker resumeId={resumeId} onViewCreated={setViewId} />
+      <ViewTracker resumeId={resumeId} onViewCreated={setViewId} themeType={theme} />
       <ResumeRenderer
         data={data}
         theme={theme}

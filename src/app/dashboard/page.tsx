@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 import { createServerClient } from '@supabase/ssr';
 import { UserMenu } from '@/components/layout/user-menu';
 import { ResumeCard } from '@/components/dashboard/resume-card';
-import { FileText, Plus, Eye, Share2 } from 'lucide-react';
+import { FileText, Plus, Eye, Share2, Globe } from 'lucide-react';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
@@ -54,12 +54,16 @@ export default async function DashboardPage() {
       telemetry: (analytics && !rpcError) ? {
         uniqueVisitors: analytics.unique_visitors || 0,
         avgDurationSecs: analytics.avg_duration || 0,
-        topLocation: analytics.top_country || 'N/A'
-      } : { uniqueVisitors: 0, avgDurationSecs: 0, topLocation: 'N/A' }
+        topLocation: analytics.top_country || 'N/A',
+        downloads: analytics.download_clicks || 0
+      } : { uniqueVisitors: 0, avgDurationSecs: 0, topLocation: 'N/A', downloads: 0 }
     };
   });
 
   const resumesWithTelemetry = await Promise.all(analyticsPromises);
+
+  const webResumes = resumesWithTelemetry.filter((r: any) => r.theme !== 'raw_pdf');
+  const pdfResumes = resumesWithTelemetry.filter((r: any) => r.theme === 'raw_pdf');
 
   // Aggregate stats globally
   const totalResumes = typedResumes.length;
@@ -72,9 +76,9 @@ export default async function DashboardPage() {
       <header className="border-b border-neutral-800 bg-neutral-950/50 sticky top-0 z-10 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold text-white">
+            <Link href="/" className="text-xl font-bold text-white hover:opacity-80 transition-opacity">
               Resume<span className="text-blue-500">Verse</span>
-            </h1>
+            </Link>
             <span className="text-neutral-600 px-2 hidden sm:inline">/</span>
             <span className="text-neutral-400 font-medium hidden sm:inline">Dashboard</span>
           </div>
@@ -154,23 +158,63 @@ export default async function DashboardPage() {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {resumesWithTelemetry.map((resume: any) => (
-              <ResumeCard key={resume.id} resume={resume} />
-            ))}
+          <div className="space-y-12 mb-12">
             
-            {/* Create New Card (Empty/Action state within grid) */}
-            <Link 
-              href="/upload"
-              className="flex flex-col items-center justify-center min-h-[220px] rounded-xl border-2 border-dashed border-neutral-800 bg-neutral-900/20 hover:bg-neutral-900/50 hover:border-neutral-700 transition-colors group"
-            >
-              <div className="w-12 h-12 bg-neutral-800 group-hover:bg-neutral-700 rounded-full flex items-center justify-center mb-3 transition-colors">
-                <Plus className="h-6 w-6 text-neutral-400 group-hover:text-white" />
+            {/* 📄 Hosted Documents Section */}
+            <section>
+              <div className="mb-6">
+                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                  <FileText className="h-5 w-5 text-purple-400" />
+                  Hosted Documents
+                </h2>
+                <p className="text-sm text-neutral-400 mt-1">Raw, unparsed PDF resumes</p>
               </div>
-              <p className="text-sm font-medium text-neutral-400 group-hover:text-neutral-300">
-                Upload New Resume
-              </p>
-            </Link>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {pdfResumes.map((resume: any) => (
+                  <ResumeCard key={resume.id} resume={resume} />
+                ))}
+
+                {/* Create New Card */}
+                <Link 
+                  href="/upload"
+                  className="flex flex-col items-center justify-center min-h-[220px] rounded-xl border-2 border-dashed border-neutral-800 bg-neutral-900/20 hover:bg-neutral-900/50 hover:border-neutral-700 transition-colors group"
+                >
+                  <div className="h-12 w-12 rounded-full bg-neutral-800/50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <Plus className="h-6 w-6 text-neutral-400 group-hover:text-white transition-colors" />
+                  </div>
+                  <span className="font-medium text-neutral-400 group-hover:text-white transition-colors">Host New Document</span>
+                </Link>
+              </div>
+            </section>
+
+            {/* 🌐 Web Portfolios Section */}
+            <section className="pt-6 border-t border-neutral-800">
+              <div className="mb-6">
+                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                  <Globe className="h-5 w-5 text-blue-400" />
+                  Web Portfolios
+                </h2>
+                <p className="text-sm text-neutral-400 mt-1">AI-parsed interactive resumes</p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {webResumes.map((resume: any) => (
+                  <ResumeCard key={resume.id} resume={resume} />
+                ))}
+                
+                {/* Create New Card (Empty/Action state within grid) */}
+                <Link 
+                  href="/upload"
+                  className="flex flex-col items-center justify-center min-h-[220px] rounded-xl border-2 border-dashed border-neutral-800 bg-neutral-900/20 hover:bg-neutral-900/50 hover:border-neutral-700 transition-colors group"
+                >
+                  <div className="h-12 w-12 rounded-full bg-neutral-800/50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <Plus className="h-6 w-6 text-neutral-400 group-hover:text-white transition-colors" />
+                  </div>
+                  <span className="font-medium text-neutral-400 group-hover:text-white transition-colors">Create New Portfolio</span>
+                </Link>
+              </div>
+            </section>
           </div>
         )}
       </main>

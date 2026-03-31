@@ -13,24 +13,46 @@ const supabase = createClient(
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { viewId, eventType, payload = {} } = body;
+    const { viewId, eventType, action, pct, payload = {} } = body;
 
-    if (!viewId || !eventType) {
-      return NextResponse.json({ error: 'Missing viewId or eventType' }, { status: 400 });
+    if (!viewId) {
+      return NextResponse.json({ error: 'Missing viewId' }, { status: 400 });
     }
 
-    const { data, error } = await supabase.rpc('record_event', {
-      p_view_id: viewId,
-      p_event_type: eventType,
-      p_payload: payload
-    });
-
-    if (error) {
-      console.error('[track-event] RPC error:', error.message);
-      return NextResponse.json({ error: error.message }, { status: 500 });
+    // Handle session actions from navigator.sendBeacon (which forces POST)
+    if (action === 'bounce') {
+      const { error } = await supabase.rpc('mark_bounce', { p_view_id: viewId });
+      if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ success: true });
+    } 
+    
+    if (action === 'scroll_depth' && typeof pct === 'number') {
+      const { error } = await supabase.rpc('set_scroll_depth', {
+        p_view_id: viewId,
+        p_pct: Math.min(100, Math.max(0, Math.round(pct)))
+      });
+      if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ success: true });
     }
 
-    return NextResponse.json({ eventId: data });
+    // Handle standard interaction events
+    if (eventType) {
+      const { data, error } = await supabase.rpc('record_event', {
+        p_view_id: viewId,
+        p_event_type: eventType,
+        p_payload: payload
+      });
+
+      if (error) {
+        console.error('[track-event] RPC error:', error.message);
+        return NextResponse.json({ error: error.message }, { status: 500 });
+      }
+
+      return NextResponse.json({ eventId: data });
+    }
+
+
+    return NextResponse.json({ error: 'Missing eventType or action' }, { status: 400 });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }

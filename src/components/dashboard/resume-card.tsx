@@ -48,6 +48,7 @@ interface ResumeCardProps {
       uniqueVisitors: number;
       avgDurationSecs: number;
       topLocation: string;
+      downloads?: number;
     };
   };
 }
@@ -183,10 +184,17 @@ export function ResumeCard({ resume }: ResumeCardProps) {
                  <p className="text-[10px] text-neutral-500 uppercase tracking-wider font-semibold">Read Time</p>
                  <p className="text-sm font-bold text-blue-400 mt-0.5">{resume.telemetry?.avgDurationSecs ? `${resume.telemetry.avgDurationSecs}s` : '0s'}</p>
                </div>
-               <div className="border-l border-neutral-800/50">
-                 <p className="text-[10px] text-neutral-500 uppercase tracking-wider font-semibold">Top Location</p>
-                 <p className="text-sm font-bold text-purple-400 mt-0.5 truncate px-1">{resume.telemetry?.topLocation || 'N/A'}</p>
-               </div>
+               {resume.theme === 'raw_pdf' ? (
+                 <div className="border-l border-neutral-800/50">
+                   <p className="text-[10px] text-neutral-500 uppercase tracking-wider font-semibold">Downloads</p>
+                   <p className="text-sm font-bold text-yellow-400 mt-0.5 px-1">{resume.telemetry?.downloads || 0}</p>
+                 </div>
+               ) : (
+                 <div className="border-l border-neutral-800/50">
+                   <p className="text-[10px] text-neutral-500 uppercase tracking-wider font-semibold">Top Location</p>
+                   <p className="text-sm font-bold text-purple-400 mt-0.5 truncate px-1">{resume.telemetry?.topLocation || 'N/A'}</p>
+                 </div>
+               )}
             </div>
           )}
 
