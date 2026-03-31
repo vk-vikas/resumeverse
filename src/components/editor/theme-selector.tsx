@@ -17,12 +17,6 @@ const themes: { id: ThemeType; name: string; description: string; icon: React.Re
     icon: <LayoutGrid className="h-5 w-5" />,
   },
   {
-    id: 'journey',
-    name: 'Journey',
-    description: 'Scroll-driven storytelling with parallax',
-    icon: <ScrollText className="h-5 w-5" />,
-  },
-  {
     id: 'terminal',
     name: 'Terminal',
     description: 'Interactive CLI experience',
@@ -33,12 +27,6 @@ const themes: { id: ThemeType; name: string; description: string; icon: React.Re
     name: 'Data Room',
     description: 'Executive dashboard driven by numerical KPIs',
     icon: <BarChartHorizontalBig className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />,
-  },
-  {
-    id: 'faang',
-    name: 'FAANG Standard',
-    description: 'Classic professional 8.5x11 plain-text template',
-    icon: <FileText className="h-5 w-5 text-neutral-300" />,
   },
 ];
 

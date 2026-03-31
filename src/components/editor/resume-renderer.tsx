@@ -7,10 +7,8 @@ import {
   Briefcase, GraduationCap, Code2, FolderOpen
 } from 'lucide-react';
 import { BentoTheme } from '@/themes/bento/bento-theme';
-import { JourneyTheme } from '@/themes/journey/journey-theme';
 import { TerminalTheme } from '@/themes/terminal/terminal-theme';
 import { KPITheme } from '@/components/themes/kpi';
-import { FaangTheme } from '@/components/themes/faang';
 import { RawPdfTheme } from '@/components/themes/raw-pdf';
 
 /**
@@ -34,10 +32,6 @@ export function ResumeRenderer({
   if (theme === 'bento') {
     return <BentoTheme data={data} />;
   }
-  
-  if (theme === 'journey') {
-    return <JourneyTheme data={data} />;
-  }
 
   if (theme === 'terminal') {
     return <TerminalTheme data={data} />;
@@ -45,10 +39,6 @@ export function ResumeRenderer({
 
   if (theme === 'kpi') {
     return <KPITheme data={data} />;
-  }
-
-  if (theme === 'faang') {
-    return <FaangTheme data={data} />;
   }
 
   if (theme === 'raw_pdf') {

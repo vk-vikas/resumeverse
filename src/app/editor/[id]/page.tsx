@@ -1,6 +1,6 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState, Suspense } from 'react';
 import { EditorProvider, useEditor } from '@/components/editor/editor-context';
 import { ResumeEditor } from '@/components/editor/resume-editor';
@@ -49,6 +49,7 @@ function EditorContent() {
 
 function EditorLayout() {
   const { data, theme } = useEditor();
+  const router = useRouter();
   const [isPublishing, setIsPublishing] = useState(false);
   const [publishedSlug, setPublishedSlug] = useState<string | null>(null);
   const [showPublishDialog, setShowPublishDialog] = useState(false);
@@ -181,7 +182,13 @@ function EditorLayout() {
       {publishedSlug && (
         <PublishDialog
           open={showPublishDialog}
-          onOpenChange={setShowPublishDialog}
+          onOpenChange={(isOpen) => {
+            setShowPublishDialog(isOpen);
+            if (!isOpen) {
+              router.push('/dashboard');
+              router.refresh(); // Refresh dashboard data to show the new resume
+            }
+          }}
           slug={publishedSlug}
         />
       )}

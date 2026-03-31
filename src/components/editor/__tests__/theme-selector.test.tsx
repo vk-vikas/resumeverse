@@ -11,15 +11,15 @@ describe('ThemeSelector Component', () => {
   });
 
   it('highlights the currently selected theme', () => {
-    render(<ThemeSelector selected="journey" onSelect={vi.fn()} />);
+    render(<ThemeSelector selected="terminal" onSelect={vi.fn()} />);
     
     // Bento should not be selected
     const bentoButton = screen.getByRole('button', { name: /bento/i });
     expect(bentoButton).toHaveAttribute('aria-selected', 'false');
     
-    // Journey should be selected
-    const journeyButton = screen.getByRole('button', { name: /journey/i });
-    expect(journeyButton).toHaveAttribute('aria-selected', 'true');
+    // Terminal should be selected
+    const terminalButton = screen.getByRole('button', { name: /terminal/i });
+    expect(terminalButton).toHaveAttribute('aria-selected', 'true');
   });
 
   it('calls onSelect callback when a different theme is clicked', () => {
