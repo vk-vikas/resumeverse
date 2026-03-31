@@ -1,47 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Upload, Cpu, Share2 } from 'lucide-react';
-
-const steps = [
-  {
-    number: '01',
-    icon: <Upload className="h-6 w-6" />,
-    title: 'Upload Your Resume',
-    description: 'Drop your existing PDF or DOCX file. We support every standard resume format.',
-    color: 'from-[#5B4FC4] to-[#7B6FD4]',
-    bgTint: 'bg-[#F0EDFA]',
-  },
-  {
-    number: '02',
-    icon: <Cpu className="h-6 w-6" />,
-    title: 'AI Transforms It',
-    description: 'Google Gemini instantly parses, structures, and enhances your content with STAR-format bullets.',
-    color: 'from-[#D89040] to-[#E8A050]',
-    bgTint: 'bg-[#FDF5EC]',
-  },
-  {
-    number: '03',
-    icon: <Share2 className="h-6 w-6" />,
-    title: 'Share Everywhere',
-    description: 'Get a unique link with QR code, OG previews, and real-time analytics built in.',
-    color: 'from-[#3A8D5C] to-[#4A9D6C]',
-    bgTint: 'bg-[#EDF7F1]',
-  },
-];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.2 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] as const } },
-};
+import { Upload, Sparkles, Activity, FileText, Globe } from 'lucide-react';
 
 export function HowItWorks() {
   return (
@@ -59,15 +19,7 @@ export function HowItWorks() {
         backgroundSize: '32px 32px',
       }} />
 
-      {/* Decorative floating shapes */}
-      <svg className="absolute top-16 right-[8%] w-10 h-10 text-[#D89040] opacity-10 pointer-events-none" viewBox="0 0 40 40" fill="none">
-        <circle cx="20" cy="20" r="16" stroke="currentColor" strokeWidth="2.5" />
-      </svg>
-      <svg className="absolute bottom-24 left-[6%] w-8 h-8 text-[#3A8D5C] opacity-10 pointer-events-none" viewBox="0 0 32 32" fill="none">
-        <rect x="4" y="4" width="24" height="24" rx="6" stroke="currentColor" strokeWidth="2.5" />
-      </svg>
-
-      <div className="container mx-auto px-4 max-w-5xl relative z-10">
+      <div className="container mx-auto px-4 max-w-6xl relative z-10">
         <div className="text-center mb-16">
           <motion.p
             initial={{ opacity: 0 }}
@@ -84,47 +36,104 @@ export function HowItWorks() {
             transition={{ delay: 0.1 }}
             className="text-3xl md:text-5xl font-bold text-[#1A1A1A]"
           >
-            Three steps. Zero effort.
+            Two ways to stand out.
           </motion.h2>
         </div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          className="grid md:grid-cols-3 gap-8"
-        >
-          {steps.map((step, i) => (
-            <motion.div key={i} variants={itemVariants} className="relative group">
-              <div className="rounded-2xl border border-[#DCD8D0] bg-white p-8 h-full transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-lg hover:shadow-black/5 hover:-translate-y-0.5">
-                {/* Number badge */}
-                <div className={`inline-flex items-center justify-center w-10 h-10 rounded-xl ${step.bgTint} mb-6`}>
-                  <span className={`bg-gradient-to-br ${step.color} bg-clip-text text-transparent font-bold text-lg`}>
-                    {step.number}
-                  </span>
-                </div>
-
-                {/* Icon */}
-                <div className={`h-12 w-12 rounded-xl bg-gradient-to-br ${step.color} flex items-center justify-center text-white mb-5`}>
-                  {step.icon}
-                </div>
-
-                <h3 className="text-xl font-semibold text-[#1A1A1A] mb-3">{step.title}</h3>
-                <p className="text-[#6B6560] leading-relaxed text-sm">{step.description}</p>
+        <div className="flex flex-col lg:flex-row items-stretch justify-center gap-8 lg:gap-4 relative">
+          
+          {/* Node 1: Upload (Left on Desktop, Top on Mobile) */}
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="w-full lg:w-1/3 flex flex-col justify-center"
+          >
+            <div className="bg-white border border-[#DCD8D0] rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col justify-center items-center text-center">
+              <div className="w-16 h-16 rounded-2xl bg-[#F0EDFA] flex items-center justify-center mb-6">
+                <Upload className="h-7 w-7 text-[#5B4FC4]" />
               </div>
+              <h3 className="text-2xl font-bold text-[#1A1A1A] mb-3">1. Upload Resume</h3>
+              <p className="text-[#6B6560] leading-relaxed text-sm">
+                Drop your standard PDF or DOCX file into the dashboard. Our engine parses your history securely in milliseconds.
+              </p>
+            </div>
+          </motion.div>
 
-              {/* Connector arrow — color-matched */}
-              {i < steps.length - 1 && (
-                <div className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10">
-                  <svg className="h-5 w-5" viewBox="0 0 20 20" fill="none">
-                    <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke={i === 0 ? '#5B4FC4' : i === 1 ? '#D89040' : '#3A8D5C'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+          {/* Desktop Branching SVG Arrows */}
+          <div className="hidden lg:flex w-24 items-center justify-center relative flex-shrink-0">
+            <svg viewBox="0 0 100 200" className="w-full h-full text-[#DCD8D0]" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" strokeDasharray="6 6">
+              {/* Top arrow path to Path A */}
+              <path d="M10,100 C 40,100 40,50 90,50" />
+              <polyline points="80,40 90,50 80,60" fill="none" strokeDasharray="none" />
+              
+              {/* Bottom arrow path to Path B */}
+              <path d="M10,100 C 40,100 40,150 90,150" />
+              <polyline points="80,140 90,150 80,160" fill="none" strokeDasharray="none" />
+            </svg>
+          </div>
+
+          {/* Mobile Downward Arrow */}
+          <div className="flex lg:hidden justify-center items-center text-[#DCD8D0] py-2">
+            <svg width="24" height="40" viewBox="0 0 24 40" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" strokeDasharray="4 4">
+              <path d="M12,0 L12,35" />
+              <polyline points="4,27 12,35 20,27" fill="none" strokeDasharray="none" />
+            </svg>
+          </div>
+
+          {/* Node 2: Divergent Paths Stack (Right on Desktop, Bottom on Mobile) */}
+          <div className="w-full lg:w-7/12 flex flex-col gap-6">
+            
+            {/* Path A */}
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="w-full bg-white border border-[#DCD8D0] border-l-4 border-l-[#5B4FC4] rounded-2xl p-8 shadow-sm hover:-translate-y-1 transition-transform relative"
+            >
+              <div className="absolute top-0 right-6 -translate-y-1/2 px-3 py-1 bg-[#F0EDFA] border border-[#DCD8D0] text-xs font-bold text-[#5B4FC4] rounded-full uppercase tracking-widest">
+                Path A
+              </div>
+              <div className="flex gap-4 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#5B4FC4] to-[#7B6FD4] flex items-center justify-center text-white flex-shrink-0">
+                  <Sparkles className="w-6 h-6"/>
                 </div>
-              )}
+                <div>
+                  <h3 className="text-xl font-bold text-[#1A1A1A] mb-1">Interactive Web Portfolio</h3>
+                  <p className="text-[#6B6560] text-sm leading-relaxed">
+                    Let Google Gemini automatically enhance your bullet points into impactful STAR formats. Choose from stunning interactive themes like Bento Grid or Terminal CLI to deploy a live website.
+                  </p>
+                </div>
+              </div>
             </motion.div>
-          ))}
-        </motion.div>
+
+            {/* Path B */}
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="w-full bg-white border border-[#DCD8D0] border-l-4 border-l-[#D89040] rounded-2xl p-8 shadow-sm hover:-translate-y-1 transition-transform relative"
+            >
+              <div className="absolute top-0 right-6 -translate-y-1/2 px-3 py-1 bg-[#FDF5EC] border border-[#DCD8D0] text-xs font-bold text-[#D89040] rounded-full uppercase tracking-widest">
+                Path B
+              </div>
+              <div className="flex gap-4 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#D89040] to-[#E8A050] flex items-center justify-center text-white flex-shrink-0">
+                  <Activity className="w-6 h-6"/>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-[#1A1A1A] mb-1">PDF Tracking & Heatmaps</h3>
+                  <p className="text-[#6B6560] text-sm leading-relaxed">
+                    Keep your original PDF styling perfectly intact. We host it behind a trackable link so you can see exactly where recruiters scroll, pause to read, and click via interactive heatmaps.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
       </div>
     </section>
   );
