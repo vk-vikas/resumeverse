@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Upload, Cpu, Share2, ArrowRight } from 'lucide-react';
+import { Upload, Cpu, Share2 } from 'lucide-react';
 
 const steps = [
   {
@@ -46,11 +46,26 @@ const itemVariants = {
 export function HowItWorks() {
   return (
     <section className="py-24 bg-white relative overflow-hidden">
+      {/* Decorative top wave */}
+      <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0]">
+        <svg className="relative block w-full h-[40px]" viewBox="0 0 1200 40" preserveAspectRatio="none">
+          <path d="M0,20 C150,40 350,0 600,20 C850,40 1050,0 1200,20 L1200,0 L0,0 Z" fill="#FAFAF8" />
+        </svg>
+      </div>
+
       {/* Subtle grid bg */}
       <div className="absolute inset-0 opacity-[0.4]" style={{
         backgroundImage: 'radial-gradient(circle, #E8E5DF 1px, transparent 1px)',
         backgroundSize: '32px 32px',
       }} />
+
+      {/* Decorative floating shapes */}
+      <svg className="absolute top-16 right-[8%] w-10 h-10 text-[#D89040] opacity-10 pointer-events-none" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="16" stroke="currentColor" strokeWidth="2.5" />
+      </svg>
+      <svg className="absolute bottom-24 left-[6%] w-8 h-8 text-[#3A8D5C] opacity-10 pointer-events-none" viewBox="0 0 32 32" fill="none">
+        <rect x="4" y="4" width="24" height="24" rx="6" stroke="currentColor" strokeWidth="2.5" />
+      </svg>
 
       <div className="container mx-auto px-4 max-w-5xl relative z-10">
         <div className="text-center mb-16">
@@ -82,7 +97,7 @@ export function HowItWorks() {
         >
           {steps.map((step, i) => (
             <motion.div key={i} variants={itemVariants} className="relative group">
-              <div className="rounded-2xl border border-[#E8E5DF] bg-white p-8 h-full transition-all duration-300 hover:shadow-lg hover:shadow-black/5 hover:-translate-y-0.5">
+              <div className="rounded-2xl border border-[#DCD8D0] bg-white p-8 h-full transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-lg hover:shadow-black/5 hover:-translate-y-0.5">
                 {/* Number badge */}
                 <div className={`inline-flex items-center justify-center w-10 h-10 rounded-xl ${step.bgTint} mb-6`}>
                   <span className={`bg-gradient-to-br ${step.color} bg-clip-text text-transparent font-bold text-lg`}>
@@ -99,10 +114,12 @@ export function HowItWorks() {
                 <p className="text-[#6B6560] leading-relaxed text-sm">{step.description}</p>
               </div>
 
-              {/* Connector arrow (visible between cards on desktop) */}
+              {/* Connector arrow — color-matched */}
               {i < steps.length - 1 && (
-                <div className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 text-[#E8E5DF]">
-                  <ArrowRight className="h-5 w-5" />
+                <div className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10">
+                  <svg className="h-5 w-5" viewBox="0 0 20 20" fill="none">
+                    <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke={i === 0 ? '#5B4FC4' : i === 1 ? '#D89040' : '#3A8D5C'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </div>
               )}
             </motion.div>

@@ -99,8 +99,8 @@ export function PdfHeatmap({ fileUrl, clicks, scrolls }: PdfHeatmapProps) {
           onClick={() => setActiveLayer('clicks')}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
             activeLayer === 'clicks'
-              ? 'bg-red-500/20 text-red-400 border border-red-500/40'
-              : 'bg-neutral-800 text-neutral-400 border border-neutral-700 hover:text-white'
+              ? 'bg-red-500/10 text-[#D84040] border border-red-500/20'
+              : 'bg-white text-[#6B6560] border border-[#E8E5DF] hover:text-[#1A1A1A] hover:bg-[#F5F3EF]'
           }`}
         >
           <MousePointer2 className="h-3.5 w-3.5" />
@@ -110,8 +110,8 @@ export function PdfHeatmap({ fileUrl, clicks, scrolls }: PdfHeatmapProps) {
           onClick={() => setActiveLayer('scrolls')}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
             activeLayer === 'scrolls'
-              ? 'bg-blue-500/20 text-blue-400 border border-blue-500/40'
-              : 'bg-neutral-800 text-neutral-400 border border-neutral-700 hover:text-white'
+              ? 'bg-blue-500/10 text-[#5B4FC4] border border-blue-500/20'
+              : 'bg-white text-[#6B6560] border border-[#E8E5DF] hover:text-[#1A1A1A] hover:bg-[#F5F3EF]'
           }`}
         >
           <Layers className="h-3.5 w-3.5" />
@@ -122,13 +122,13 @@ export function PdfHeatmap({ fileUrl, clicks, scrolls }: PdfHeatmapProps) {
       {/* Heatmap viewer */}
       <div
         ref={containerRef}
-        className="relative border border-neutral-800 rounded-xl overflow-hidden bg-[#050505]"
+        className="relative border border-[#E8E5DF] rounded-xl overflow-hidden bg-[#FAFAF8] shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
       >
         {!hasData ? (
-          <div className="h-[500px] flex flex-col items-center justify-center text-neutral-500 gap-3">
+          <div className="h-[500px] flex flex-col items-center justify-center text-[#9C9590] gap-3">
             <Layers className="h-10 w-10 opacity-30" />
-            <p className="text-sm">No interaction data yet.</p>
-            <p className="text-xs text-neutral-600">Heatmap will appear after visitors interact with the resume.</p>
+            <p className="text-sm font-medium text-[#6B6560]">No interaction data yet.</p>
+            <p className="text-xs">Heatmap will appear after visitors interact with the resume.</p>
           </div>
         ) : (
           <div className="relative" style={{ width: containerWidth }}>
@@ -137,7 +137,7 @@ export function PdfHeatmap({ fileUrl, clicks, scrolls }: PdfHeatmapProps) {
               file={fileUrl}
               onLoadSuccess={({ numPages }) => setNumPages(numPages)}
               loading={
-                <div className="h-[600px] flex items-center justify-center text-neutral-500">
+                <div className="h-[600px] flex items-center justify-center text-[#9C9590]">
                   <Loader2 className="h-6 w-6 animate-spin" />
                 </div>
               }
@@ -156,7 +156,7 @@ export function PdfHeatmap({ fileUrl, clicks, scrolls }: PdfHeatmapProps) {
               ref={clickCanvasRef}
               width={containerWidth}
               height={containerWidth * aspectRatio}
-              className={`absolute inset-0 pointer-events-none mix-blend-multiply transition-opacity duration-200 ${
+              className={`absolute inset-0 pointer-events-none transition-opacity duration-200 ${
                 activeLayer === 'clicks' ? 'opacity-100' : 'opacity-0'
               }`}
             />
@@ -166,7 +166,7 @@ export function PdfHeatmap({ fileUrl, clicks, scrolls }: PdfHeatmapProps) {
               ref={scrollCanvasRef}
               width={containerWidth}
               height={containerWidth * aspectRatio}
-              className={`absolute inset-0 pointer-events-none mix-blend-multiply transition-opacity duration-200 ${
+              className={`absolute inset-0 pointer-events-none transition-opacity duration-200 ${
                 activeLayer === 'scrolls' ? 'opacity-100' : 'opacity-0'
               }`}
             />
@@ -174,7 +174,7 @@ export function PdfHeatmap({ fileUrl, clicks, scrolls }: PdfHeatmapProps) {
         )}
       </div>
 
-      <p className="text-xs text-neutral-600 text-center">
+      <p className="text-xs text-[#9C9590] text-center">
         🔴 Red = click locations &nbsp;|&nbsp; 🔵 Blue = attention dwell positions &nbsp;|&nbsp; Showing page 1
       </p>
     </div>

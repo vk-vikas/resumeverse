@@ -114,8 +114,7 @@ export function ResumeCard({ resume }: ResumeCardProps) {
 
   return (
     <>
-      <Card className="bg-white border-[#E8E5DF] hover:border-[#9C9590] transition-all duration-200 overflow-hidden group shadow-sm">
-        <div className="h-2 bg-gradient-to-r from-[#5B4FC4] to-[#8B5CF6] w-full" />
+      <Card className="bg-white border-[#DCD8D0] border-l-4 border-l-[#5B4FC4] hover:border-[#9C9590] transition-all duration-200 overflow-hidden group shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)] rounded-xl">
         <CardContent className="p-6">
           <div className="flex items-start justify-between mb-4">
             <div>
@@ -176,25 +175,25 @@ export function ResumeCard({ resume }: ResumeCardProps) {
           {/* Micro Telemetry Dashboard */}
           {isPublic && (
             <div className="grid grid-cols-3 gap-2 py-3 mb-4 border-t border-b border-[#E8E5DF] bg-[#FAFAF8] px-3 -mx-6 text-center">
-               <div>
-                 <p className="text-[10px] text-[#9C9590] uppercase tracking-wider font-semibold">Unique Viewers</p>
-                 <p className="text-sm font-bold text-[#3A8D5C] mt-0.5">{resume.telemetry?.uniqueVisitors || 0}</p>
-               </div>
-               <div className="border-l border-[#E8E5DF]">
-                 <p className="text-[10px] text-[#9C9590] uppercase tracking-wider font-semibold">Read Time</p>
-                 <p className="text-sm font-bold text-[#5B4FC4] mt-0.5">{resume.telemetry?.avgDurationSecs ? `${resume.telemetry.avgDurationSecs}s` : '0s'}</p>
-               </div>
-               {resume.theme === 'raw_pdf' ? (
-                 <div className="border-l border-[#E8E5DF]">
-                   <p className="text-[10px] text-[#9C9590] uppercase tracking-wider font-semibold">Downloads</p>
-                   <p className="text-sm font-bold text-[#D89040] mt-0.5 px-1">{resume.telemetry?.downloads || 0}</p>
-                 </div>
-               ) : (
-                 <div className="border-l border-[#E8E5DF]">
-                   <p className="text-[10px] text-[#9C9590] uppercase tracking-wider font-semibold">Top Location</p>
-                   <p className="text-sm font-bold text-[#8B5CF6] mt-0.5 truncate px-1">{resume.telemetry?.topLocation || 'N/A'}</p>
-                 </div>
-               )}
+              <div>
+                <p className="text-[10px] text-[#9C9590] uppercase tracking-wider font-semibold">Unique Viewers</p>
+                <p className="text-sm font-bold text-[#3A8D5C] mt-0.5">{resume.telemetry?.uniqueVisitors || 0}</p>
+              </div>
+              <div className="border-l border-[#E8E5DF]">
+                <p className="text-[10px] text-[#9C9590] uppercase tracking-wider font-semibold">Read Time</p>
+                <p className="text-sm font-bold text-[#5B4FC4] mt-0.5">{resume.telemetry?.avgDurationSecs ? `${resume.telemetry.avgDurationSecs}s` : '0s'}</p>
+              </div>
+              {resume.theme === 'raw_pdf' ? (
+                <div className="border-l border-[#E8E5DF]">
+                  <p className="text-[10px] text-[#9C9590] uppercase tracking-wider font-semibold">Downloads</p>
+                  <p className="text-sm font-bold text-[#D89040] mt-0.5 px-1">{resume.telemetry?.downloads || 0}</p>
+                </div>
+              ) : (
+                <div className="border-l border-[#E8E5DF]">
+                  <p className="text-[10px] text-[#9C9590] uppercase tracking-wider font-semibold">Top Location</p>
+                  <p className="text-sm font-bold text-[#8B5CF6] mt-0.5 truncate px-1">{resume.telemetry?.topLocation || 'N/A'}</p>
+                </div>
+              )}
             </div>
           )}
 

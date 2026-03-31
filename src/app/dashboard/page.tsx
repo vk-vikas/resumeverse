@@ -25,7 +25,7 @@ export default async function DashboardPage() {
 
   if (!session) {
     // Middleware handles redirect but strict type checking ensures session.user is safe
-    return null; 
+    return null;
   }
 
   const { data: resumes, error } = await supabase
@@ -45,10 +45,10 @@ export default async function DashboardPage() {
     const { data: analytics, error: rpcError } = await supabase.rpc('get_resume_analytics', {
       p_resume_id: resume.id
     });
-    
+
     // Debug: log what we get from the RPC
     console.log('[Dashboard] Analytics for', resume.id, ':', JSON.stringify(analytics), 'error:', rpcError?.message);
-    
+
     return {
       ...resume,
       telemetry: (analytics && !rpcError) ? {
@@ -71,7 +71,7 @@ export default async function DashboardPage() {
   const activeShares = typedResumes.filter((r: any) => r.is_public).length;
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8]">
+    <div className="min-h-screen bg-[#F5F3EF]">
       {/* Header */}
       <header className="border-b border-[#E8E5DF] bg-white/80 sticky top-0 z-10 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -82,10 +82,10 @@ export default async function DashboardPage() {
             <span className="text-[#E8E5DF] px-2 hidden sm:inline">/</span>
             <span className="text-[#6B6560] font-medium hidden sm:inline">Dashboard</span>
           </div>
-          
+
           <div className="flex items-center gap-4">
-            <Link 
-              href="/upload" 
+            <Link
+              href="/upload"
               className="hidden sm:inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#5B4FC4] disabled:pointer-events-none disabled:opacity-50 bg-[#5B4FC4] hover:bg-[#4A3FB0] text-white shadow-sm h-8 px-3"
             >
               <Plus className="mr-2 h-4 w-4" />
@@ -102,7 +102,7 @@ export default async function DashboardPage() {
             <h2 className="text-3xl font-bold text-[#1A1A1A] mb-2">Your Resumes</h2>
             <p className="text-[#6B6560] text-sm">Manage, edit, and share your interactive resumes.</p>
           </div>
-          
+
           {/* Quick Stats */}
           {totalResumes > 0 && (
             <div className="flex gap-4 bg-white border border-[#E8E5DF] rounded-lg p-3 w-full md:w-auto overflow-x-auto shadow-sm">
@@ -149,8 +149,8 @@ export default async function DashboardPage() {
             <p className="text-[#6B6560] max-w-sm mb-6">
               You haven&apos;t created any resumes. Upload an existing PDF/DOCX or start from scratch using our interactive editor.
             </p>
-            <Link 
-              href="/upload" 
+            <Link
+              href="/upload"
               className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#5B4FC4] disabled:pointer-events-none disabled:opacity-50 bg-[#5B4FC4] text-white hover:bg-[#4A3FB0] shadow-sm h-10 px-8"
             >
               <Plus className="mr-2 h-5 w-5" />
@@ -159,7 +159,7 @@ export default async function DashboardPage() {
           </div>
         ) : (
           <div className="space-y-12 mb-12">
-            
+
             {/* 📄 Hosted Documents Section */}
             <section>
               <div className="mb-6">
@@ -169,16 +169,16 @@ export default async function DashboardPage() {
                 </h2>
                 <p className="text-sm text-[#6B6560] mt-1">Raw, unparsed PDF resumes</p>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {pdfResumes.map((resume: any) => (
                   <ResumeCard key={resume.id} resume={resume} />
                 ))}
 
                 {/* Create New Card */}
-                <Link 
+                <Link
                   href="/upload"
-                  className="flex flex-col items-center justify-center min-h-[220px] rounded-xl border-2 border-dashed border-[#E8E5DF] bg-white hover:bg-[#F5F3EF] hover:border-[#9C9590] transition-colors group"
+                  className="flex flex-col items-center justify-center min-h-[220px] rounded-xl border-2 border-dashed border-[#DCD8D0] bg-white hover:bg-[#FAFAF8] hover:border-[#9C9590] transition-colors group shadow-[0_2px_8px_rgba(0,0,0,0.03)]"
                 >
                   <div className="h-12 w-12 rounded-full bg-[#F5F3EF] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <Plus className="h-6 w-6 text-[#9C9590] group-hover:text-[#1A1A1A] transition-colors" />
@@ -197,16 +197,16 @@ export default async function DashboardPage() {
                 </h2>
                 <p className="text-sm text-[#6B6560] mt-1">AI-parsed interactive resumes</p>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {webResumes.map((resume: any) => (
                   <ResumeCard key={resume.id} resume={resume} />
                 ))}
-                
+
                 {/* Create New Card (Empty/Action state within grid) */}
-                <Link 
+                <Link
                   href="/upload"
-                  className="flex flex-col items-center justify-center min-h-[220px] rounded-xl border-2 border-dashed border-[#E8E5DF] bg-white hover:bg-[#F5F3EF] hover:border-[#9C9590] transition-colors group"
+                  className="flex flex-col items-center justify-center min-h-[220px] rounded-xl border-2 border-dashed border-[#DCD8D0] bg-white hover:bg-[#FAFAF8] hover:border-[#9C9590] transition-colors group shadow-[0_2px_8px_rgba(0,0,0,0.03)]"
                 >
                   <div className="h-12 w-12 rounded-full bg-[#F5F3EF] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <Plus className="h-6 w-6 text-[#9C9590] group-hover:text-[#1A1A1A] transition-colors" />

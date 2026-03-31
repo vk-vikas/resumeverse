@@ -3,7 +3,13 @@ import { Github } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="border-t border-[#E8E5DF] bg-[#FAFAF8] py-16">
+    <footer className="border-t border-[#E8E5DF] bg-[#F5F3EF] py-16 relative overflow-hidden">
+      {/* Top wave from white section */}
+      <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0]">
+        <svg className="relative block w-full h-[30px]" viewBox="0 0 1200 30" preserveAspectRatio="none">
+          <path d="M0,10 C200,25 400,0 600,15 C800,30 1000,5 1200,15 L1200,0 L0,0 Z" fill="white" />
+        </svg>
+      </div>
       <div className="container mx-auto px-4 max-w-5xl">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-10">
           {/* Branding */}
