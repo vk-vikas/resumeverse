@@ -92,12 +92,12 @@ export function Dropzone({ onFileSelect, isLoading = false }: DropzoneProps) {
 
   return (
     <Card
-      className={`relative overflow-hidden border-2 border-dashed transition-all duration-200 cursor-pointer
+      className={`relative overflow-hidden border-2 border-dashed transition-all duration-300 cursor-pointer rounded-2xl
         ${isDragOver
-          ? 'border-[#5B4FC4] bg-[#F0EDFA]'
+          ? 'border-[#5B4FC4] bg-[#F0EDFA] shadow-md scale-[1.01]'
           : error
             ? 'border-[#D84040]/50 bg-[#FDF0F0]'
-            : 'border-[#E8E5DF] bg-white hover:border-[#9C9590] hover:bg-[#F5F3EF]/30'
+            : 'border-[#E8E5DF] bg-white hover:border-[#5B4FC4]/40 hover:bg-[#FAFAF8] shadow-sm hover:shadow-md'
         }
       `}
       onDrop={handleDrop}
@@ -123,7 +123,7 @@ export function Dropzone({ onFileSelect, isLoading = false }: DropzoneProps) {
         aria-label="Upload your resume"
       />
 
-      <div className="flex flex-col items-center justify-center p-8 sm:p-12 min-h-[200px]">
+      <div className="flex flex-col items-center justify-center p-8 sm:p-12 min-h-[220px]">
         <AnimatePresence mode="wait">
           {isLoading ? (
             <motion.div
@@ -134,8 +134,8 @@ export function Dropzone({ onFileSelect, isLoading = false }: DropzoneProps) {
               className="flex flex-col items-center gap-4"
             >
               <Loader2 className="h-10 w-10 text-[#5B4FC4] animate-spin" />
-              <p className="text-[#6B6560] text-sm">
-                Parsing your resume with AI...
+              <p className="text-[#6B6560] font-medium text-sm animate-pulse">
+                Parsing document structure using AI...
               </p>
             </motion.div>
           ) : selectedFile ? (
@@ -144,7 +144,7 @@ export function Dropzone({ onFileSelect, isLoading = false }: DropzoneProps) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="w-full"
+              className="w-full relative z-10"
               onClick={(e) => e.stopPropagation()}
             >
               <FilePreview file={selectedFile} onRemove={handleRemove} />
@@ -155,23 +155,24 @@ export function Dropzone({ onFileSelect, isLoading = false }: DropzoneProps) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="flex flex-col items-center gap-4"
+              className="flex flex-col items-center gap-6"
             >
               <motion.div
-                animate={isDragOver ? { scale: 1.1, y: -4 } : { scale: 1, y: 0 }}
+                animate={isDragOver ? { scale: 1.15, y: -4 } : { scale: 1, y: 0 }}
                 transition={{ type: 'spring', stiffness: 300 }}
+                className={`w-20 h-20 rounded-full flex items-center justify-center transition-colors duration-300 ${isDragOver ? 'bg-[#5B4FC4] text-white shadow-md' : 'bg-[#FAFAF8] text-[#5B4FC4] shadow-sm border border-[#E8E5DF]'}`}
               >
-                <Upload className={`h-10 w-10 ${isDragOver ? 'text-[#5B4FC4]' : 'text-[#9C9590]'}`} />
+                <Upload className="h-8 w-8" />
               </motion.div>
-              <div className="text-center">
-                <p className="text-[#1A1A1A] text-sm font-medium">
+              <div className="text-center space-y-1">
+                <p className="text-[#1A1A1A] text-lg font-bold">
                   Drag & drop your resume, or{' '}
-                  <span className="text-[#5B4FC4] underline underline-offset-2">
+                  <span className="text-[#5B4FC4] hover:text-[#3A2A9A] underline underline-offset-4 decoration-2 transition-colors">
                     click to browse
                   </span>
                 </p>
-                <p className="text-[#9C9590] text-xs mt-1">
-                  PDF or DOCX · Max 5MB
+                <p className="text-[#6B6560] text-sm font-medium">
+                  Supports PDF or DOCX format (Max 5MB)
                 </p>
               </div>
             </motion.div>

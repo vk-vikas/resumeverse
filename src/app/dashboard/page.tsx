@@ -71,7 +71,15 @@ export default async function DashboardPage() {
   const activeShares = typedResumes.filter((r: any) => r.is_public).length;
 
   return (
-    <div className="min-h-screen bg-[#F5F3EF]">
+    <div className="min-h-screen bg-[#F5F3EF] relative overflow-hidden">
+      {/* Background Depth Blurs */}
+      <div className="absolute top-20 right-0 w-[500px] h-[500px] opacity-[0.03] pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-tl from-[#5B4FC4] to-transparent blur-3xl rounded-full" />
+      </div>
+      <div className="absolute bottom-20 left-0 w-[400px] h-[400px] opacity-[0.03] pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#D89040] to-transparent blur-3xl rounded-full" />
+      </div>
+
       {/* Header */}
       <header className="border-b border-[#E8E5DF] bg-white/80 sticky top-0 z-10 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -103,40 +111,41 @@ export default async function DashboardPage() {
             <p className="text-[#6B6560] text-sm">Manage, edit, and share your interactive resumes.</p>
           </div>
 
-          {/* Quick Stats */}
-          {totalResumes > 0 && (
-            <div className="flex gap-4 bg-white border border-[#E8E5DF] rounded-lg p-3 w-full md:w-auto overflow-x-auto shadow-sm">
-              <div className="flex items-center gap-3 px-3">
-                <div className="p-2 bg-[#F0EDFA] rounded-md">
-                  <FileText className="h-4 w-4 text-[#5B4FC4]" />
+          {/* Quick Stats (Animated KPI Cards) */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full xl:w-auto mt-4 md:mt-0">
+            <div className="bg-white border text-left border-[#E8E5DF] rounded-xl p-5 shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all duration-300 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#5B4FC4]/10 to-transparent rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-150 duration-500" />
+              <div className="flex items-center gap-3 mb-2 relative z-10">
+                <div className="p-2 bg-[#F0EDFA] rounded-xl text-[#5B4FC4] group-hover:scale-110 transition-transform duration-300">
+                  <FileText className="h-4 w-4" />
                 </div>
-                <div>
-                  <p className="text-[10px] text-[#9C9590] uppercase font-semibold">Total Resumes</p>
-                  <p className="text-lg font-bold text-[#1A1A1A] leading-none mt-1">{totalResumes}</p>
-                </div>
+                <p className="text-[10px] text-[#9C9590] uppercase font-bold tracking-wider">Total Resumes</p>
               </div>
-              <div className="w-px bg-[#E8E5DF]" />
-              <div className="flex items-center gap-3 px-3">
-                <div className="p-2 bg-[#EDF7F1] rounded-md">
-                  <Eye className="h-4 w-4 text-[#3A8D5C]" />
-                </div>
-                <div>
-                  <p className="text-[10px] text-[#9C9590] uppercase font-semibold">Total Views</p>
-                  <p className="text-lg font-bold text-[#1A1A1A] leading-none mt-1">{totalViews}</p>
-                </div>
-              </div>
-              <div className="w-px bg-[#E8E5DF]" />
-              <div className="flex items-center gap-3 px-3">
-                <div className="p-2 bg-[#F5F0FF] rounded-md">
-                  <Share2 className="h-4 w-4 text-[#8B5CF6]" />
-                </div>
-                <div>
-                  <p className="text-[10px] text-[#9C9590] uppercase font-semibold">Active Shares</p>
-                  <p className="text-lg font-bold text-[#1A1A1A] leading-none mt-1">{activeShares}</p>
-                </div>
-              </div>
+              <p className="text-3xl font-black text-[#1A1A1A] relative z-10">{totalResumes}</p>
             </div>
-          )}
+
+            <div className="bg-white border text-left border-[#E8E5DF] rounded-xl p-5 shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all duration-300 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#3A8D5C]/10 to-transparent rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-150 duration-500" />
+              <div className="flex items-center gap-3 mb-2 relative z-10">
+                <div className="p-2 bg-[#EDF7F1] rounded-xl text-[#3A8D5C] group-hover:scale-110 transition-transform duration-300">
+                  <Eye className="h-4 w-4" />
+                </div>
+                <p className="text-[10px] text-[#9C9590] uppercase font-bold tracking-wider">Total Views</p>
+              </div>
+              <p className="text-3xl font-black text-[#1A1A1A] relative z-10">{totalViews}</p>
+            </div>
+
+            <div className="bg-white border text-left border-[#E8E5DF] rounded-xl p-5 shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all duration-300 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#8B5CF6]/10 to-transparent rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-150 duration-500" />
+              <div className="flex items-center gap-3 mb-2 relative z-10">
+                <div className="p-2 bg-[#F5F0FF] rounded-xl text-[#8B5CF6] group-hover:scale-110 transition-transform duration-300">
+                  <Share2 className="h-4 w-4" />
+                </div>
+                <p className="text-[10px] text-[#9C9590] uppercase font-bold tracking-wider">Active Shares</p>
+              </div>
+              <p className="text-3xl font-black text-[#1A1A1A] relative z-10">{activeShares}</p>
+            </div>
+          </div>
         </div>
 
         {/* Content Grid */}
@@ -178,12 +187,13 @@ export default async function DashboardPage() {
                 {/* Create New Card */}
                 <Link
                   href="/upload"
-                  className="flex flex-col items-center justify-center min-h-[220px] rounded-xl border-2 border-dashed border-[#DCD8D0] bg-white hover:bg-[#FAFAF8] hover:border-[#9C9590] transition-colors group shadow-[0_2px_8px_rgba(0,0,0,0.03)]"
+                  className="flex flex-col items-center justify-center min-h-[220px] rounded-xl border-2 border-dashed border-[#DCD8D0] bg-[#FAFAF8] hover:bg-white hover:border-[#8B5CF6] transition-all duration-300 group shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-xl hover:-translate-y-1 relative overflow-hidden"
                 >
-                  <div className="h-12 w-12 rounded-full bg-[#F5F3EF] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <Plus className="h-6 w-6 text-[#9C9590] group-hover:text-[#1A1A1A] transition-colors" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#8B5CF6]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <div className="h-14 w-14 rounded-full bg-white border border-[#E8E5DF] shadow-sm flex items-center justify-center mb-4 group-hover:scale-110 group-hover:border-[#8B5CF6]/30 transition-all duration-300 relative z-10">
+                    <Plus className="h-6 w-6 text-[#9C9590] group-hover:text-[#8B5CF6] group-hover:rotate-90 transition-all duration-300" />
                   </div>
-                  <span className="font-medium text-[#9C9590] group-hover:text-[#1A1A1A] transition-colors">Host New Document</span>
+                  <span className="font-semibold text-[#6B6560] group-hover:text-[#8B5CF6] transition-colors relative z-10">Host New Document</span>
                 </Link>
               </div>
             </section>
@@ -206,12 +216,13 @@ export default async function DashboardPage() {
                 {/* Create New Card (Empty/Action state within grid) */}
                 <Link
                   href="/upload"
-                  className="flex flex-col items-center justify-center min-h-[220px] rounded-xl border-2 border-dashed border-[#DCD8D0] bg-white hover:bg-[#FAFAF8] hover:border-[#9C9590] transition-colors group shadow-[0_2px_8px_rgba(0,0,0,0.03)]"
+                  className="flex flex-col items-center justify-center min-h-[220px] rounded-xl border-2 border-dashed border-[#DCD8D0] bg-[#FAFAF8] hover:bg-white hover:border-[#5B4FC4] transition-all duration-300 group shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-xl hover:-translate-y-1 relative overflow-hidden"
                 >
-                  <div className="h-12 w-12 rounded-full bg-[#F5F3EF] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <Plus className="h-6 w-6 text-[#9C9590] group-hover:text-[#1A1A1A] transition-colors" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#5B4FC4]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <div className="h-14 w-14 rounded-full bg-white border border-[#E8E5DF] shadow-sm flex items-center justify-center mb-4 group-hover:scale-110 group-hover:border-[#5B4FC4]/30 transition-all duration-300 relative z-10">
+                    <Plus className="h-6 w-6 text-[#9C9590] group-hover:text-[#5B4FC4] group-hover:rotate-90 transition-all duration-300" />
                   </div>
-                  <span className="font-medium text-[#9C9590] group-hover:text-[#1A1A1A] transition-colors">Create New Portfolio</span>
+                  <span className="font-semibold text-[#6B6560] group-hover:text-[#5B4FC4] transition-colors relative z-10">Create New Portfolio</span>
                 </Link>
               </div>
             </section>

@@ -62,20 +62,20 @@ export default function Home() {
       router.push('/login?next=/upload');
       return;
     }
-    
+
     setIsLoading(true);
     try {
       const formData = new FormData();
       formData.append('file', file);
-      
+
       const res = await fetch('/api/upload-raw', { method: 'POST', body: formData });
       const json = await res.json();
-      
+
       if (!res.ok) throw new Error(json.error || 'Failed to upload document');
-      
+
       toast.success('PDF Hosted Successfully!');
       router.push('/dashboard');
-    } catch(err: any) {
+    } catch (err: any) {
       toast.error(err.message || 'Something went wrong');
       setIsLoading(false);
     }
@@ -95,8 +95,8 @@ export default function Home() {
       <div className="px-4 py-20 mx-auto max-w-2xl space-y-8">
         {/* Header */}
         <div className="text-center space-y-4">
-          <Badge variant="secondary" className="mb-2">
-            <Sparkles className="mr-1 h-3 w-3" />
+          <Badge variant="secondary" className="mb-2 shadow-sm bg-white">
+            <Sparkles className="mr-1 h-3 w-3 text-[#5B4FC4]" />
             AI-Powered
           </Badge>
           <h1 className="text-5xl font-bold tracking-tight text-[#1A1A1A] sm:text-6xl">
@@ -108,20 +108,20 @@ export default function Home() {
           </p>
 
           {/* Feature pills */}
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-            <Card className="bg-white border-[#E8E5DF]">
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
+            <Card className="bg-white border-[#E8E5DF] shadow-sm hover:shadow-md transition-shadow">
               <CardContent className="flex items-center gap-2 px-4 py-2 text-sm text-[#6B6560]">
                 <Upload className="h-4 w-4 text-[#5B4FC4]" />
                 Upload Resume
               </CardContent>
             </Card>
-            <Card className="bg-white border-[#E8E5DF]">
+            <Card className="bg-white border-[#E8E5DF] shadow-sm hover:shadow-md transition-shadow">
               <CardContent className="flex items-center gap-2 px-4 py-2 text-sm text-[#6B6560]">
                 <Sparkles className="h-4 w-4 text-[#8B5CF6]" />
                 AI Transforms
               </CardContent>
             </Card>
-            <Card className="bg-white border-[#E8E5DF]">
+            <Card className="bg-white border-[#E8E5DF] shadow-sm hover:shadow-md transition-shadow">
               <CardContent className="flex items-center gap-2 px-4 py-2 text-sm text-[#6B6560]">
                 <Share2 className="h-4 w-4 text-[#3A8D5C]" />
                 Share Everywhere
@@ -132,68 +132,100 @@ export default function Home() {
 
         {/* Upload Section */}
         {(!stagedFile || parsedData) && (
-          <div className="space-y-4">
+          <div className="space-y-4 pt-6">
             <div className="space-y-2">
               <h2 className="text-sm font-medium text-[#9C9590] uppercase tracking-wider">
                 Upload Your Resume
               </h2>
               <Dropzone onFileSelect={handleFileSelect} isLoading={isLoading} />
             </div>
-          
-          <div className="flex items-center gap-4 py-2">
-            <div className="flex-1 border-t border-[#E8E5DF]"></div>
-            <span className="text-xs text-[#9C9590] font-medium uppercase tracking-widest">OR</span>
-            <div className="flex-1 border-t border-[#E8E5DF]"></div>
+
+            <div className="flex items-center gap-4 py-4">
+              <div className="flex-1 border-t border-[#E8E5DF]"></div>
+              <span className="text-xs text-[#9C9590] font-medium uppercase tracking-widest">OR</span>
+              <div className="flex-1 border-t border-[#E8E5DF]"></div>
+            </div>
+
+            <Button
+              variant="outline"
+              size="lg"
+              className="w-full border-[#E8E5DF] bg-white text-[#6B6560] shadow-sm hover:shadow-md hover:text-[#1A1A1A] hover:bg-[#FAFAF8] transition-all"
+              onClick={() => {
+                if (isAuthenticated) {
+                  router.push('/editor/new');
+                } else {
+                  toast.info('Please sign in to start creating your resume');
+                  router.push('/login?next=/editor/new');
+                }
+              }}
+            >
+              Start Building From Scratch
+            </Button>
           </div>
-          
-          <Button 
-            variant="outline" 
-            size="lg"
-            className="w-full border-[#E8E5DF] text-[#6B6560] hover:text-[#1A1A1A] hover:bg-[#F5F3EF]"
-            onClick={() => {
-              if (isAuthenticated) {
-                router.push('/editor/new');
-              } else {
-                toast.info('Please sign in to start creating your resume');
-                router.push('/login?next=/editor/new');
-              }
-            }}
-          >
-            Start from scratch
-          </Button>
-        </div>
         )}
 
         {/* Branching Options: AI vs Raw PDF */}
         {stagedFile && !isLoading && !parsedData && (
-          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-             <h2 className="text-xl font-bold text-[#1A1A1A] text-center">How would you like to build your portfolio?</h2>
-             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Card 
-                  className="bg-white border-[#5B4FC4]/30 cursor-pointer hover:bg-[#F0EDFA] transition-colors" 
-                  onClick={() => processAIParsing(stagedFile)}
-                >
-                  <CardContent className="p-6 text-center space-y-3">
-                     <Sparkles className="h-8 w-8 text-[#5B4FC4] mx-auto" />
-                     <h3 className="font-semibold text-[#1A1A1A]">Extract & Build (AI)</h3>
-                     <p className="text-xs text-[#6B6560]">Parse your document into an interactive, customizable web dashboard.</p>
-                  </CardContent>
-                </Card>
+          <div className="space-y-6 pt-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="text-center space-y-2 mb-8">
+              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-4 border border-[#E8E5DF] shadow-sm">
+                <CheckCircle2 className="h-6 w-6 text-[#5B4FC4]" />
+              </div>
+              <h2 className="text-2xl font-bold text-[#1A1A1A]">File Uploaded Successfully</h2>
+              <p className="text-[#6B6560]">How would you like to build your portfolio?</p>
+            </div>
 
-                <Card 
-                  className="bg-white border-[#3A8D5C]/30 cursor-pointer hover:bg-[#EDF7F1] transition-colors" 
-                  onClick={() => processRawUpload(stagedFile)}
-                >
-                  <CardContent className="p-6 text-center space-y-3">
-                     <Eye className="h-8 w-8 text-[#3A8D5C] mx-auto" />
-                     <h3 className="font-semibold text-[#1A1A1A]">Host Tracked PDF</h3>
-                     <p className="text-xs text-[#6B6560]">Bypass AI entirely. Host your raw PDF natively to get an instant view-tracking link.</p>
-                  </CardContent>
-                </Card>
-             </div>
-             <Button variant="ghost" className="w-full text-[#9C9590] hover:text-[#1A1A1A]" onClick={() => setStagedFile(null)}>
-               Cancel and select a different file
-             </Button>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 relative z-10">
+              <Card
+                className="bg-white border-[#E8E5DF] border-t-2 border-t-[#5B4FC4] cursor-pointer hover:-translate-y-1 hover:shadow-xl transition-all duration-300 relative overflow-hidden group shadow-md"
+                onClick={() => processAIParsing(stagedFile)}
+              >
+                <CardContent className="p-8 text-center space-y-4 relative z-10">
+                  <div className="w-14 h-14 rounded-full bg-[#FAFAF8] flex items-center justify-center mx-auto border border-[#E8E5DF] transition-transform group-hover:bg-[#F0EDFA] group-hover:scale-110">
+                    <Sparkles className="h-6 w-6 text-[#5B4FC4]" />
+                  </div>
+                  <h3 className="text-lg font-bold text-[#1A1A1A]">Extract & Build (AI)</h3>
+                  <p className="text-sm text-[#6B6560] leading-relaxed">Let AI parse your document into an interactive, beautifully themed web portfolio.</p>
+                </CardContent>
+              </Card>
+
+              <Card
+                className="bg-white border-[#E8E5DF] border-t-2 border-t-[#3A8D5C] cursor-pointer hover:-translate-y-1 hover:shadow-xl transition-all duration-300 relative overflow-hidden group shadow-md"
+                onClick={() => processRawUpload(stagedFile)}
+              >
+                <CardContent className="p-8 text-center space-y-4 relative z-10">
+                  <div className="w-14 h-14 rounded-full bg-[#FAFAF8] flex items-center justify-center mx-auto border border-[#E8E5DF] transition-transform group-hover:bg-[#EDF7F1] group-hover:scale-110">
+                    <Eye className="h-6 w-6 text-[#3A8D5C]" />
+                  </div>
+                  <h3 className="text-lg font-bold text-[#1A1A1A]">Host Tracked PDF</h3>
+                  <p className="text-sm text-[#6B6560] leading-relaxed">Bypass AI entirely. Host your raw PDF exactly as styled to access real-time reading heatmaps.</p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="text-center pt-4">
+              <Button variant="ghost" className="text-[#9C9590] hover:text-[#1A1A1A]" onClick={() => setStagedFile(null)}>
+                Cancel and select a different file
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* Loading State */}
+        {stagedFile && isLoading && !parsedData && (
+          <div className="flex flex-col items-center justify-center py-24 space-y-8 animate-in fade-in zoom-in-95 duration-500">
+            <div className="relative flex items-center justify-center w-32 h-32">
+              <div className="absolute inset-0 bg-[#5B4FC4] rounded-full blur-2xl opacity-15 animate-pulse" />
+              <div className="w-20 h-20 bg-white rounded-3xl shadow-lg border border-[#E8E5DF] flex items-center justify-center relative z-10 animate-bounce">
+                <Sparkles className="h-10 w-10 text-[#5B4FC4]" />
+              </div>
+            </div>
+            <div className="text-center space-y-2">
+              <h3 className="text-2xl font-bold text-[#1A1A1A]">Processing Document...</h3>
+              <p className="text-[#6B6560] max-w-sm mx-auto leading-relaxed">
+                Hold tight while we securely process your document. This usually takes just a few seconds.
+              </p>
+            </div>
           </div>
         )}
 

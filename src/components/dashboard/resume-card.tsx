@@ -61,6 +61,14 @@ export function ResumeCard({ resume }: ResumeCardProps) {
   const [isUpdatingVisibility, setIsUpdatingVisibility] = useState(false);
   const supabase = createClient();
 
+  const themeStyles: Record<string, { border: string, bg: string, text: string }> = {
+    'bento': { border: 'border-l-[#5B4FC4]', bg: 'bg-[#F0EDFA]', text: 'text-[#5B4FC4]' },
+    'terminal': { border: 'border-l-[#3A8D5C]', bg: 'bg-[#EDF7F1]', text: 'text-[#3A8D5C]' },
+    'kpi': { border: 'border-l-[#D89040]', bg: 'bg-[#FDF5EC]', text: 'text-[#D89040]' },
+    'raw_pdf': { border: 'border-l-[#8B8580]', bg: 'bg-[#F3F0EC]', text: 'text-[#6B6560]' },
+  };
+  const style = themeStyles[resume.theme] || { border: 'border-l-[#8B5CF6]', bg: 'bg-[#F5F0FF]', text: 'text-[#8B5CF6]' };
+
   const formattedDate = new Intl.DateTimeFormat('en-US', {
     month: 'short',
     day: 'numeric',
@@ -114,8 +122,11 @@ export function ResumeCard({ resume }: ResumeCardProps) {
 
   return (
     <>
-      <Card className="bg-white border-[#DCD8D0] border-l-4 border-l-[#5B4FC4] hover:border-[#9C9590] transition-all duration-200 overflow-hidden group shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)] rounded-xl">
-        <CardContent className="p-6">
+      <Card className={`relative bg-white border-[#DCD8D0] border-l-4 ${style.border} hover:border-[#9C9590] transition-all duration-300 overflow-hidden group shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] hover:-translate-y-1 rounded-xl`}>
+        {/* Subtle hover gradient flare */}
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-black/[0.02] to-transparent rounded-full -mr-16 -mt-16 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+        
+        <CardContent className="p-6 relative z-10">
           <div className="flex items-start justify-between mb-4">
             <div>
               <h3 className="text-xl font-bold text-[#1A1A1A] truncate max-w-[200px] mb-1" title={resumeName}>
@@ -163,13 +174,24 @@ export function ResumeCard({ resume }: ResumeCardProps) {
             </DropdownMenu>
           </div>
 
-          <div className="flex flex-wrap gap-2 mb-4">
-            <Badge variant="secondary" className="bg-[#F5F3EF] text-[#6B6560] font-normal">
-              Theme: <span className="capitalize ml-1 text-[#1A1A1A]">{resume.theme}</span>
+          <div className="flex flex-wrap items-center gap-3 mb-4">
+            <Badge variant="secondary" className={`${style.bg} ${style.text} px-2.5 py-0.5 border-none font-medium capitalize shadow-none transition-colors`}>
+              {resume.theme.replace('_', ' ')}
             </Badge>
-            <Badge variant={isPublic ? 'default' : 'outline'} className={isPublic ? 'bg-[#EDF7F1] text-[#3A8D5C] hover:bg-[#EDF7F1]' : 'border-[#E8E5DF] text-[#9C9590]'}>
-              {isPublic ? 'Public' : 'Private'}
-            </Badge>
+            {isPublic ? (
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-[#3A8D5C] bg-[#EDF7F1] px-2.5 py-0.5 rounded-full border border-[#3A8D5C]/20 shadow-sm">
+                <div className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#3A8D5C] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#3A8D5C]"></span>
+                </div>
+                Live
+              </div>
+            ) : (
+              <div className="flex items-center gap-1.5 text-xs font-medium text-[#9C9590] bg-[#FAFAF8] px-2.5 py-0.5 rounded-full border border-[#E8E5DF] shadow-sm">
+                <div className="h-2 w-2 rounded-full bg-[#DCD8D0]"></div>
+                Private
+              </div>
+            )}
           </div>
 
           {/* Micro Telemetry Dashboard */}
