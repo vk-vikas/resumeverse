@@ -65,31 +65,31 @@ export function ResumeEditor() {
       <SectionEditor title="Personal Info" defaultOpen={true}>
         <div className="space-y-3">
           <div>
-            <Label className="text-xs text-neutral-400">Full Name</Label>
+            <Label className="text-xs text-[#6B6560]">Full Name</Label>
             <Input
               value={data.name}
               onChange={(e) => updateField('name', e.target.value)}
               placeholder="John Doe"
-              className="bg-neutral-800/50 border-neutral-700 text-white"
+              className="bg-[#F5F3EF] border-[#E8E5DF] text-[#1A1A1A]"
             />
           </div>
           <div>
-            <Label className="text-xs text-neutral-400">Title / Headline</Label>
+            <Label className="text-xs text-[#6B6560]">Title / Headline</Label>
             <Input
               value={data.title}
               onChange={(e) => updateField('title', e.target.value)}
               placeholder="Senior Software Engineer"
-              className="bg-neutral-800/50 border-neutral-700 text-white"
+              className="bg-[#F5F3EF] border-[#E8E5DF] text-[#1A1A1A]"
             />
           </div>
           <div>
-            <Label className="text-xs text-neutral-400">Summary</Label>
+            <Label className="text-xs text-[#6B6560]">Summary</Label>
             <Textarea
               value={data.summary}
               onChange={(e) => updateField('summary', e.target.value)}
               placeholder="Brief professional summary..."
               rows={3}
-              className="bg-neutral-800/50 border-neutral-700 text-white resize-none"
+              className="bg-[#F5F3EF] border-[#E8E5DF] text-[#1A1A1A] resize-none"
             />
           </div>
         </div>
@@ -101,14 +101,14 @@ export function ResumeEditor() {
           {(['email', 'phone', 'linkedin', 'github', 'portfolio', 'location'] as const).map(
             (field) => (
               <div key={field}>
-                <Label className="text-xs text-neutral-400 capitalize">{field}</Label>
+                <Label className="text-xs text-[#6B6560] capitalize">{field}</Label>
                 <Input
                   value={data.contact[field] || ''}
                   onChange={(e) =>
                     updateField('contact', { ...data.contact, [field]: e.target.value })
                   }
                   placeholder={field === 'email' ? 'email@example.com' : field}
-                  className="bg-neutral-800/50 border-neutral-700 text-white text-sm"
+                  className="bg-[#F5F3EF] border-[#E8E5DF] text-[#1A1A1A] text-sm"
                 />
               </div>
             )
@@ -125,7 +125,7 @@ export function ResumeEditor() {
               size="sm"
               onClick={handleEnhanceAll}
               disabled={isEnhancingAll}
-              className="border-neutral-700 bg-neutral-900/50 text-amber-500 hover:text-amber-400 hover:bg-neutral-800 transition-colors gap-2"
+              className="border-[#E8E5DF] bg-white text-amber-600 hover:text-amber-500 hover:bg-[#F5F3EF] transition-colors gap-2"
             >
               {isEnhancingAll ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Sparkles className="h-3.5 w-3.5" />}
               {isEnhancingAll ? 'Enhancing...' : 'Enhance All'}
@@ -159,7 +159,7 @@ export function ResumeEditor() {
                 { company: '', role: '', startDate: '', endDate: '', bullets: [''] },
               ])
             }
-            className="w-full border-dashed border-neutral-700 text-neutral-400 hover:text-white"
+            className="w-full border-dashed border-[#E8E5DF] text-[#9C9590] hover:text-[#1A1A1A]"
           >
             <Plus className="h-4 w-4 mr-1" /> Add Experience
           </Button>
@@ -195,7 +195,7 @@ export function ResumeEditor() {
                 { institution: '', degree: '', year: '' },
               ])
             }
-            className="w-full border-dashed border-neutral-700 text-neutral-400 hover:text-white"
+            className="w-full border-dashed border-[#E8E5DF] text-[#9C9590] hover:text-[#1A1A1A]"
           >
             <Plus className="h-4 w-4 mr-1" /> Add Education
           </Button>
@@ -252,7 +252,7 @@ export function ResumeEditor() {
                 { name: '', description: '', tech: [] },
               ])
             }
-            className="w-full border-dashed border-neutral-700 text-neutral-400 hover:text-white"
+            className="w-full border-dashed border-[#E8E5DF] text-[#9C9590] hover:text-[#1A1A1A]"
           >
             <Plus className="h-4 w-4 mr-1" /> Add Project
           </Button>
@@ -318,12 +318,12 @@ function ExperienceEditor({
   };
 
   return (
-    <div className="rounded-lg border border-neutral-800 p-3 space-y-2">
+    <div className="rounded-lg border border-[#E8E5DF] p-3 space-y-2">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium text-neutral-400">
+        <span className="text-xs font-medium text-[#6B6560]">
           {item.company || 'New Experience'}
         </span>
-        <Button variant="ghost" size="icon" className="h-6 w-6 text-neutral-500 hover:text-red-400" onClick={onRemove}>
+        <Button variant="ghost" size="icon" className="h-6 w-6 text-[#9C9590] hover:text-[#D84040]" onClick={onRemove}>
           <Trash2 className="h-3 w-3" />
         </Button>
       </div>
@@ -332,7 +332,7 @@ function ExperienceEditor({
           value={item.company}
           onChange={(e) => onChange({ ...item, company: e.target.value })}
           placeholder="Company"
-          className="bg-neutral-800/50 border-neutral-700 text-white text-sm"
+          className="bg-[#F5F3EF] border-[#E8E5DF] text-[#1A1A1A] text-sm"
         />
         <Input
           value={item.role}
@@ -355,7 +355,7 @@ function ExperienceEditor({
       </div>
       {/* Bullets */}
       <div className="space-y-1">
-        <Label className="text-xs text-neutral-500">Bullet Points</Label>
+        <Label className="text-xs text-[#9C9590]">Bullet Points</Label>
         {item.bullets.map((bullet, j) => (
           <div key={j} className="flex gap-1">
             <Input
@@ -366,7 +366,7 @@ function ExperienceEditor({
                 onChange({ ...item, bullets: newBullets });
               }}
               placeholder="Achievement or responsibility..."
-              className="bg-neutral-800/50 border-neutral-700 text-white text-sm flex-1"
+              className="bg-[#F5F3EF] border-[#E8E5DF] text-[#1A1A1A] text-sm flex-1"
             />
 
             {/* AI Enhance / Undo Controls */}
@@ -400,7 +400,7 @@ function ExperienceEditor({
             <Button
               variant="ghost"
               size="icon"
-              className="h-9 w-9 shrink-0 text-neutral-600 hover:text-red-400"
+              className="h-9 w-9 shrink-0 text-[#9C9590] hover:text-[#D84040]"
               onClick={() => {
                 if (item.bullets.length > 1) {
                   onChange({ ...item, bullets: item.bullets.filter((_, idx) => idx !== j) });
@@ -422,7 +422,7 @@ function ExperienceEditor({
           variant="ghost"
           size="sm"
           onClick={() => onChange({ ...item, bullets: [...item.bullets, ''] })}
-          className="text-xs text-neutral-500 hover:text-white"
+          className="text-xs text-[#9C9590] hover:text-[#1A1A1A]"
         >
           <Plus className="h-3 w-3 mr-1" /> Add bullet
         </Button>
@@ -517,7 +517,7 @@ function ProjectEditor({
         }}
         placeholder="Project description OR bullet points (one per line)..."
         rows={4}
-        className="bg-neutral-800/50 border-neutral-700 text-white text-sm resize-none min-h-[80px]"
+        className="bg-[#F5F3EF] border-[#E8E5DF] text-[#1A1A1A] text-sm resize-none min-h-[80px]"
       />
       <SkillsGroup
         label="Tech Stack"
@@ -555,7 +555,7 @@ function SkillsGroup({
 
   return (
     <div>
-      <Label className="text-xs text-neutral-400">{label}</Label>
+      <Label className="text-xs text-[#6B6560]">{label}</Label>
       <div className="flex flex-wrap gap-1.5 mt-1 mb-2">
         {items.map((skill, i) => (
           <Badge
@@ -579,13 +579,13 @@ function SkillsGroup({
             }
           }}
           placeholder={`Add ${label.toLowerCase()}...`}
-          className="bg-neutral-800/50 border-neutral-700 text-white text-sm flex-1"
+          className="bg-[#F5F3EF] border-[#E8E5DF] text-[#1A1A1A] text-sm flex-1"
         />
         <Button
           variant="outline"
           size="sm"
           onClick={addSkill}
-          className="border-neutral-700 text-neutral-400"
+          className="border-[#E8E5DF] text-[#9C9590]"
         >
           <Plus className="h-3 w-3" />
         </Button>

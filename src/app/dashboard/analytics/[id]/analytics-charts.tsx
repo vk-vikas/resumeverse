@@ -18,7 +18,7 @@ interface AnalyticsChartsProps {
   views: ViewRecord[];
 }
 
-const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
+const COLORS = ['#5B4FC4', '#3A8D5C', '#D89040', '#D84040', '#8B5CF6', '#ec4899'];
 
 export function AnalyticsCharts({ views }: AnalyticsChartsProps) {
   // 1. Process Time Series Data (Last 30 Days)
@@ -88,38 +88,38 @@ export function AnalyticsCharts({ views }: AnalyticsChartsProps) {
   return (
     <div className="space-y-8">
       {/* Time Series Context */}
-      <div className="p-6 bg-neutral-900 border border-neutral-800 rounded-xl shadow-sm">
-        <h3 className="text-lg font-semibold text-white mb-6">Views Over Time (30 Days)</h3>
+      <div className="p-6 bg-white border border-[#E8E5DF] rounded-xl shadow-sm">
+        <h3 className="text-lg font-semibold text-[#1A1A1A] mb-6">Views Over Time (30 Days)</h3>
         <div className="h-[300px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={timeSeriesData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#262626" vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E8E5DF" vertical={false} />
               <XAxis 
                 dataKey="name" 
-                stroke="#525252" 
-                tick={{ fill: '#a3a3a3', fontSize: 12 }} 
+                stroke="#E8E5DF" 
+                tick={{ fill: '#6B6560', fontSize: 12 }} 
                 tickLine={false}
                 axisLine={false}
                 minTickGap={30}
               />
               <YAxis 
-                stroke="#525252" 
-                tick={{ fill: '#a3a3a3', fontSize: 12 }}
+                stroke="#E8E5DF" 
+                tick={{ fill: '#6B6560', fontSize: 12 }}
                 tickLine={false}
                 axisLine={false}
                 allowDecimals={false}
               />
               <Tooltip 
-                contentStyle={{ backgroundColor: '#171717', border: '1px solid #262626', borderRadius: '8px', color: '#fff' }}
-                itemStyle={{ color: '#3b82f6' }}
+                contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #E8E5DF', borderRadius: '8px', color: '#1A1A1A' }}
+                itemStyle={{ color: '#5B4FC4' }}
               />
               <Line 
                 type="monotone" 
                 dataKey="Views" 
-                stroke="#3b82f6" 
+                stroke="#5B4FC4" 
                 strokeWidth={3}
-                dot={{ r: 4, fill: '#171717', strokeWidth: 2 }}
-                activeDot={{ r: 6, fill: '#3b82f6' }}
+                dot={{ r: 4, fill: '#FAFAF8', strokeWidth: 2 }}
+                activeDot={{ r: 6, fill: '#5B4FC4' }}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -128,31 +128,31 @@ export function AnalyticsCharts({ views }: AnalyticsChartsProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Referrer Chart */}
-        <div className="p-6 bg-neutral-900 border border-neutral-800 rounded-xl shadow-sm">
-          <h3 className="text-lg font-semibold text-white mb-6">Top Traffic Sources</h3>
+        <div className="p-6 bg-white border border-[#E8E5DF] rounded-xl shadow-sm">
+          <h3 className="text-lg font-semibold text-[#1A1A1A] mb-6">Top Traffic Sources</h3>
           {referrerData.length > 0 ? (
             <div className="h-[250px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={referrerData} layout="vertical" margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#262626" horizontal={false} />
-                  <XAxis type="number" stroke="#525252" tick={{ fill: '#a3a3a3', fontSize: 12 }} allowDecimals={false} />
-                  <YAxis dataKey="name" type="category" stroke="#525252" tick={{ fill: '#e5e5e5', fontSize: 12 }} width={80} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E8E5DF" horizontal={false} />
+                  <XAxis type="number" stroke="#E8E5DF" tick={{ fill: '#6B6560', fontSize: 12 }} allowDecimals={false} />
+                  <YAxis dataKey="name" type="category" stroke="#E8E5DF" tick={{ fill: '#1A1A1A', fontSize: 12 }} width={80} />
                   <Tooltip 
-                    cursor={{ fill: '#262626' }}
-                    contentStyle={{ backgroundColor: '#171717', border: '1px solid #262626', borderRadius: '8px', color: '#fff' }}
+                    cursor={{ fill: '#F5F3EF' }}
+                    contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #E8E5DF', borderRadius: '8px', color: '#1A1A1A' }}
                   />
-                  <Bar dataKey="value" name="Views" fill="#10b981" radius={[0, 4, 4, 0]} barSize={24} />
+                  <Bar dataKey="value" name="Views" fill="#3A8D5C" radius={[0, 4, 4, 0]} barSize={24} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
           ) : (
-             <div className="h-[250px] flex items-center justify-center text-neutral-500">Not enough data</div>
+             <div className="h-[250px] flex items-center justify-center text-[#9C9590]">Not enough data</div>
           )}
         </div>
 
         {/* Device Chart */}
-        <div className="p-6 bg-neutral-900 border border-neutral-800 rounded-xl shadow-sm flex flex-col items-center">
-          <h3 className="text-lg font-semibold text-white mb-2 w-full text-left">Device Breakdown</h3>
+        <div className="p-6 bg-white border border-[#E8E5DF] rounded-xl shadow-sm flex flex-col items-center">
+          <h3 className="text-lg font-semibold text-[#1A1A1A] mb-2 w-full text-left">Device Breakdown</h3>
           {deviceData.length > 0 ? (
             <div className="h-[250px] w-full">
               <ResponsiveContainer width="100%" height="100%">
@@ -172,14 +172,14 @@ export function AnalyticsCharts({ views }: AnalyticsChartsProps) {
                     ))}
                   </Pie>
                   <Tooltip 
-                    contentStyle={{ backgroundColor: '#171717', border: '1px solid #262626', borderRadius: '8px', color: '#fff' }}
+                    contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #E8E5DF', borderRadius: '8px', color: '#1A1A1A' }}
                   />
-                  <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: '12px', color: '#a3a3a3' }} />
+                  <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: '12px', color: '#6B6560' }} />
                 </PieChart>
               </ResponsiveContainer>
             </div>
           ) : (
-            <div className="h-[250px] w-full flex items-center justify-center text-neutral-500">Not enough data</div>
+            <div className="h-[250px] w-full flex items-center justify-center text-[#9C9590]">Not enough data</div>
           )}
         </div>
       </div>

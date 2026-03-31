@@ -30,13 +30,13 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-4">
-      <div className="w-full max-w-sm border border-neutral-800 bg-neutral-900/50 p-8 rounded-2xl backdrop-blur-sm shadow-2xl">
+    <div className="min-h-screen bg-[#FAFAF8] flex items-center justify-center p-4">
+      <div className="w-full max-w-sm border border-[#E8E5DF] bg-white p-8 rounded-2xl shadow-xl shadow-black/5">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-white mb-2">
-            Resume<span className="text-blue-500">Verse</span>
+          <h1 className="text-2xl font-bold text-[#1A1A1A] mb-2">
+            Resume<span className="text-[#5B4FC4]">Verse</span>
           </h1>
-          <p className="text-neutral-400 text-sm">
+          <p className="text-[#6B6560] text-sm">
             Sign in to create, manage, and share your interactive resumes.
           </p>
         </div>
@@ -44,7 +44,7 @@ export default function LoginPage() {
         <div className="space-y-3">
           <Button
             variant="outline"
-            className="w-full bg-white text-black hover:bg-neutral-200 border-none justify-center h-12"
+            className="w-full bg-white text-[#1A1A1A] hover:bg-[#F5F3EF] border-[#E8E5DF] justify-center h-12"
             onClick={() => handleOAuthLogin('google')}
             disabled={isLoading !== null}
           >

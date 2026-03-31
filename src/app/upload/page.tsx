@@ -86,7 +86,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[#FAFAF8]">
       {/* Navigation */}
       <header className="absolute top-0 w-full p-4 flex justify-end z-50">
         <UserMenu />
@@ -99,31 +99,31 @@ export default function Home() {
             <Sparkles className="mr-1 h-3 w-3" />
             AI-Powered
           </Badge>
-          <h1 className="text-5xl font-bold tracking-tight text-white sm:text-6xl">
-            Resume<span className="text-blue-500">Verse</span>
+          <h1 className="text-5xl font-bold tracking-tight text-[#1A1A1A] sm:text-6xl">
+            Resume<span className="text-[#5B4FC4]">Verse</span>
           </h1>
-          <p className="text-lg text-neutral-400 leading-relaxed">
+          <p className="text-lg text-[#6B6560] leading-relaxed">
             Transform your PDF/DOCX resume into a beautiful, interactive,
             shareable website — powered by AI.
           </p>
 
           {/* Feature pills */}
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-            <Card className="bg-neutral-900/50 border-neutral-800">
-              <CardContent className="flex items-center gap-2 px-4 py-2 text-sm text-neutral-300">
-                <Upload className="h-4 w-4 text-blue-400" />
+            <Card className="bg-white border-[#E8E5DF]">
+              <CardContent className="flex items-center gap-2 px-4 py-2 text-sm text-[#6B6560]">
+                <Upload className="h-4 w-4 text-[#5B4FC4]" />
                 Upload Resume
               </CardContent>
             </Card>
-            <Card className="bg-neutral-900/50 border-neutral-800">
-              <CardContent className="flex items-center gap-2 px-4 py-2 text-sm text-neutral-300">
-                <Sparkles className="h-4 w-4 text-purple-400" />
+            <Card className="bg-white border-[#E8E5DF]">
+              <CardContent className="flex items-center gap-2 px-4 py-2 text-sm text-[#6B6560]">
+                <Sparkles className="h-4 w-4 text-[#8B5CF6]" />
                 AI Transforms
               </CardContent>
             </Card>
-            <Card className="bg-neutral-900/50 border-neutral-800">
-              <CardContent className="flex items-center gap-2 px-4 py-2 text-sm text-neutral-300">
-                <Share2 className="h-4 w-4 text-green-400" />
+            <Card className="bg-white border-[#E8E5DF]">
+              <CardContent className="flex items-center gap-2 px-4 py-2 text-sm text-[#6B6560]">
+                <Share2 className="h-4 w-4 text-[#3A8D5C]" />
                 Share Everywhere
               </CardContent>
             </Card>
@@ -134,22 +134,22 @@ export default function Home() {
         {(!stagedFile || parsedData) && (
           <div className="space-y-4">
             <div className="space-y-2">
-              <h2 className="text-sm font-medium text-neutral-400 uppercase tracking-wider">
+              <h2 className="text-sm font-medium text-[#9C9590] uppercase tracking-wider">
                 Upload Your Resume
               </h2>
               <Dropzone onFileSelect={handleFileSelect} isLoading={isLoading} />
             </div>
           
           <div className="flex items-center gap-4 py-2">
-            <div className="flex-1 border-t border-neutral-800"></div>
-            <span className="text-xs text-neutral-500 font-medium uppercase tracking-widest">OR</span>
-            <div className="flex-1 border-t border-neutral-800"></div>
+            <div className="flex-1 border-t border-[#E8E5DF]"></div>
+            <span className="text-xs text-[#9C9590] font-medium uppercase tracking-widest">OR</span>
+            <div className="flex-1 border-t border-[#E8E5DF]"></div>
           </div>
           
           <Button 
             variant="outline" 
             size="lg"
-            className="w-full border-neutral-800 text-neutral-300 hover:text-white hover:bg-neutral-900"
+            className="w-full border-[#E8E5DF] text-[#6B6560] hover:text-[#1A1A1A] hover:bg-[#F5F3EF]"
             onClick={() => {
               if (isAuthenticated) {
                 router.push('/editor/new');
@@ -167,31 +167,31 @@ export default function Home() {
         {/* Branching Options: AI vs Raw PDF */}
         {stagedFile && !isLoading && !parsedData && (
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-             <h2 className="text-xl font-bold text-white text-center">How would you like to build your portfolio?</h2>
+             <h2 className="text-xl font-bold text-[#1A1A1A] text-center">How would you like to build your portfolio?</h2>
              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Card 
-                  className="bg-neutral-900/50 border-blue-500/50 cursor-pointer hover:bg-neutral-800 transition-colors" 
+                  className="bg-white border-[#5B4FC4]/30 cursor-pointer hover:bg-[#F0EDFA] transition-colors" 
                   onClick={() => processAIParsing(stagedFile)}
                 >
                   <CardContent className="p-6 text-center space-y-3">
-                     <Sparkles className="h-8 w-8 text-blue-400 mx-auto" />
-                     <h3 className="font-semibold text-white">Extract & Build (AI)</h3>
-                     <p className="text-xs text-neutral-400">Parse your document into an interactive, customizable web dashboard.</p>
+                     <Sparkles className="h-8 w-8 text-[#5B4FC4] mx-auto" />
+                     <h3 className="font-semibold text-[#1A1A1A]">Extract & Build (AI)</h3>
+                     <p className="text-xs text-[#6B6560]">Parse your document into an interactive, customizable web dashboard.</p>
                   </CardContent>
                 </Card>
 
                 <Card 
-                  className="bg-neutral-900/50 border-emerald-500/50 cursor-pointer hover:bg-neutral-800 transition-colors" 
+                  className="bg-white border-[#3A8D5C]/30 cursor-pointer hover:bg-[#EDF7F1] transition-colors" 
                   onClick={() => processRawUpload(stagedFile)}
                 >
                   <CardContent className="p-6 text-center space-y-3">
-                     <Eye className="h-8 w-8 text-emerald-400 mx-auto" />
-                     <h3 className="font-semibold text-white">Host Tracked PDF</h3>
-                     <p className="text-xs text-neutral-400">Bypass AI entirely. Host your raw PDF natively to get an instant view-tracking link.</p>
+                     <Eye className="h-8 w-8 text-[#3A8D5C] mx-auto" />
+                     <h3 className="font-semibold text-[#1A1A1A]">Host Tracked PDF</h3>
+                     <p className="text-xs text-[#6B6560]">Bypass AI entirely. Host your raw PDF natively to get an instant view-tracking link.</p>
                   </CardContent>
                 </Card>
              </div>
-             <Button variant="ghost" className="w-full text-neutral-500 hover:text-white" onClick={() => setStagedFile(null)}>
+             <Button variant="ghost" className="w-full text-[#9C9590] hover:text-[#1A1A1A]" onClick={() => setStagedFile(null)}>
                Cancel and select a different file
              </Button>
           </div>
@@ -201,19 +201,19 @@ export default function Home() {
         {parsedData && (
           <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-5 w-5 text-green-400" />
-              <h2 className="text-lg font-semibold text-white">
+              <CheckCircle2 className="h-5 w-5 text-[#3A8D5C]" />
+              <h2 className="text-lg font-semibold text-[#1A1A1A]">
                 Parsed Successfully
               </h2>
             </div>
 
             {/* Name & Title */}
-            <Card className="bg-neutral-900/50 border-neutral-800">
+            <Card className="bg-white border-[#E8E5DF]">
               <CardContent className="p-5 space-y-1">
-                <h3 className="text-xl font-bold text-white">{parsedData.name}</h3>
-                <p className="text-neutral-400">{parsedData.title}</p>
+                <h3 className="text-xl font-bold text-[#1A1A1A]">{parsedData.name}</h3>
+                <p className="text-[#6B6560]">{parsedData.title}</p>
                 {parsedData.summary && (
-                  <p className="text-sm text-neutral-500 pt-2 leading-relaxed">{parsedData.summary}</p>
+                  <p className="text-sm text-[#9C9590] pt-2 leading-relaxed">{parsedData.summary}</p>
                 )}
               </CardContent>
             </Card>
@@ -226,13 +226,13 @@ export default function Home() {
                 onToggle={() => toggleSection('experience')}
               >
                 {parsedData.experience.map((exp, i) => (
-                  <div key={i} className="py-3 border-b border-neutral-800 last:border-0">
-                    <p className="text-sm font-medium text-white">{exp.role}</p>
-                    <p className="text-xs text-neutral-400">{exp.company} · {exp.startDate} – {exp.endDate}</p>
+                  <div key={i} className="py-3 border-b border-[#E8E5DF] last:border-0">
+                    <p className="text-sm font-medium text-[#1A1A1A]">{exp.role}</p>
+                    <p className="text-xs text-[#6B6560]">{exp.company} · {exp.startDate} – {exp.endDate}</p>
                     <ul className="mt-2 space-y-1">
                       {exp.bullets.map((b, j) => (
-                        <li key={j} className="text-xs text-neutral-500 flex gap-2">
-                          <span className="text-neutral-600 shrink-0">•</span>
+                        <li key={j} className="text-xs text-[#9C9590] flex gap-2">
+                          <span className="text-[#9C9590] shrink-0">•</span>
                           <span>{b}</span>
                         </li>
                       ))}
@@ -270,8 +270,8 @@ export default function Home() {
               >
                 {parsedData.education.map((edu, i) => (
                   <div key={i} className="py-2">
-                    <p className="text-sm font-medium text-white">{edu.degree}{edu.field ? ` in ${edu.field}` : ''}</p>
-                    <p className="text-xs text-neutral-400">{edu.institution} · {edu.year}</p>
+                    <p className="text-sm font-medium text-[#1A1A1A]">{edu.degree}{edu.field ? ` in ${edu.field}` : ''}</p>
+                    <p className="text-xs text-[#6B6560]">{edu.institution} · {edu.year}</p>
                   </div>
                 ))}
               </CollapsibleSection>
@@ -285,13 +285,13 @@ export default function Home() {
               >
                 {parsedData.projects.map((proj, i) => (
                   <div key={i} className="py-2">
-                    <p className="text-sm font-medium text-white">{proj.name}</p>
+                    <p className="text-sm font-medium text-[#1A1A1A]">{proj.name}</p>
                     {(proj.bullets && proj.bullets.length > 0) ? (
-                      <ul className="text-xs text-neutral-500 list-disc pl-4 space-y-0.5 mt-0.5">
+                      <ul className="text-xs text-[#9C9590] list-disc pl-4 space-y-0.5 mt-0.5">
                         {proj.bullets.map((b, bIdx) => <li key={bIdx}>{b}</li>)}
                       </ul>
                     ) : (
-                      <p className="text-xs text-neutral-500">{proj.description}</p>
+                      <p className="text-xs text-[#9C9590]">{proj.description}</p>
                     )}
                     <div className="flex flex-wrap gap-1 mt-1">
                       {proj.tech.map((t, j) => (
@@ -326,7 +326,7 @@ export default function Home() {
         )}
 
         {/* Footer tagline */}
-        <p className="text-center text-sm text-neutral-600 pt-4">
+        <p className="text-center text-sm text-[#9C9590] pt-4">
           3 stunning themes · Shareable links · View analytics · $0 cost
         </p>
       </div>
@@ -348,16 +348,16 @@ function CollapsibleSection({
   children: React.ReactNode;
 }) {
   return (
-    <Card className="bg-neutral-900/50 border-neutral-800">
+    <Card className="bg-white border-[#E8E5DF]">
       <button
         onClick={onToggle}
         className="w-full flex items-center justify-between p-4 text-left"
       >
-        <span className="text-sm font-medium text-neutral-300">{title}</span>
+        <span className="text-sm font-medium text-[#1A1A1A]">{title}</span>
         {isOpen ? (
-          <ChevronUp className="h-4 w-4 text-neutral-500" />
+          <ChevronUp className="h-4 w-4 text-[#9C9590]" />
         ) : (
-          <ChevronDown className="h-4 w-4 text-neutral-500" />
+          <ChevronDown className="h-4 w-4 text-[#9C9590]" />
         )}
       </button>
       {isOpen && <CardContent className="px-4 pb-4 pt-0">{children}</CardContent>}
@@ -368,7 +368,7 @@ function CollapsibleSection({
 function SkillGroup({ label, items }: { label: string; items: string[] }) {
   return (
     <div>
-      <p className="text-xs font-medium text-neutral-400 mb-1">{label}</p>
+      <p className="text-xs font-medium text-[#6B6560] mb-1">{label}</p>
       <div className="flex flex-wrap gap-1.5">
         {items.map((skill, i) => (
           <Badge key={i} variant="secondary" className="text-xs">

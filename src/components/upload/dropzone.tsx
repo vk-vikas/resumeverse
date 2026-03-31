@@ -94,10 +94,10 @@ export function Dropzone({ onFileSelect, isLoading = false }: DropzoneProps) {
     <Card
       className={`relative overflow-hidden border-2 border-dashed transition-all duration-200 cursor-pointer
         ${isDragOver
-          ? 'border-blue-500 bg-blue-500/5'
+          ? 'border-[#5B4FC4] bg-[#F0EDFA]'
           : error
-            ? 'border-red-500/50 bg-red-500/5'
-            : 'border-neutral-700 bg-neutral-900/50 hover:border-neutral-500 hover:bg-neutral-900/80'
+            ? 'border-[#D84040]/50 bg-[#FDF0F0]'
+            : 'border-[#E8E5DF] bg-white hover:border-[#9C9590] hover:bg-[#F5F3EF]/30'
         }
       `}
       onDrop={handleDrop}
@@ -133,8 +133,8 @@ export function Dropzone({ onFileSelect, isLoading = false }: DropzoneProps) {
               exit={{ opacity: 0, scale: 0.9 }}
               className="flex flex-col items-center gap-4"
             >
-              <Loader2 className="h-10 w-10 text-blue-400 animate-spin" />
-              <p className="text-neutral-300 text-sm">
+              <Loader2 className="h-10 w-10 text-[#5B4FC4] animate-spin" />
+              <p className="text-[#6B6560] text-sm">
                 Parsing your resume with AI...
               </p>
             </motion.div>
@@ -161,16 +161,16 @@ export function Dropzone({ onFileSelect, isLoading = false }: DropzoneProps) {
                 animate={isDragOver ? { scale: 1.1, y: -4 } : { scale: 1, y: 0 }}
                 transition={{ type: 'spring', stiffness: 300 }}
               >
-                <Upload className={`h-10 w-10 ${isDragOver ? 'text-blue-400' : 'text-neutral-500'}`} />
+                <Upload className={`h-10 w-10 ${isDragOver ? 'text-[#5B4FC4]' : 'text-[#9C9590]'}`} />
               </motion.div>
               <div className="text-center">
-                <p className="text-neutral-300 text-sm font-medium">
+                <p className="text-[#1A1A1A] text-sm font-medium">
                   Drag & drop your resume, or{' '}
-                  <span className="text-blue-400 underline underline-offset-2">
+                  <span className="text-[#5B4FC4] underline underline-offset-2">
                     click to browse
                   </span>
                 </p>
-                <p className="text-neutral-500 text-xs mt-1">
+                <p className="text-[#9C9590] text-xs mt-1">
                   PDF or DOCX · Max 5MB
                 </p>
               </div>
@@ -185,7 +185,7 @@ export function Dropzone({ onFileSelect, isLoading = false }: DropzoneProps) {
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 5 }}
-              className="flex items-center gap-2 mt-4 text-red-400 text-sm"
+              className="flex items-center gap-2 mt-4 text-[#D84040] text-sm"
               role="alert"
             >
               <AlertCircle className="h-4 w-4 shrink-0" />

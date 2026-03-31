@@ -14,16 +14,16 @@ export function SectionEditor({ title, defaultOpen = false, children }: SectionE
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <Card className="bg-neutral-900/50 border-neutral-800">
+    <Card className="bg-white border-[#E8E5DF]">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-4 text-left hover:bg-neutral-800/30 transition-colors rounded-t-lg"
+        className="w-full flex items-center justify-between p-4 text-left hover:bg-[#F5F3EF]/50 transition-colors rounded-t-lg"
       >
-        <span className="text-sm font-semibold text-neutral-200">{title}</span>
+        <span className="text-sm font-semibold text-[#1A1A1A]">{title}</span>
         {isOpen ? (
-          <ChevronUp className="h-4 w-4 text-neutral-500" />
+          <ChevronUp className="h-4 w-4 text-[#9C9590]" />
         ) : (
-          <ChevronDown className="h-4 w-4 text-neutral-500" />
+          <ChevronDown className="h-4 w-4 text-[#9C9590]" />
         )}
       </button>
       {isOpen && (

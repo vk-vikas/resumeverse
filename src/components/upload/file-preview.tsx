@@ -15,11 +15,11 @@ export function FilePreview({ file, onRemove }: FilePreviewProps) {
   const displaySize = file.size > 1024 * 1024 ? `${sizeMB} MB` : `${sizeKB} KB`;
 
   return (
-    <div className="flex items-center gap-4 rounded-lg bg-neutral-800/60 p-4 w-full">
+    <div className="flex items-center gap-4 rounded-lg bg-[#F5F3EF] border border-[#E8E5DF] p-4 w-full">
       {/* File icon */}
       <div
         className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-lg ${
-          isPDF ? 'bg-red-500/10 text-red-400' : 'bg-blue-500/10 text-blue-400'
+          isPDF ? 'bg-[#FDF0F0] text-[#D84040]' : 'bg-[#F0EDFA] text-[#5B4FC4]'
         }`}
       >
         <FileText className="h-6 w-6" />
@@ -27,10 +27,10 @@ export function FilePreview({ file, onRemove }: FilePreviewProps) {
 
       {/* File info */}
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-neutral-200 truncate">
+        <p className="text-sm font-medium text-[#1A1A1A] truncate">
           {file.name}
         </p>
-        <p className="text-xs text-neutral-500 mt-0.5">
+        <p className="text-xs text-[#9C9590] mt-0.5">
           {isPDF ? 'PDF' : 'DOCX'} · {displaySize}
         </p>
       </div>
@@ -39,7 +39,7 @@ export function FilePreview({ file, onRemove }: FilePreviewProps) {
       <Button
         variant="ghost"
         size="icon"
-        className="shrink-0 h-8 w-8 text-neutral-500 hover:text-neutral-200"
+        className="shrink-0 h-8 w-8 text-[#9C9590] hover:text-[#D84040]"
         onClick={onRemove}
         aria-label="Remove file"
       >

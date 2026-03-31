@@ -34,8 +34,8 @@ function EditorContent() {
 
   if (!isReady) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
-        <div className="text-neutral-500 text-sm">Loading editor...</div>
+      <div className="min-h-screen bg-[#FAFAF8] flex items-center justify-center">
+        <div className="text-[#9C9590] text-sm">Loading editor...</div>
       </div>
     );
   }
@@ -126,22 +126,22 @@ function EditorLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] flex flex-col">
+    <div className="min-h-screen bg-[#FAFAF8] flex flex-col">
       {/* Top bar */}
-      <header className="border-b border-neutral-800 bg-neutral-950/80 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b border-[#E8E5DF] bg-white/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-3">
             <Button
               variant="ghost"
               size="icon"
-              className="text-neutral-400 hover:text-white"
+              className="text-[#9C9590] hover:text-[#1A1A1A]"
               onClick={() => window.history.back()}
             >
               <ArrowLeft className="h-4 w-4" />
             </Button>
-            <h1 className="text-sm font-semibold text-white">
-              Resume<span className="text-blue-500">Verse</span>{' '}
-              <span className="text-neutral-500 font-normal">Editor</span>
+            <h1 className="text-sm font-semibold text-[#1A1A1A]">
+              Resume<span className="text-[#5B4FC4]">Verse</span>{' '}
+              <span className="text-[#9C9590] font-normal">Editor</span>
             </h1>
           </div>
           <div className="flex items-center gap-4">
@@ -150,7 +150,7 @@ function EditorLayout() {
               size="sm"
               onClick={handlePublish}
               disabled={isPublishing}
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              className="bg-[#5B4FC4] hover:bg-[#4A3FB0] text-white"
             >
               {isPublishing ? (
                 <>
@@ -170,10 +170,10 @@ function EditorLayout() {
 
       {/* Split panel layout */}
       <div className="flex flex-1 overflow-hidden">
-        <div className="w-1/2 border-r border-neutral-800 overflow-y-auto p-4">
+        <div className="w-1/2 border-r border-[#E8E5DF] overflow-y-auto p-4">
           <ResumeEditor />
         </div>
-        <div className="w-1/2 overflow-y-auto p-4 bg-neutral-950">
+        <div className="w-1/2 overflow-y-auto p-4 bg-[#F5F3EF]">
           <LivePreview />
         </div>
       </div>

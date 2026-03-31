@@ -114,47 +114,47 @@ export function ResumeCard({ resume }: ResumeCardProps) {
 
   return (
     <>
-      <Card className="bg-neutral-900 border-neutral-800 hover:border-neutral-700 transition-all duration-200 overflow-hidden group">
-        <div className="h-2 bg-gradient-to-r from-blue-600 to-purple-600 w-full" />
+      <Card className="bg-white border-[#E8E5DF] hover:border-[#9C9590] transition-all duration-200 overflow-hidden group shadow-sm">
+        <div className="h-2 bg-gradient-to-r from-[#5B4FC4] to-[#8B5CF6] w-full" />
         <CardContent className="p-6">
           <div className="flex items-start justify-between mb-4">
             <div>
-              <h3 className="text-xl font-bold text-white truncate max-w-[200px] mb-1" title={resumeName}>
+              <h3 className="text-xl font-bold text-[#1A1A1A] truncate max-w-[200px] mb-1" title={resumeName}>
                 {resumeName}
               </h3>
-              <p className="text-sm text-neutral-400 truncate max-w-[200px]" title={resumeRole}>
+              <p className="text-sm text-[#6B6560] truncate max-w-[200px]" title={resumeRole}>
                 {resumeRole}
               </p>
             </div>
 
             <DropdownMenu>
-              <DropdownMenuTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium hover:bg-neutral-800 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring h-8 w-8 text-neutral-400 hover:text-white -mr-2">
+              <DropdownMenuTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium hover:bg-[#F5F3EF] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring h-8 w-8 text-[#9C9590] hover:text-[#1A1A1A] -mr-2">
                 <MoreVertical className="h-4 w-4" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48 bg-neutral-900 border-neutral-800 text-neutral-200">
+              <DropdownMenuContent align="end" className="w-48 bg-white border-[#E8E5DF] text-[#1A1A1A]">
                 <DropdownMenuItem
-                  className="cursor-pointer hover:bg-neutral-800 focus:bg-neutral-800"
+                  className="cursor-pointer hover:bg-[#F5F3EF] focus:bg-[#F5F3EF]"
                   onClick={() => window.open(`/${resume.slug}`, '_blank')}
                 >
                   <ExternalLink className="mr-2 h-4 w-4" />
                   View Live
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className="cursor-pointer hover:bg-neutral-800 focus:bg-neutral-800"
+                  className="cursor-pointer hover:bg-[#F5F3EF] focus:bg-[#F5F3EF]"
                   onClick={() => router.push(`/editor/${resume.id}`)}
                 >
                   <Edit2 className="mr-2 h-4 w-4" />
                   Edit Resume
                 </DropdownMenuItem>
                 <DropdownMenuItem className="p-0">
-                  <Link href={`/dashboard/analytics/${resume.id}`} className="cursor-pointer w-full flex items-center px-2 py-1.5 hover:bg-neutral-800 focus:bg-neutral-800 rounded outline-none w-[100%] min-w-full">
+                  <Link href={`/dashboard/analytics/${resume.id}`} className="cursor-pointer w-full flex items-center px-2 py-1.5 hover:bg-[#F5F3EF] focus:bg-[#F5F3EF] rounded outline-none w-[100%] min-w-full">
                     <LineChart className="mr-2 h-4 w-4" />
                     <span>Analytics</span>
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuSeparator className="bg-neutral-800" />
+                <DropdownMenuSeparator className="bg-[#E8E5DF]" />
                 <DropdownMenuItem
-                  className="cursor-pointer text-red-500 hover:bg-neutral-800 focus:bg-neutral-800 focus:text-red-400"
+                  className="cursor-pointer text-[#D84040] hover:bg-[#FDF0F0] focus:bg-[#FDF0F0] focus:text-[#D84040]"
                   onClick={() => setShowDeleteDialog(true)}
                 >
                   <Trash2 className="mr-2 h-4 w-4" />
@@ -165,40 +165,40 @@ export function ResumeCard({ resume }: ResumeCardProps) {
           </div>
 
           <div className="flex flex-wrap gap-2 mb-4">
-            <Badge variant="secondary" className="bg-neutral-800 text-neutral-300 font-normal">
-              Theme: <span className="capitalize ml-1 text-white">{resume.theme}</span>
+            <Badge variant="secondary" className="bg-[#F5F3EF] text-[#6B6560] font-normal">
+              Theme: <span className="capitalize ml-1 text-[#1A1A1A]">{resume.theme}</span>
             </Badge>
-            <Badge variant={isPublic ? 'default' : 'outline'} className={isPublic ? 'bg-green-500/10 text-green-400 hover:bg-green-500/20' : 'border-neutral-700 text-neutral-500'}>
+            <Badge variant={isPublic ? 'default' : 'outline'} className={isPublic ? 'bg-[#EDF7F1] text-[#3A8D5C] hover:bg-[#EDF7F1]' : 'border-[#E8E5DF] text-[#9C9590]'}>
               {isPublic ? 'Public' : 'Private'}
             </Badge>
           </div>
 
           {/* Micro Telemetry Dashboard */}
           {isPublic && (
-            <div className="grid grid-cols-3 gap-2 py-3 mb-4 border-t border-b border-neutral-800/50 bg-neutral-900/30 px-3 -mx-6 text-center">
+            <div className="grid grid-cols-3 gap-2 py-3 mb-4 border-t border-b border-[#E8E5DF] bg-[#FAFAF8] px-3 -mx-6 text-center">
                <div>
-                 <p className="text-[10px] text-neutral-500 uppercase tracking-wider font-semibold">Unique Viewers</p>
-                 <p className="text-sm font-bold text-emerald-400 mt-0.5">{resume.telemetry?.uniqueVisitors || 0}</p>
+                 <p className="text-[10px] text-[#9C9590] uppercase tracking-wider font-semibold">Unique Viewers</p>
+                 <p className="text-sm font-bold text-[#3A8D5C] mt-0.5">{resume.telemetry?.uniqueVisitors || 0}</p>
                </div>
-               <div className="border-l border-neutral-800/50">
-                 <p className="text-[10px] text-neutral-500 uppercase tracking-wider font-semibold">Read Time</p>
-                 <p className="text-sm font-bold text-blue-400 mt-0.5">{resume.telemetry?.avgDurationSecs ? `${resume.telemetry.avgDurationSecs}s` : '0s'}</p>
+               <div className="border-l border-[#E8E5DF]">
+                 <p className="text-[10px] text-[#9C9590] uppercase tracking-wider font-semibold">Read Time</p>
+                 <p className="text-sm font-bold text-[#5B4FC4] mt-0.5">{resume.telemetry?.avgDurationSecs ? `${resume.telemetry.avgDurationSecs}s` : '0s'}</p>
                </div>
                {resume.theme === 'raw_pdf' ? (
-                 <div className="border-l border-neutral-800/50">
-                   <p className="text-[10px] text-neutral-500 uppercase tracking-wider font-semibold">Downloads</p>
-                   <p className="text-sm font-bold text-yellow-400 mt-0.5 px-1">{resume.telemetry?.downloads || 0}</p>
+                 <div className="border-l border-[#E8E5DF]">
+                   <p className="text-[10px] text-[#9C9590] uppercase tracking-wider font-semibold">Downloads</p>
+                   <p className="text-sm font-bold text-[#D89040] mt-0.5 px-1">{resume.telemetry?.downloads || 0}</p>
                  </div>
                ) : (
-                 <div className="border-l border-neutral-800/50">
-                   <p className="text-[10px] text-neutral-500 uppercase tracking-wider font-semibold">Top Location</p>
-                   <p className="text-sm font-bold text-purple-400 mt-0.5 truncate px-1">{resume.telemetry?.topLocation || 'N/A'}</p>
+                 <div className="border-l border-[#E8E5DF]">
+                   <p className="text-[10px] text-[#9C9590] uppercase tracking-wider font-semibold">Top Location</p>
+                   <p className="text-sm font-bold text-[#8B5CF6] mt-0.5 truncate px-1">{resume.telemetry?.topLocation || 'N/A'}</p>
                  </div>
                )}
             </div>
           )}
 
-          <div className="flex items-center justify-between text-xs text-neutral-500 pt-4 border-t border-neutral-800/50">
+          <div className="flex items-center justify-between text-xs text-[#9C9590] pt-4 border-t border-[#E8E5DF]">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1.5" title="Views">
                 <Eye className="h-3.5 w-3.5" />
@@ -216,7 +216,7 @@ export function ResumeCard({ resume }: ResumeCardProps) {
                 checked={isPublic}
                 onCheckedChange={handleToggleVisibility}
                 disabled={isUpdatingVisibility}
-                className="data-[state=checked]:bg-blue-600"
+                className="data-[state=checked]:bg-[#5B4FC4]"
               />
             </div>
           </div>
@@ -224,22 +224,22 @@ export function ResumeCard({ resume }: ResumeCardProps) {
       </Card>
 
       <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <DialogContent className="bg-neutral-900 border-neutral-800">
+        <DialogContent className="bg-white border-[#E8E5DF]">
           <DialogHeader>
-            <DialogTitle className="text-white">Is it completely necessary to delete this?</DialogTitle>
-            <DialogDescription className="text-neutral-400">
+            <DialogTitle className="text-[#1A1A1A]">Is it completely necessary to delete this?</DialogTitle>
+            <DialogDescription className="text-[#6B6560]">
               This action cannot be undone. This will permanently delete your resume "{resumeName}" from our servers and it will no longer be accessible via the shareable link.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowDeleteDialog(false)} className="bg-transparent border-neutral-700 text-neutral-300 hover:bg-neutral-800 hover:text-white">Cancel</Button>
+            <Button variant="outline" onClick={() => setShowDeleteDialog(false)} className="bg-transparent border-[#E8E5DF] text-[#6B6560] hover:bg-[#F5F3EF] hover:text-[#1A1A1A]">Cancel</Button>
             <Button
               onClick={(e: React.MouseEvent) => {
                 e.preventDefault();
                 handleDelete();
               }}
               disabled={isDeleting}
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className="bg-[#D84040] hover:bg-[#C03030] text-white"
             >
               {isDeleting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Trash2 className="mr-2 h-4 w-4" />}
               Yes, Delete

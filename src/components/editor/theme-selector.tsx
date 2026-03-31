@@ -26,7 +26,7 @@ const themes: { id: ThemeType; name: string; description: string; icon: React.Re
     id: 'kpi',
     name: 'Data Room',
     description: 'Executive dashboard driven by numerical KPIs',
-    icon: <BarChartHorizontalBig className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />,
+    icon: <BarChartHorizontalBig className="h-5 w-5 text-[#3A8D5C]" />,
   },
 ];
 
@@ -41,20 +41,20 @@ export function ThemeSelector({ selected, onSelect }: ThemeSelectorProps) {
             onClick={() => onSelect(theme.id)}
             aria-selected={isSelected}
             className={`relative text-left rounded-xl border-2 p-3 transition-all duration-200 ${isSelected
-                ? 'border-blue-500 bg-blue-500/10'
-                : 'border-neutral-800 bg-neutral-900/50 hover:border-neutral-600'
+                ? 'border-[#5B4FC4] bg-[#F0EDFA]'
+                : 'border-[#E8E5DF] bg-white hover:border-[#9C9590]'
               }`}
           >
             {isSelected && (
-              <div className="absolute top-2 right-2 h-5 w-5 rounded-full bg-blue-500 flex items-center justify-center">
+              <div className="absolute top-2 right-2 h-5 w-5 rounded-full bg-[#5B4FC4] flex items-center justify-center">
                 <Check className="h-3 w-3 text-white" />
               </div>
             )}
-            <div className={`mb-2 ${isSelected ? 'text-blue-400' : 'text-neutral-500'}`}>
+            <div className={`mb-2 ${isSelected ? 'text-[#5B4FC4]' : 'text-[#9C9590]'}`}>
               {theme.icon}
             </div>
-            <p className="text-xs font-medium text-neutral-200">{theme.name}</p>
-            <p className="text-[10px] text-neutral-500 mt-0.5 leading-tight">
+            <p className="text-xs font-medium text-[#1A1A1A]">{theme.name}</p>
+            <p className="text-[10px] text-[#9C9590] mt-0.5 leading-tight">
               {theme.description}
             </p>
           </button>
