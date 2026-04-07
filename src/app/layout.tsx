@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { RouteProgress } from "@/components/layout/route-progress";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -37,6 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${dmSans.variable} font-sans antialiased`}>
+        <RouteProgress />
         <TooltipProvider>
           {children}
         </TooltipProvider>

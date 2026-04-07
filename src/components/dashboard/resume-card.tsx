@@ -9,7 +9,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import {
   ExternalLink,
-  Edit2,
   Trash2,
   Eye,
   Calendar,
@@ -148,13 +147,6 @@ export function ResumeCard({ resume }: ResumeCardProps) {
                 >
                   <ExternalLink className="mr-2 h-4 w-4" />
                   View Live
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="cursor-pointer hover:bg-[#F5F3EF] focus:bg-[#F5F3EF]"
-                  onClick={() => router.push(`/editor/${resume.id}`)}
-                >
-                  <Edit2 className="mr-2 h-4 w-4" />
-                  Edit Resume
                 </DropdownMenuItem>
                 <DropdownMenuItem className="p-0">
                   <Link href={`/dashboard/analytics/${resume.id}`} className="cursor-pointer w-full flex items-center px-2 py-1.5 hover:bg-[#F5F3EF] focus:bg-[#F5F3EF] rounded outline-none w-[100%] min-w-full">

@@ -3,7 +3,12 @@
 import { Download, Eye } from 'lucide-react';
 import type { ResumeData } from '@/types/resume';
 import { Button } from '@/components/ui/button';
-import { TrackedPdfViewer } from '@/components/analytics/tracked-pdf-viewer';
+import dynamic from 'next/dynamic';
+
+const TrackedPdfViewer = dynamic(
+  () => import('@/components/analytics/tracked-pdf-viewer').then((mod) => mod.TrackedPdfViewer),
+  { ssr: false }
+);
 
 interface RawPdfThemeProps {
   data: ResumeData;
