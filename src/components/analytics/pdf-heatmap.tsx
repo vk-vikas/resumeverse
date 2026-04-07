@@ -14,6 +14,12 @@ interface HeatPoint {
   page?: number;
 }
 
+interface ClusteredPoint {
+  x_pct: number;
+  y_pct: number;
+  count: number;
+}
+
 interface PdfHeatmapProps {
   fileUrl: string;
   clicks: HeatPoint[];
@@ -23,25 +29,63 @@ interface PdfHeatmapProps {
 const COLORS_CLICK = 'rgba(239, 68, 68,'; // red for clicks
 const COLORS_SCROLL = 'rgba(59, 130, 246,'; // blue for scroll dwell
 
+/**
+ * Greedy single-pass spatial clustering.
+ * Merges points within `radiusPct` distance into weighted clusters.
+ */
+function clusterPoints(points: HeatPoint[], radiusPct: number): ClusteredPoint[] {
+  const clusters: ClusteredPoint[] = [];
+
+  for (const p of points) {
+    let merged = false;
+    for (const c of clusters) {
+      const dx = c.x_pct - p.x_pct;
+      const dy = c.y_pct - p.y_pct;
+      if (Math.sqrt(dx * dx + dy * dy) <= radiusPct) {
+        // Weighted average centroid
+        const total = c.count + 1;
+        c.x_pct = (c.x_pct * c.count + p.x_pct) / total;
+        c.y_pct = (c.y_pct * c.count + p.y_pct) / total;
+        c.count = total;
+        merged = true;
+        break;
+      }
+    }
+    if (!merged) {
+      clusters.push({ x_pct: p.x_pct, y_pct: p.y_pct, count: 1 });
+    }
+  }
+
+  return clusters;
+}
+
 function drawHeatmap(
   canvas: HTMLCanvasElement,
-  points: HeatPoint[],
+  clusters: ClusteredPoint[],
   color: string,
-  radius: number
+  baseRadius: number
 ) {
   const ctx = canvas.getContext('2d');
-  if (!ctx || !points.length) return;
+  if (!ctx || !clusters.length) return;
 
   const { width, height } = canvas;
   ctx.clearRect(0, 0, width, height);
 
-  // Draw Gaussian blobs for each point
-  points.forEach(p => {
-    const x = (p.x_pct / 100) * width;
-    const y = (p.y_pct / 100) * height;
+  const maxCount = Math.max(...clusters.map(c => c.count));
+
+  const BASE_OPACITY = 0.15;
+  const PEAK_OPACITY = 0.75;
+
+  clusters.forEach(c => {
+    const intensity = c.count / maxCount; // 0–1
+    const opacity = BASE_OPACITY + intensity * (PEAK_OPACITY - BASE_OPACITY);
+    const radius = baseRadius * (0.7 + 0.3 * intensity);
+
+    const x = (c.x_pct / 100) * width;
+    const y = (c.y_pct / 100) * height;
     const grad = ctx.createRadialGradient(x, y, 0, x, y, radius);
-    grad.addColorStop(0, `${color} 0.4)`);
-    grad.addColorStop(0.5, `${color} 0.15)`);
+    grad.addColorStop(0, `${color} ${opacity})`);
+    grad.addColorStop(0.5, `${color} ${opacity * 0.35})`);
     grad.addColorStop(1, `${color} 0)`);
     ctx.beginPath();
     ctx.fillStyle = grad;
@@ -89,13 +133,17 @@ export function PdfHeatmap({ fileUrl, clicks, scrolls }: PdfHeatmapProps) {
     const clickPoints = clicks.filter(p => !p.page || p.page === page);
     const scrollPoints = scrolls.filter(p => !p.page || p.page === page);
 
+    // Cluster nearby points to prevent saturation
+    const clickClusters = clusterPoints(clickPoints, 3);
+    const scrollClusters = clusterPoints(scrollPoints, 4);
+
     // We draw on a slight delay so the PDF page canvas has rendered
     const t = setTimeout(() => {
       if (clickCanvasRef.current) {
-        drawHeatmap(clickCanvasRef.current, clickPoints, COLORS_CLICK, 28);
+        drawHeatmap(clickCanvasRef.current, clickClusters, COLORS_CLICK, 28);
       }
       if (scrollCanvasRef.current) {
-        drawHeatmap(scrollCanvasRef.current, scrollPoints, COLORS_SCROLL, 40);
+        drawHeatmap(scrollCanvasRef.current, scrollClusters, COLORS_SCROLL, 40);
       }
     }, 300);
     return () => clearTimeout(t);
