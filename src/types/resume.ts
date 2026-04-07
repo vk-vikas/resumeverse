@@ -43,7 +43,7 @@ export interface SkillsData {
 export interface ResumeData {
   name: string;
   title: string;
-  summary: string;
+  summary?: string;
   contact: ContactInfo;
   experience: ExperienceItem[];
   education: EducationItem[];

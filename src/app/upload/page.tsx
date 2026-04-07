@@ -131,7 +131,7 @@ export default function Home() {
         </div>
 
         {/* Upload Section */}
-        {(!stagedFile || parsedData) && (
+        {!stagedFile && (
           <div className="space-y-4 pt-6">
             <div className="space-y-2">
               <h2 className="text-sm font-medium text-[#9C9590] uppercase tracking-wider">

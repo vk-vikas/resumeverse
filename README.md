@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 ResumeVerse: Your Resume. Two Powerful Tools.
 
-## Getting Started
+> **Transform Your Resume into a Stunning Web Portfolio & Visualize Recruiter Engagement with AI-Powered Heatmaps.**
 
-First, run the development server:
+![Hero Mockup](./public/images/hero_mockup.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 💡 The Problem
+Traditional resumes are **static**, **boring**, and provide **zero feedback**. You send a PDF into a "black hole" and never know if a recruiter actually read it, or which parts they spent time on.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✨ The Solution: ResumeVerse
+ResumeVerse brings your resume to life with two distinct, AI-driven features:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. 🤖 AI Portfolio Generator
+Upload your PDF or DOCX. Our AI (Gemini 1.5 Flash) extracts your experience, rewrites metric-driven STAR bullets, and deploys it as a **breathtaking interactive website** in seconds.
+*   **3 Distinct Themes:** Choose from Bento (Modern Grid), Journey (Story-driven), or Terminal (Dev-focused).
+*   **Fully Customizable:** Edit content and themes in real-time.
 
-## Learn More
+### 2. 📊 Smart Resume Analytics
+Share your PDF through a trackable link and see exactly how recruiters engage.
+*   **Activity Heatmaps:** Visualize exactly where recruiters are spending their time using D3-powered heatmaps.
+*   **Real-time Metrics:** Track view counts, session duration, and geographical data.
+*   **Recruiter Insights:** Know your strengths based on real interaction data.
 
-To learn more about Next.js, take a look at the following resources:
+![Heatmap Mockup](./public/images/heatmap_mockup.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Tech Stack
+This project is built using a modern, high-performance stack:
 
-## Deploy on Vercel
+- **Frontend:** Next.js 14, React 19, TypeScript, Tailwind CSS
+- **Design & UI:** shadcn/ui, Framer Motion, GSAP, Lenis (Smooth Scroll)
+- **Data Viz:** D3.js, Recharts
+- **AI Engine:** Google Gemini AI (1.5 Flash)
+- **Backend / Auth:** Supabase (Database, Auth, Storage)
+- **DevOps:** Docker, Vitest, GitHub Actions
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 20+
+- A Google Gemini API Key
+- A Supabase Project
+
+### Installation
+1.  **Clone the Repo**
+    ```bash
+    git clone https://github.com/your-username/resumeverse.git
+    cd resumeverse
+    ```
+
+2.  **Environment Setup**
+    Create a `.env.local` file:
+    ```env
+    NEXT_PUBLIC_SUPABASE_URL=your_url
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
+    GEMINI_API_KEY=your_gemini_key
+    ```
+
+3.  **Run Development Server**
+    ```bash
+    npm install
+    npm run dev
+    ```
+
+---
+
+## 🌟 Why this Project?
+This isn't just a resume builder. It's a demonstration of complex **full-stack integration**, **AI implementation**, and **advanced data visualization**. From parsing messy PDFs to rendering real-time heatmaps, ResumeVerse solves a real-world career communication problem with a premium aesthetic.
+
+---
+
+### Developed with ❤️ by [Your Name]

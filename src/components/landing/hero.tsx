@@ -117,9 +117,9 @@ export function Hero() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-4xl md:text-6xl font-bold tracking-tight text-[#1A1A1A] mb-6"
         >
-          Turn Your Resume Into A<br className="hidden md:block" />
+          Your Resume.<br className="hidden md:block" />
           <span className="bg-gradient-to-r from-[#5B4FC4] via-[#8B5CF6] to-[#D89040] bg-clip-text text-transparent">
-            Stunning Interactive Website
+            Two Powerful Tools.
           </span>
         </motion.h1>
 
@@ -127,10 +127,10 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-lg md:text-xl text-[#6B6560] mb-10 max-w-2xl mx-auto"
+          className="text-lg md:text-xl text-[#6B6560] mb-10 max-w-3xl mx-auto px-4"
         >
-          Upload your standard PDF or DOCX. Our AI extracts the content, writes
-          metric-driven STAR bullets, and deploys it as a breathtaking interactive portfolio in seconds.
+          Generate an interactive portfolio website from your resume or share your PDF with a
+          smart link and see exactly how recruiters engage — with heatmaps, view counts, and detailed analytics.
         </motion.p>
 
         <motion.div

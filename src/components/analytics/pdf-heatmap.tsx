@@ -66,9 +66,21 @@ export function PdfHeatmap({ fileUrl, clicks, scrolls }: PdfHeatmapProps) {
   }
 
   useEffect(() => {
-    if (containerRef.current) {
-      setContainerWidth(containerRef.current.clientWidth - 2);
-    }
+    if (!containerRef.current) return;
+    
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        // Debounce slightly or just set directly since react batches
+        setContainerWidth(entry.contentRect.width - 2);
+      }
+    });
+    
+    observer.observe(containerRef.current);
+    
+    // Initial set just in case observer misses the very first paint
+    setContainerWidth(containerRef.current.clientWidth - 2);
+    
+    return () => observer.disconnect();
   }, []);
 
   // Redraw heatmap when layer or data changes

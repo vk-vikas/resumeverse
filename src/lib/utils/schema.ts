@@ -51,7 +51,7 @@ const skillsSchema = z
 export const resumeSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   title: z.string().min(1, 'Title is required'),
-  summary: z.string().min(1, 'Summary is required'),
+  summary: z.string().optional(),
   contact: contactSchema,
   experience: z.array(experienceItemSchema),
   education: z.array(educationItemSchema),

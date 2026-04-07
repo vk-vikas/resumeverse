@@ -85,7 +85,7 @@ export function ResumeEditor() {
           <div>
             <Label className="text-xs text-[#6B6560]">Summary</Label>
             <Textarea
-              value={data.summary}
+              value={data.summary || ''}
               onChange={(e) => updateField('summary', e.target.value)}
               placeholder="Brief professional summary..."
               rows={3}

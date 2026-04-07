@@ -56,8 +56,8 @@ function EditorLayout() {
 
   const handlePublish = async () => {
     // Basic checks first for the most common requirement
-    if (!data.name?.trim() || !data.title?.trim() || !data.summary?.trim()) {
-      toast.error('Please fill in at least Name, Title, and Summary before publishing.');
+    if (!data.name?.trim() || !data.title?.trim()) {
+      toast.error('Please fill in at least Name and Title before publishing.');
       return;
     }
 
@@ -169,11 +169,11 @@ function EditorLayout() {
       </header>
 
       {/* Split panel layout */}
-      <div className="flex flex-1 overflow-hidden">
-        <div className="w-1/2 border-r border-[#E8E5DF] overflow-y-auto p-4">
+      <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
+        <div className="w-full lg:w-1/2 border-b lg:border-b-0 lg:border-r border-[#E8E5DF] overflow-y-auto p-4 sm:p-6 lg:p-8 shrink-0 lg:shrink-1 h-[50vh] lg:h-auto">
           <ResumeEditor />
         </div>
-        <div className="w-1/2 overflow-y-auto p-4 bg-[#F5F3EF]">
+        <div className="w-full lg:w-1/2 overflow-y-auto p-4 sm:p-6 lg:p-8 bg-[#F5F3EF]">
           <LivePreview />
         </div>
       </div>
