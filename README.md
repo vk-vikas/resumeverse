@@ -1,77 +1,154 @@
-# 🚀 ResumeVerse: Your Resume. Two Powerful Tools.
+<div align="center">
 
-> **Transform Your Resume into a Stunning Web Portfolio & Visualize Recruiter Engagement with AI-Powered Heatmaps.**
+# ResumeVerse
 
-![Hero Mockup](./public/images/hero_mockup.png)
+**Upload a resume. Get a live portfolio. Track who reads it.**
+
+An AI-powered platform that transforms static PDF/DOCX resumes into interactive, themed web portfolios — complete with real-time editing, recruiter engagement heatmaps, and deep analytics.
+
+[![Next.js](https://img.shields.io/badge/Next.js_16-000?logo=nextdotjs&logoColor=white)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://typescriptlang.org/)
+[![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?logo=supabase&logoColor=white)](https://supabase.com/)
+[![Gemini AI](https://img.shields.io/badge/Gemini_AI-8E75B2?logo=googlegemini&logoColor=white)](https://ai.google.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+
+[Live Demo →](https://resumeverse-puce.vercel.app/) · 
+
+</div>
 
 ---
 
-## 💡 The Problem
-Traditional resumes are **static**, **boring**, and provide **zero feedback**. You send a PDF into a "black hole" and never know if a recruiter actually read it, or which parts they spent time on.
+<!-- TODO: Replace with an actual screenshot of the landing/upload page -->
+<!-- ![Hero Screenshot](./public/screenshots/hero.png) -->
+![alt text](image.png)
 
-## ✨ The Solution: ResumeVerse
-ResumeVerse brings your resume to life with two distinct, AI-driven features:
+---
 
-### 1. 🤖 AI Portfolio Generator
-Upload your PDF or DOCX. Our AI (Gemini 1.5 Flash) extracts your experience, rewrites metric-driven STAR bullets, and deploys it as a **breathtaking interactive website** in seconds.
-*   **3 Distinct Themes:** Choose from Bento (Modern Grid), Journey (Story-driven), or Terminal (Dev-focused).
-*   **Fully Customizable:** Edit content and themes in real-time.
+## ⚡ What It Does
 
-### 2. 📊 Smart Resume Analytics
-Share your PDF through a trackable link and see exactly how recruiters engage.
-*   **Activity Heatmaps:** Visualize exactly where recruiters are spending their time using D3-powered heatmaps.
-*   **Real-time Metrics:** Track view counts, session duration, and geographical data.
-*   **Recruiter Insights:** Know your strengths based on real interaction data.
+| Step | Feature | What Happens |
+|:----:|---------|-------------|
+| **1** | **Upload** | Drop a PDF or DOCX — the AI extracts everything automatically |
+| **2** | **Transform** | Generates a fully interactive web portfolio in seconds |
+| **3** | **Customize** | Edit content live with a real-time WYSIWYG preview |
+| **4** | **Share** | Get a shareable link and track how recruiters engage |
 
-![Heatmap Mockup](./public/images/heatmap_mockup.png)
+---
+
+## 🎯 Core Features
+
+### 🤖 AI-Powered Resume Parsing
+- Gemini AI extracts structured data from raw PDFs/DOCX with **98%+ accuracy**
+- Automatically maps experience, education, skills, and projects into a clean JSON schema
+- Zero manual data entry required
+
+<!-- TODO: Replace with a screenshot of the parsed result / editor -->
+<!-- ![Parsing Screenshot](./public/screenshots/parsing.png) -->
+![alt text](image-1.png)
+
+---
+
+### 🎨 3 Premium Themes with Real-Time Editing
+
+Choose from three distinct, production-quality themes:
+
+| Theme | Style | Best For |
+|-------|-------|----------|
+| **Bento** | Modern grid layout | Design-oriented roles |
+| **Terminal** | Developer CLI aesthetic | Engineering roles |
+| **KPI** | Data-driven dashboard | Analytics / PM roles |
+
+- **Live WYSIWYG Editor** — edit any field and see changes reflected instantly, zero page reloads
+- **One-click theme switching** with persistent data across themes
+
+<!-- TODO: Replace with a screenshot or GIF of the real-time editor + theme switching -->
+<!-- ![Editor Screenshot](./public/screenshots/editor.png) -->
+![alt text](image-2.png)
+
+---
+
+### ✍️ AI Bullet Point Enhancer
+- One-click rewrite of experience bullet points using Gemini AI
+- Contextually optimizes for **action verbs**, **quantifiable metrics**, and **ATS keyword density**
+- Improves simulated ATS match scores by up to **40%**
+
+<!-- TODO: Replace with a screenshot of the AI Enhancer in action -->
+<!-- ![Enhancer Screenshot](./public/screenshots/enhancer.png) -->
+![alt text](image-3.png)
+
+---
+
+### 📊 Recruiter Engagement Analytics
+
+Share your portfolio and get **real data** on how recruiters interact with it:
+
+- **Normalized Heatmaps** — device-agnostic spatial heatmaps (via coordinate bucketing & opacity normalization) that visualize exactly where recruiters focus, with **95%+ positional accuracy** across viewports
+- **Link Click Tracking** — track outbound clicks on GitHub, LinkedIn, portfolio, and project links
+- **Deep Engagement Metrics** — unique visitors, geographic origin, scroll depth, average session duration, return visits, and download counts
+- **Per-PDF Page Tracking** — for hosted raw PDFs, track reading patterns per page
+
+<!-- TODO: Replace with a screenshot of the analytics dashboard / heatmap -->
+<!-- ![Analytics Screenshot](./public/screenshots/analytics.png) -->
+![alt text](image-4.png)
+![alt text](image-5.png)
+
+---
+
+### 🔒 Hosted PDF Mode
+- Upload and share your original PDF exactly as-is, no AI transformation
+- Full tracking — heatmaps, downloads, time-on-page — still works
+- One-click download button for recruiters
 
 ---
 
 ## 🛠️ Tech Stack
-This project is built using a modern, high-performance stack:
 
-- **Frontend:** Next.js 14, React 19, TypeScript, Tailwind CSS
-- **Design & UI:** shadcn/ui, Framer Motion, GSAP, Lenis (Smooth Scroll)
-- **Data Viz:** D3.js, Recharts
-- **AI Engine:** Google Gemini AI (1.5 Flash)
-- **Backend / Auth:** Supabase (Database, Auth, Storage)
-- **DevOps:** Docker, Vitest, GitHub Actions
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js 20+
-- A Google Gemini API Key
-- A Supabase Project
-
-### Installation
-1.  **Clone the Repo**
-    ```bash
-    git clone https://github.com/your-username/resumeverse.git
-    cd resumeverse
-    ```
-
-2.  **Environment Setup**
-    Create a `.env.local` file:
-    ```env
-    NEXT_PUBLIC_SUPABASE_URL=your_url
-    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
-    GEMINI_API_KEY=your_gemini_key
-    ```
-
-3.  **Run Development Server**
-    ```bash
-    npm install
-    npm run dev
-    ```
+| Layer | Technologies |
+|-------|-------------|
+| **Framework** | Next.js 16, React 19, TypeScript |
+| **Styling** | Tailwind CSS, shadcn/ui, Framer Motion, GSAP, Lenis |
+| **AI Engine** | Google Gemini AI |
+| **Backend & Auth** | Supabase (PostgreSQL, Auth, Edge Storage) |
+| **Data Visualization** | D3.js, Recharts |
+| **PDF Processing** | pdf-parse, PDF.js, react-pdf |
+| **Rich Text Editing** | TipTap |
+| **Testing** | Vitest, React Testing Library |
 
 ---
 
-## 🌟 Why this Project?
-This isn't just a resume builder. It's a demonstration of complex **full-stack integration**, **AI implementation**, and **advanced data visualization**. From parsing messy PDFs to rendering real-time heatmaps, ResumeVerse solves a real-world career communication problem with a premium aesthetic.
+## 🏗️ Architecture Highlights
+
+```
+User Upload (PDF/DOCX)
+        │
+        ▼
+┌─── API Route: /api/parse-resume ───┐
+│  pdf-parse → Raw Text Extraction   │
+│  Gemini AI → Structured JSON       │
+│  Zod → Schema Validation           │
+└────────────┬───────────────────────┘
+             ▼
+     ┌── Editor ──┐
+     │ Real-time  │──→ Theme Renderer (Bento / Terminal / KPI)
+     │ WYSIWYG    │
+     └─────┬──────┘
+           ▼
+   Supabase PostgreSQL
+   (Resume Data + Telemetry)
+           │
+           ▼
+   Analytics Dashboard
+   (Heatmaps + KPIs + Link Clicks)
+```
 
 ---
 
-### Developed with ❤️ by [Your Name]
+
+
+---
+
+<div align="center">
+
+**Built with ❤️ by [Vikas Kumar](https://github.com/vk-vikas)**
+
+</div>
