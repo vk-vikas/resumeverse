@@ -99,7 +99,7 @@ export function PdfHeatmap({ fileUrl, clicks, scrolls }: PdfHeatmapProps) {
       }
     }, 300);
     return () => clearTimeout(t);
-  }, [clicks, scrolls, containerWidth]);
+  }, [clicks, scrolls, containerWidth, aspectRatio]);
 
   const hasData = clicks.length > 0 || scrolls.length > 0;
 

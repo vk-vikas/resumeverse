@@ -95,10 +95,6 @@ export default function Home() {
       <div className="px-4 py-20 mx-auto max-w-2xl space-y-8">
         {/* Header */}
         <div className="text-center space-y-4">
-          <Badge variant="secondary" className="mb-2 shadow-sm bg-white">
-            <Sparkles className="mr-1 h-3 w-3 text-[#5B4FC4]" />
-            AI-Powered
-          </Badge>
           <h1 className="text-5xl font-bold tracking-tight text-[#1A1A1A] sm:text-6xl">
             Resume<span className="text-[#5B4FC4]">Verse</span>
           </h1>
@@ -139,6 +135,35 @@ export default function Home() {
               </h2>
               <Dropzone onFileSelect={handleFileSelect} isLoading={isLoading} />
             </div>
+
+            {/* Try Sample — Hero CTA */}
+            <button
+              type="button"
+              className="group w-full rounded-xl p-[2px] bg-gradient-to-r from-[#5B4FC4] via-[#8B5CF6] to-[#5B4FC4] bg-[length:200%_auto] animate-[shimmer_3s_linear_infinite] shadow-lg hover:shadow-xl transition-shadow"
+              onClick={async () => {
+                try {
+                  const res = await fetch('/sample-resume.pdf');
+                  if (!res.ok) throw new Error('fetch failed');
+                  const blob = await res.blob();
+                  const file = new File([blob], 'jane-doe-sample.pdf', { type: 'application/pdf' });
+                  handleFileSelect(file);
+                } catch {
+                  toast.error('Could not load sample resume');
+                }
+              }}
+            >
+              <div className="flex items-center justify-center gap-3 rounded-[10px] bg-white px-5 py-3.5 group-hover:bg-[#FAFAFF] transition-colors">
+                <span className="text-2xl" aria-hidden>📄</span>
+                <div className="text-left">
+                  <span className="block text-sm font-bold text-[#1A1A1A]">
+                    Don&apos;t have a resume?
+                  </span>
+                  <span className="block text-xs text-[#5B4FC4] font-semibold">
+                    Try with a sample resume →
+                  </span>
+                </div>
+              </div>
+            </button>
 
             <div className="flex items-center gap-4 py-4">
               <div className="flex-1 border-t border-[#E8E5DF]"></div>
