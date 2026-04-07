@@ -20,7 +20,7 @@ An AI-powered platform that transforms static PDF/DOCX resumes into interactive,
 
 <!-- TODO: Replace with an actual screenshot of the landing/upload page -->
 <!-- ![Hero Screenshot](./public/screenshots/hero.png) -->
-![alt text](image.png)
+![alt text](./public/screenshots/image.png)
 
 ---
 
@@ -44,7 +44,7 @@ An AI-powered platform that transforms static PDF/DOCX resumes into interactive,
 
 <!-- TODO: Replace with a screenshot of the parsed result / editor -->
 <!-- ![Parsing Screenshot](./public/screenshots/parsing.png) -->
-![alt text](image-1.png)
+![alt text](./public/screenshots/image-1.png)
 
 ---
 
@@ -63,7 +63,7 @@ Choose from three distinct, production-quality themes:
 
 <!-- TODO: Replace with a screenshot or GIF of the real-time editor + theme switching -->
 <!-- ![Editor Screenshot](./public/screenshots/editor.png) -->
-![alt text](image-2.png)
+![alt text](./public/screenshots/image-2.png)
 
 ---
 
@@ -74,7 +74,7 @@ Choose from three distinct, production-quality themes:
 
 <!-- TODO: Replace with a screenshot of the AI Enhancer in action -->
 <!-- ![Enhancer Screenshot](./public/screenshots/enhancer.png) -->
-![alt text](image-3.png)
+![alt text](./public/screenshots/image-3.png)
 
 ---
 
@@ -89,8 +89,8 @@ Share your portfolio and get **real data** on how recruiters interact with it:
 
 <!-- TODO: Replace with a screenshot of the analytics dashboard / heatmap -->
 <!-- ![Analytics Screenshot](./public/screenshots/analytics.png) -->
-![alt text](image-4.png)
-![alt text](image-5.png)
+![alt text](./public/screenshots/image-4.png)
+![alt text](./public/screenshots/image-5.png)
 
 ---
 
