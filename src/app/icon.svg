@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="rv-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#5B4FC4"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="60" fill="url(#rv-gradient)"/>
+  
+  <path d="M85 70 L155 70 A 15 15 0 0 1 170 85 L170 170 A 15 15 0 0 1 155 185 L85 185 A 15 15 0 0 1 70 170 L70 85 A 15 15 0 0 1 85 70 Z" fill="white" />
+  
+  <rect x="95" y="100" width="60" height="12" rx="6" fill="#5B4FC4" />
+  <rect x="95" y="125" width="60" height="12" rx="6" fill="#5B4FC4" />
+  <rect x="95" y="150" width="40" height="12" rx="6" fill="#5B4FC4" />
+</svg>
