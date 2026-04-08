@@ -139,9 +139,9 @@ export function Hero() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <Link href="/login">
+          <Link href="/upload">
             <Button size="lg" className="h-12 px-8 text-base bg-gradient-to-r from-[#5B4FC4] to-[#7B6FD4] hover:from-[#4A3FB0] hover:to-[#6B5FC4] text-white w-full sm:w-auto shadow-lg shadow-[#5B4FC4]/20">
-              Get Started for Free
+              Generate Site + Heatmaps
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
