@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { RouteProgress } from "@/components/layout/route-progress";
@@ -43,6 +44,7 @@ export default function RootLayout({
           {children}
         </TooltipProvider>
         <Toaster />
+        <Analytics />
       </body>
     </html>
   );
